@@ -52,14 +52,14 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 // to remove
-app.MapControllers();
+//app.MapControllers();
 
 // handle fallback to index
-//   app.UseEndpoints(endpoints =>
-//             {
-//                 endpoints.MapControllers();
-//                 endpoints.MapFallbackToController("Index", "Fallback");
-//             });
+  app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
+            });
 
 //SeedData
 using var scope = app.Services.CreateScope();
