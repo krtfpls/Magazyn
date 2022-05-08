@@ -37,7 +37,7 @@ public class Edit
                 if (product== null) return null;
                 
                 var requestCategory = requestProduct.CategoryName.Trim();
-
+                
                 if (product.Category.Name != requestCategory){
                     var category = await _context.Categories
                                         .FirstOrDefaultAsync(x => x.Name == requestCategory);
@@ -46,6 +46,7 @@ public class Edit
                                             
                 }
 
+                requestProduct.Quantity= product.Quantity;
                 _mapper.Map(requestProduct, product);
              
                     var result= await _context.SaveChangesAsync() > 0 ;
