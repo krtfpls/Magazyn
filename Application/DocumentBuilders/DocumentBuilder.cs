@@ -8,7 +8,7 @@ namespace Application.DocumentBuilders
 {
     public abstract class DocumentBuilder
     {
-        public string? TypeName {get; protected set;}
+        public string TypeName {get; protected set;}
         protected DateTime _date;
         protected int _number;
         protected int _typeId;

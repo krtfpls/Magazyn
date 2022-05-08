@@ -6,7 +6,7 @@ namespace Entities.Entities.Documents
     {
         public int Id {get;set;}
         [Required]
-        public Product Product { get; set; } = new Product();
+        public Product Product { get; set; }
          [Required]
         public int Quantity { get; set; }
         

@@ -14,11 +14,11 @@ namespace Data
             
         }
 
-        public DbSet<Product>? Products {get;set;}
-        public DbSet<Category>? Categories {get;set;}
-        public DbSet<Document>? Documents {get;set;}
-        public DbSet<Customer>? Customers {get;set;}
-        public DbSet<DocumentLine>? DocumentLines {get;set;}
-        public DbSet<DocumentType>? DocumentTypes {get; set;}
+        public DbSet<Product> Products {get;set;}
+        public DbSet<Category> Categories {get;set;}
+        public DbSet<Document> Documents {get;set;}
+        public DbSet<Customer> Customers {get;set;}
+        public DbSet<DocumentLine> DocumentLines {get;set;}
+        public DbSet<DocumentType> DocumentTypes {get; set;}
     }
 }
