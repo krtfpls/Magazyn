@@ -26,7 +26,7 @@ public class ProductsController : BaseApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateItem(ProductDto item)
+    public async Task<IActionResult> Create(ProductDto item)
     {
         return HandleResult(await Mediator.Send(new Create.Command { Product = item }));
     }

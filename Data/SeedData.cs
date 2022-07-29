@@ -230,7 +230,6 @@ public class Seed
                         Description = "patchcord testowy",
                         Category = context.Categories.FirstOrDefault(x => x.Name == "Patchcord")
                     },
-            
             };
 
             await context.Products.AddRangeAsync(_productList1);
@@ -241,5 +240,4 @@ public class Seed
             };
         }
     }
-
 }

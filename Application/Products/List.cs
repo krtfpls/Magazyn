@@ -9,11 +9,11 @@ namespace Application.Products;
 
 public class List
 {
-    public class Query: IRequest<Result<PagedList<ProductsListDto>>> {
+    public class Query: IRequest<Result<PagedList<ProductsShortDto>>> {
             public ProductParams Params { get; set; }   
         }
     
-    public class Handler : IRequestHandler<Query, Result<PagedList<ProductsListDto>>>
+    public class Handler : IRequestHandler<Query, Result<PagedList<ProductsShortDto>>>
         {
             DataContext _context;
             private readonly IMapper _mapper;
@@ -26,13 +26,13 @@ public class List
                // _userAccessor = userAccessor;
             }
 
-          public async Task<Result<PagedList<ProductsListDto>>> Handle(Query request, CancellationToken cancellationToken)
+          public async Task<Result<PagedList<ProductsShortDto>>> Handle(Query request, CancellationToken cancellationToken)
             {                 
                     var query = _context.Products
                     .OrderBy(d => d.Name)
                     // .Include(u => u.User)
                     //    .Where(u => u.User.UserName == _userAccessor.GetUsername())
-                    .ProjectTo<ProductsListDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ProductsShortDto>(_mapper.ConfigurationProvider)
                     .AsNoTracking()
                     .AsQueryable();
 
@@ -40,8 +40,8 @@ public class List
                     query = query.Where(c => c.CategoryName== request.Params.CategoryName);
                 }
                  
-                 return Result<PagedList<ProductsListDto>>.Success(
-                     await PagedList<ProductsListDto>.CreateAysnc(query, request.Params.PageNumber, request.Params.PageSize)
+                 return Result<PagedList<ProductsShortDto>>.Success(
+                     await PagedList<ProductsShortDto>.CreateAysnc(query, request.Params.PageNumber, request.Params.PageSize)
                  );
             }
         }  

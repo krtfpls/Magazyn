@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using Data;
 using Entities.Entities;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +16,13 @@ public class Create
 
     }
 
-    // public class CommandValidator : AbstractValidator<Command>
-    // {
-    //     public CommandValidator()
-    //     {
-    //         RuleFor(x => x.Item).SetValidator(new ProductValidator());
-    //     }
-    // }
+    public class CommandValidator : AbstractValidator<Command>
+    {
+        public CommandValidator()
+        {
+            RuleFor(x => x.Product).SetValidator(new ProductsValidator());
+        }
+    }
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;

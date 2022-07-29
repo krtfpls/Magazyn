@@ -41,12 +41,11 @@ public class Edit
                 if (product.Category.Name != requestCategory){
                     var category = await _context.Categories
                                         .FirstOrDefaultAsync(x => x.Name == requestCategory);
-
                     product.Category = category ?? new Category{Name = requestCategory};
-                                            
                 }
-
+                // ensure that quantity doesnt change
                 requestProduct.Quantity= product.Quantity;
+
                 _mapper.Map(requestProduct, product);
              
                     var result= await _context.SaveChangesAsync() > 0 ;

@@ -21,7 +21,7 @@ namespace Entities.Entities
         
         [Required]
         [Column(TypeName ="DECIMAL(8,2)")]
-        public decimal PriceNetto { get; set; }
+        public decimal PriceNetto { get; set; } = 0.01m;
 
         public int? MinLimit { get; set; }
 

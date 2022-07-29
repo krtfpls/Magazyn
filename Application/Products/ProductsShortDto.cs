@@ -1,6 +1,6 @@
 namespace Application.Products;
 
-public class ProductsListDto
+public class ProductsShortDto
 {
      public Guid Id { get; set; }
 
@@ -9,6 +9,7 @@ public class ProductsListDto
         public string? SerialNumber { get; set; }
 
         public int Quantity { get; set; }
+        public decimal PriceNetto { get; set; }
 
         public string CategoryName { get; set; }
 }
