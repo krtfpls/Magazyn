@@ -11,7 +11,8 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        CreateMap<Document, DocumentToReturn>().ReverseMap();
+        CreateMap<Document, DocumentToReturn>()
+            .ForMember(d => d.Type, o => o.MapFrom(s => s.Type.Name));
         CreateMap<DocumentLine, DocumentLineDto>().ReverseMap();
         CreateMap<Document, DocumentDto>();
 

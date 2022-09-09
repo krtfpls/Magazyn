@@ -22,7 +22,7 @@ public class Create
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Document).SetValidator(new DocumentsValidator());
+            RuleFor(x => x.Document.newDocument).SetValidator(new DocumentsValidator());
         }
         public class Handler : IRequestHandler<Command, Result<Unit>>
     {
