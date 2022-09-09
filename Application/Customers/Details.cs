@@ -1,6 +1,6 @@
 using Application.Core;
 using Data;
-using Entities.Entities.Documents;
+using Entities.Documents;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

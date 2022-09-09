@@ -1,5 +1,5 @@
 using Application.Customers;
-using Entities.Entities.Documents;
+using Entities.Documents;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;

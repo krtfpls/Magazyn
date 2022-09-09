@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Entities.Entities.Documents
+namespace Entities.Documents
 {
     public class DocumentLine
     {

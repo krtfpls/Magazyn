@@ -9,10 +9,10 @@ namespace Application.Documents;
 
 public class List
 {
-    public class Query: IRequest<Result<PagedList<DocumentsShortDto>>> {
+    public class Query: IRequest<Result<PagedList<DocumentToReturn>>> {
             public DocumentParams Params { get; set; }   
         }
-     public class Handler : IRequestHandler<Query, Result<PagedList<DocumentsShortDto>>>
+     public class Handler : IRequestHandler<Query, Result<PagedList<DocumentToReturn>>>
         {
             DataContext _context;
             private readonly IMapper _mapper;
@@ -24,13 +24,13 @@ public class List
                 _mapper = mapper;
                // _userAccessor = userAccessor;
             }
-     public async Task<Result<PagedList<DocumentsShortDto>>> Handle(Query request, CancellationToken cancellationToken)
+     public async Task<Result<PagedList<DocumentToReturn>>> Handle(Query request, CancellationToken cancellationToken)
             {                 
                     var query = _context.Documents
                     .OrderBy(d => d.Date)
                     // .Include(u => u.User)
                     //    .Where(u => u.User.UserName == _userAccessor.GetUsername())
-                    .ProjectTo<DocumentsShortDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<DocumentToReturn>(_mapper.ConfigurationProvider)
                     .AsNoTracking()
                     .AsQueryable();
 
@@ -38,8 +38,8 @@ public class List
                     query = query.Where(t => t.Type == request.Params.Type);
                 }
                  
-                 return Result<PagedList<DocumentsShortDto>>.Success(
-                     await PagedList<DocumentsShortDto>.CreateAysnc(query, request.Params.PageNumber, request.Params.PageSize)
+                 return Result<PagedList<DocumentToReturn>>.Success(
+                     await PagedList<DocumentToReturn>.CreateAysnc(query, request.Params.PageNumber, request.Params.PageSize)
                  );
             }
         }  

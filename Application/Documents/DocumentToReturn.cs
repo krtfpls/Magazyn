@@ -2,7 +2,7 @@ using Application.Customers;
 
 namespace Application.Documents;
 
-public class DocumentsShortDto
+public class DocumentToReturn
 {
         public Guid Id { get; set; }
         public string Type { get; set; }

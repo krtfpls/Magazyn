@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Entities.Entities.Documents
+namespace Entities.Documents
 {
     public class DocumentType
     {

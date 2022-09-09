@@ -1,7 +1,7 @@
 using Application.Core;
 using AutoMapper;
 using Data;
-using Entities.Entities;
+using Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +29,7 @@ public class Edit
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             { 
                 var requestProduct = request.Product;
-
+                
                 var product = await _context.Products
                             .Include(c => c.Category)
                             .FirstOrDefaultAsync(x => x.Id == requestProduct.Id);

@@ -1,5 +1,5 @@
 using Application.Documents;
-using Application.Documents.DocumentBuilders;
+using Application.Documents.DocumentHelpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -12,23 +12,15 @@ public class DocumentsController: BaseApiController
         return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
     }
 
-    [HttpPost("/CreatePZ")]
+    [HttpPost("CreatePZ")]
     public async Task<IActionResult> CreatePZ(DocumentDto document)
     {
-        document.Type= "PZ";
-        return HandleResult(await Mediator.Send(new Create.Command { Document = document}));
+        return HandleResult(await Mediator.Send(new Create.Command { Document = new CreatePZDocument(document)}));
     }
 
-     [HttpPost("/CreateWZ")]
+     [HttpPost("CreateWZ")]
     public async Task<IActionResult> CreateWZ(DocumentDto document)
     {
-        document.Type= "WZ";
-        return HandleResult(await Mediator.Send(new Create.Command { Document = document}));
+        return HandleResult(await Mediator.Send(new Create.Command { Document = new CreateWZDocument(document)}));
     }
-}
-
-enum DocumentTypes
-{
-    PZ,
-    WZ
 }

@@ -6,7 +6,7 @@
 // using Microsoft.AspNetCore.Http;
 // using Microsoft.Extensions.DependencyInjection;
 
-// namespace Core.Entities.Documents
+// namespace Entities.Documents
 // {
 //     public class SessionDocumentLines: DocumentLines
 //     {

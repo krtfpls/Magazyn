@@ -1,5 +1,5 @@
-using Entities.Entities;
-using Entities.Entities.Documents;
+using Entities;
+using Entities.Documents;
 
 namespace Data;
 
@@ -12,6 +12,20 @@ public class Seed
         List<Product> _productList1;
         List<Product> _productList2;
         List<Product> _productList3;
+
+        if (!context.DocumentTypes.Any()){
+             DocumentType pz = new DocumentType{
+                Name = "PZ",
+                isIncomeType=true
+            };
+            DocumentType wz = new DocumentType{
+                Name = "WZ",
+                isIncomeType=false
+            };
+            await context.DocumentTypes.AddAsync(pz);
+            await context.DocumentTypes.AddAsync(wz);
+            await context.SaveChangesAsync();
+        }
 
         if (!context.Categories.Any())
         {

@@ -1,7 +1,7 @@
 using Application.Core;
 using AutoMapper;
 using Data;
-using Entities.Entities;
+using Entities;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
