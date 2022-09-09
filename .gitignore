@@ -460,4 +460,4 @@ $RECYCLE.BIN/
 appsettings.json
 *.db
 *.db-*
-Magazyn.Tests/
+#Magazyn.Tests/
