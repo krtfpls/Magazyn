@@ -30,7 +30,8 @@ public class Delete
                 
                 var item = await _context.Customers.FindAsync(request.Id);
              
-                _context.Customers.Remove(item);
+                if (item != null)
+                    _context.Customers.Remove(item);
 
                 var result = await _context.SaveChangesAsync() > 0;
                 if (!result) return Result<Unit>.Failure("Failed to remove Customer");

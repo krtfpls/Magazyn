@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Entities.Documents
 {
@@ -12,19 +8,19 @@ namespace Entities.Documents
 
         [Required]
         [StringLength(100)]
-        public string Name {get; set;}
+        public string Name {get; set;}= string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string Street {get;set;}
+        public string Street {get;set;} = string.Empty;
     
         [Required]
         [StringLength(100)]
-        public string StreetNumber {get;set;}
+        public string StreetNumber {get;set;} = string.Empty;
         
         [Required]
         [StringLength(100)]
-        public string City {get;set;}
+        public string City {get;set;} = string.Empty;
 
         [StringLength(100)]
         public string? TaxNumber {get;set;}

@@ -12,6 +12,13 @@ public class DocumentsController: BaseApiController
         return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
     }
 
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        return HandleResult(await Mediator.Send(new Details.Query { id = id }));
+    }
+
+
     [HttpPost("CreatePZ")]
     public async Task<IActionResult> CreatePZ(DocumentDto document)
     {
@@ -23,4 +30,5 @@ public class DocumentsController: BaseApiController
     {
         return HandleResult(await Mediator.Send(new Create.Command { Document = new CreateWZDocument(document)}));
     }
+     
 }

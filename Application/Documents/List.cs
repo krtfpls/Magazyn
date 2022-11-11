@@ -9,10 +9,10 @@ namespace Application.Documents;
 
 public class List
 {
-    public class Query: IRequest<Result<PagedList<DocumentToReturn>>> {
-            public DocumentParams Params { get; set; }   
+    public class Query: IRequest<Result<PagedList<DocumentsToReturn>>> {
+            public DocumentParams Params { get; set; } = new DocumentParams();
         }
-     public class Handler : IRequestHandler<Query, Result<PagedList<DocumentToReturn>>>
+     public class Handler : IRequestHandler<Query, Result<PagedList<DocumentsToReturn>>>
         {
             DataContext _context;
             private readonly IMapper _mapper;
@@ -24,22 +24,28 @@ public class List
                 _mapper = mapper;
                // _userAccessor = userAccessor;
             }
-     public async Task<Result<PagedList<DocumentToReturn>>> Handle(Query request, CancellationToken cancellationToken)
+     public async Task<Result<PagedList<DocumentsToReturn>>> Handle(Query request, CancellationToken cancellationToken)
             {                 
                     var query = _context.Documents
                     .OrderBy(d => d.Date)
                     // .Include(u => u.User)
                     //    .Where(u => u.User.UserName == _userAccessor.GetUsername())
-                    .ProjectTo<DocumentToReturn>(_mapper.ConfigurationProvider)
+                    .ProjectTo<DocumentsToReturn>(_mapper.ConfigurationProvider)
                     .AsNoTracking()
                     .AsQueryable();
 
                 if (request.Params.Type != null){
                     query = query.Where(t => t.Type == request.Params.Type);
                 }
-                 
-                 return Result<PagedList<DocumentToReturn>>.Success(
-                     await PagedList<DocumentToReturn>.CreateAysnc(query, request.Params.PageNumber, request.Params.PageSize)
+                if (request.Params.DateFrom != null){
+                    query = query.Where(d => d.Date >= request.Params.DateFrom);
+                }
+                if (request.Params.DateTo != null){
+                    query = query.Where(d => d.Date <= request.Params.DateTo);
+                }
+
+                 return Result<PagedList<DocumentsToReturn>>.Success(
+                     await PagedList<DocumentsToReturn>.CreateAysnc(query, request.Params.PageNumber, request.Params.PageSize)
                  );
             }
         }  

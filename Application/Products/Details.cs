@@ -36,7 +36,10 @@ public class Details
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Id == request.id);
 
+        if (item != null)
             return Result<ProductDto>.Success(item);
+        else
+            return Result<ProductDto>.Failure("Can't find that product");
         }
     }
 }

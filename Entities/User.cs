@@ -8,10 +8,12 @@ namespace Entities
 
         [Required]
         [StringLength(100)]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; }= string.Empty;
+
         [Required]
         [StringLength(100)]
-        public string LastName {get; set;}
+        public string LastName {get; set;}= string.Empty;
+
   
     }
 }

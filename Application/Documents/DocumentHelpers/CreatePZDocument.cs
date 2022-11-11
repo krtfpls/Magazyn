@@ -7,6 +7,6 @@ public sealed class CreatePZDocument: CreateIncomingDocument
     public CreatePZDocument(DocumentDto document)
     {
         this.newDocument= document;
-        this.newDocument.Type= "WZ";
+        this.newDocument.Type= "PZ";
     }
 }

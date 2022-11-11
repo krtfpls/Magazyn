@@ -4,7 +4,7 @@ namespace Application.Products
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string Name { get; set; }= string.Empty;
 
         public string? SerialNumber { get; set; }
 
@@ -14,6 +14,6 @@ namespace Application.Products
         public int Quantity { get; set; }
 
         public string? Description { get; set; }
-        public string CategoryName { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
     }
 }

@@ -12,7 +12,7 @@ namespace Entities.Documents
 
          [Required]
          [StringLength(100)]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         
          [Required]
         public bool isIncomeType { get; set; }

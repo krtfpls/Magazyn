@@ -11,7 +11,7 @@ namespace Application.Customers;
 public class Edit
 {
     public class Command : IRequest<Result<Unit>>{
-           public CustomerDto Customer {get;set;}
+           public CustomerDto Customer {get;set;} = new CustomerDto();
         }
      public class CommandValidator : AbstractValidator<Command>
     {

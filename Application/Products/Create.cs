@@ -12,7 +12,7 @@ public class Create
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public ProductDto Product { get; set; }
+        public ProductDto Product { get; set; } = new ProductDto();
 
     }
 
@@ -39,18 +39,15 @@ public class Create
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
         {
             var requestProduct = request.Product;
-            var requestCategory = requestProduct.CategoryName.Trim();
-
-            var category = await _context.Categories
-                        .FirstOrDefaultAsync(x =>
-                            x.Name == requestCategory) ??
-                    new Category() { Name = requestCategory };
-
+            
             Product newProduct = _mapper.Map<Product>(requestProduct);
-
-            newProduct.Id = default;
-            newProduct.Quantity = default;
-            newProduct.Category= category;
+//Zdecyduj czy ID nadawane na Froncie czy na backendzie
+           // newProduct.Id = default;
+            newProduct.Quantity = 0;
+            newProduct.Category= await _context.Categories
+                        .FirstOrDefaultAsync(x =>
+                            x.Name == requestProduct.CategoryName.Trim()) ??
+                    new Category() { Name = requestProduct.CategoryName.Trim() };
 
             _context.Products.Add(newProduct);
 

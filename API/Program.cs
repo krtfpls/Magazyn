@@ -25,8 +25,8 @@ builder.Services.AddDbContext<DataContext>(opts =>{
     );
 });
 //dodane
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession();
+//builder.Services.AddDistributedMemoryCache();
+//builder.Services.AddSession();
 
 // Mediator CQRS
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);

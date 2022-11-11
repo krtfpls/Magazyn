@@ -14,7 +14,7 @@ namespace Entities
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }
+        public string Name { get; set; }= string.Empty;
 
         [StringLength(100)]
         public string? SerialNumber { get; set; }
@@ -33,6 +33,6 @@ namespace Entities
 
         [Required]
         public int CategoryId {get;set;}
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
     }
 }

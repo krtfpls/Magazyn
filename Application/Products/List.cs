@@ -10,7 +10,7 @@ namespace Application.Products;
 public class List
 {
     public class Query: IRequest<Result<PagedList<ProductsShortDto>>> {
-            public ProductParams Params { get; set; }   
+            public ProductParams Params { get; set; } = new ProductParams(); 
         }
     
     public class Handler : IRequestHandler<Query, Result<PagedList<ProductsShortDto>>>

@@ -10,7 +10,7 @@ namespace Application.Products;
 public class Edit
 {
     public class Command : IRequest<Result<Unit>>{
-           public ProductDto Product {get;set;}
+           public ProductDto Product {get;set;} = new ProductDto();
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
@@ -34,14 +34,16 @@ public class Edit
                             .Include(c => c.Category)
                             .FirstOrDefaultAsync(x => x.Id == requestProduct.Id);
                             
-                if (product== null) return null;
+                if (product== null) return Result<Unit>.Failure("Can't find that Product");
                 
-                var requestCategory = requestProduct.CategoryName.Trim();
-                
-                if (product.Category.Name != requestCategory){
-                    var category = await _context.Categories
-                                        .FirstOrDefaultAsync(x => x.Name == requestCategory);
-                    product.Category = category ?? new Category{Name = requestCategory};
+                requestProduct.CategoryName= requestProduct.CategoryName.Trim();
+                if (product.Category!.Name != requestProduct.CategoryName){
+                    
+                  //  product.Category = await SetCategory.Set(_context, requestProduct.CategoryName);
+                   product.Category = await _context.Categories
+                                        .FirstOrDefaultAsync(x =>
+                                        x.Name == requestProduct.CategoryName) ??
+                            new Category() { Name = requestProduct.CategoryName };
                 }
                 // ensure that quantity doesnt change
                 requestProduct.Quantity= product.Quantity;
