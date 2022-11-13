@@ -32,6 +32,7 @@ builder.Services.AddDbContext<DataContext>(opts =>{
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -47,12 +48,17 @@ if (app.Environment.IsDevelopment())
 
 //added by myself
 app.UseRouting();
+
+//Cors place
+app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins(
+    "http://localhost:4200"
+));
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
 //added end
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 
 // to remove

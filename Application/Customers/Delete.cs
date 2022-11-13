@@ -1,6 +1,7 @@
 using Application.Core;
 using Data;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Customers;
 
@@ -21,9 +22,11 @@ public class Delete
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var CustomerCount = _context.Documents
-                                .Where(c => c.CustomerId == request.Id)
-                                .Count();
+
+                var CustomerCount = _context.Customers
+                                    .Include(x => x.Documents)
+                                    .SelectMany(x => x.Documents)
+                                    .Count();
 
                 if (CustomerCount > 0)
                     return Result<Unit>.Failure("Customer has documents");
