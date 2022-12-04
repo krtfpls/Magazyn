@@ -1,9 +1,11 @@
 using Application.Documents;
 using Application.Documents.DocumentHelpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class DocumentsController: BaseApiController
 {
     [HttpGet]

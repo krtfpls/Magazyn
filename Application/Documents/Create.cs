@@ -15,14 +15,14 @@ public class Create
 {
     public class Command : IRequest<Result<Unit>>
     {
-        public NewDocument? Document { get; set; }
+        public NewDocument Document { get; set; }
     }
 
     public class CommandValidator : AbstractValidator<Command>
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Document!.newDocument).SetValidator(new DocumentsValidator()!);
+            RuleFor(x => x.Document.newDocument).SetValidator(new DocumentsValidator());
         }
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
@@ -107,7 +107,7 @@ public class Create
 
                             message += "Id: " + item.Id + " Qty: " + item.Quantity + ", " + System.Environment.NewLine;
                         }
-                            message+= "Products don't exists or trying to add unique item with bad qty numbers";
+                            message+= "Products don't exists or trying to add unique item with plural numbers";
                 
                     throw new InvalidLineException(message);
                 }

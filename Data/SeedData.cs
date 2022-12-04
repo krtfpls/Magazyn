@@ -1,17 +1,25 @@
 using Entities;
 using Entities.Documents;
+using Microsoft.AspNetCore.Identity;
 
 namespace Data;
 
 public class Seed
 {
-    public static async Task SeedData(DataContext context)
+    public static async Task SeedData(DataContext context, UserManager<User> userManager)
     {
         var _categories = new List<Category>();
         var _customers = new List<Customer>();
         List<Product> _productList1;
         List<Product> _productList2;
         List<Product> _productList3;
+
+        if (!context.Users.Any()){
+            var user = setUser();
+
+            await userManager.CreateAsync(user, "P@ssword1");
+         //   await context.SaveChangesAsync();
+        }
 
         if (!context.DocumentTypes.Any()){
              DocumentType pz = new DocumentType{
@@ -253,5 +261,15 @@ public class Seed
             await context.SaveChangesAsync();
             };
         }
+    }
+
+    private static User setUser()
+    {
+        var user = new User{
+            UserName= "admin",
+            Email= "admin@test.pl"
+        };
+
+        return user;
     }
 }

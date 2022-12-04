@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220508164420_init")]
+    [Migration("20221201165247_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
 
-            modelBuilder.Entity("Entities.Entities.Category", b =>
+            modelBuilder.Entity("Entities.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -35,7 +35,7 @@ namespace Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.Customer", b =>
+            modelBuilder.Entity("Entities.Documents.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -74,7 +74,7 @@ namespace Data.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.Document", b =>
+            modelBuilder.Entity("Entities.Documents.Document", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace Data.Migrations
                     b.ToTable("Documents");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.DocumentLine", b =>
+            modelBuilder.Entity("Entities.Documents.DocumentLine", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -127,7 +127,7 @@ namespace Data.Migrations
                     b.ToTable("DocumentLines");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.DocumentType", b =>
+            modelBuilder.Entity("Entities.Documents.DocumentType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,7 +146,7 @@ namespace Data.Migrations
                     b.ToTable("DocumentTypes");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Product", b =>
+            modelBuilder.Entity("Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -156,6 +156,7 @@ namespace Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
@@ -184,15 +185,77 @@ namespace Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.Document", b =>
+            modelBuilder.Entity("Entities.User", b =>
                 {
-                    b.HasOne("Entities.Entities.Documents.Customer", "Customer")
-                        .WithMany()
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Entities.Documents.Document", b =>
+                {
+                    b.HasOne("Entities.Documents.Customer", "Customer")
+                        .WithMany("Documents")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Entities.Documents.DocumentType", "Type")
+                    b.HasOne("Entities.Documents.DocumentType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -203,13 +266,13 @@ namespace Data.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.DocumentLine", b =>
+            modelBuilder.Entity("Entities.Documents.DocumentLine", b =>
                 {
-                    b.HasOne("Entities.Entities.Documents.Document", null)
+                    b.HasOne("Entities.Documents.Document", null)
                         .WithMany("DocumentLines")
                         .HasForeignKey("DocumentId");
 
-                    b.HasOne("Entities.Entities.Product", "Product")
+                    b.HasOne("Entities.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -218,10 +281,10 @@ namespace Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Product", b =>
+            modelBuilder.Entity("Entities.Product", b =>
                 {
-                    b.HasOne("Entities.Entities.Category", "Category")
-                        .WithMany("Products")
+                    b.HasOne("Entities.Category", "Category")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -229,12 +292,12 @@ namespace Data.Migrations
                     b.Navigation("Category");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Category", b =>
+            modelBuilder.Entity("Entities.Documents.Customer", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Documents");
                 });
 
-            modelBuilder.Entity("Entities.Entities.Documents.Document", b =>
+            modelBuilder.Entity("Entities.Documents.Document", b =>
                 {
                     b.Navigation("DocumentLines");
                 });

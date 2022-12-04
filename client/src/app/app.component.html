@@ -1,37 +1,14 @@
-<h1>Magazyn</h1>
+<ngx-spinner type="line-scale-party">
+    <h3>Loading...</h3>
+</ngx-spinner>
 
-<div>
-    <table class="table">
-        <tr>
-        <th>Nazwa</th>
-        <th>numer seryjny</th>
-        <th>cena Netto</th>
-        <th>ilość</th>
-        </tr>
-        <tr *ngFor="let product of Products">
-            <th>{{product.name}}</th>
-            <th>{{product.serialNumber}}</th>
-            <th>{{product.priceNetto}}</th>
-            <th>{{product.quantity}}</th>
-        </tr>
-</table>
-</div>
+<app-nav></app-nav>
+<div class="container mt-5">
+    <div class="row">
+        <main class="mt-5 ms-sm-auto">
 
-<div>
-    <table class="table">
-        <tr>
-        <th>Typ</th>
-        <th>numer</th>
-        <th>Data</th>
-        <th>Kontrahent</th>
-        <th>Miasto</th>
-        </tr>
-        <tr *ngFor="let document of Documents">
-            <th>{{document.type}}</th>
-            <th>{{document.number}}</th>
-            <th>{{document.date}}</th>
-            <th>{{document.customer.name}}</th>
-            <th>{{document.customer.city}}</th>
-        </tr>
-</table>
+            <router-outlet></router-outlet>
+
+        </main>
+    </div>
 </div>

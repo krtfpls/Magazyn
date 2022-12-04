@@ -1,0 +1,22 @@
+<h1>Produkty</h1>
+<table class="table table-striped" *ngIf="products">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nazwa</th>
+            <th scope="col">Kategoria</th>
+            <th scope="col">Ilość</th>
+            <th scope="col">Cena Netto</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let prod of products">
+            <th scope="row"></th>
+            <td>{{prod.name}}</td>
+            <td>{{prod.categoryName}}</td>
+            <td>{{prod.quantity}}</td>
+            <td>{{prod.priceNetto}}</td>
+        </tr>
+
+    </tbody>
+</table>

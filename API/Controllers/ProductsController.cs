@@ -1,8 +1,10 @@
 using Application.Products;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
+[Authorize]
 public class ProductsController : BaseApiController
 {
     [HttpGet]

@@ -26,13 +26,13 @@ namespace Entities
         public int? MinLimit { get; set; }
 
         [Required]
-        public int Quantity {get; set;} = 0;
+        public int Quantity {get; set;}
 
         [StringLength(500)]
-        public string? Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         public int CategoryId {get;set;}
-        public Category? Category { get; set; }
+        public Category Category { get; set; } = new();
     }
 }

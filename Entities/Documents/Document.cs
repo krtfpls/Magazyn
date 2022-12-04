@@ -23,7 +23,7 @@ namespace Entities.Documents
         
          [Required]
         // Date
-        public DateTime Date { get; set; } 
+        public DateTime? Date { get; set; } //nullable for required work properly
         // Lines
         public IEnumerable<DocumentLine> DocumentLines { get; set; } = new List<DocumentLine>();
     }
