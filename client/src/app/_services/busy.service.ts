@@ -7,17 +7,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class BusyService {
 
   constructor(private spinnerService: NgxSpinnerService) { }
-
   busy() {
+
     this.spinnerService.show(undefined, {
       type: 'line-scale-party',
       bdColor: 'rgba(255,255,255,0)',
-      color: '#333333'
+      color: '#333333',
     })
   }
 
   idle() {
     this.spinnerService.hide();
+    
   }
 }
 

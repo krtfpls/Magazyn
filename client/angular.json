@@ -30,8 +30,8 @@
               "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "./node_modules/ngx-toastr/toastr.css",
-              "src/styles.css",
-              "./node_modules/ngx-spinner/animations/line-scale-party.css"
+              "node_modules/ngx-spinner/animations/line-scale-party.css",
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -106,5 +106,7 @@
       }
     }
   },
-  "defaultProject": "client"
+  "cli": {
+    "analytics": false
+  }
 }

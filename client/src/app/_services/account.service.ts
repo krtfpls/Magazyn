@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class AccountService {
 
 baseUrl = environment.apiUrl;
-private currentUserSource = new ReplaySubject<User>(1);
+private currentUserSource = new ReplaySubject<User | null>(1);
 currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -28,8 +28,8 @@ currentUser$ = this.currentUserSource.asObservable();
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'account/register', model).pipe(
-      map((user: User) => {
+    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+      map((user) => {
         if (user) {
          this.setCurrentUser(user);
         }

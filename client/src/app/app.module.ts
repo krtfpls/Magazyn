@@ -33,6 +33,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     ServerErrorComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     SharedModule,
     AppRoutingModule,
