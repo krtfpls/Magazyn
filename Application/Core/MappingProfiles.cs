@@ -30,11 +30,10 @@ public class MappingProfiles : Profile
         CreateProjection<DocumentLine, DocumentLineDetails>();
         CreateProjection<DocumentLine, DocumentLineDto>();//.ReverseMap();
         CreateProjection<Document, DocumentDto>();
-        // CreateProjection<List<DocumentLine>, List<DocumentLineDetails>>();
-
         CreateProjection<Product, ProductDto>();//.ReverseMap();
         CreateProjection<Product, ProductsShortDto>();
         CreateProjection<Product, ProductLine>();
+        
 
         CreateProjection<Customer, CustomerShortDto>();
         CreateProjection<Customer, CustomerDto>();//.ReverseMap();

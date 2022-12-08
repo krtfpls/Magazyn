@@ -9,7 +9,7 @@ public class DocumentDto
 
         public int CustomerId { get; set; }
         public string Number { get; set; }= string.Empty;
-        public DateTime Date { get; set; } 
+        public DateOnly Date { get; set; } 
         // Lines
         public IEnumerable<DocumentLineDto> DocumentLines { get; set; } = new List<DocumentLineDto>();
 }

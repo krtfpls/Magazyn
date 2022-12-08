@@ -34,5 +34,8 @@ namespace Entities
         [Required]
         public int CategoryId {get;set;}
         public Category Category { get; set; } = new();
+        
+        [Required]
+        public User User {get;set;}
     }
 }

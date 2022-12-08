@@ -1,31 +1,27 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Route } from '@angular/router';
-import { map } from 'rxjs';
-import { Products } from 'src/app/_models/products';
-import { environment } from 'src/environments/environment';
+import { Product } from 'src/app/_models/product';
+import { ProductService } from 'src/app/_services/product.service';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.css']
 })
-export class ProductsListComponent implements OnInit {
-  products:Products[]= [];
-  baseUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+export class ProductsListComponent implements OnInit {
+products: Product[] = []
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
-    this.getAllProducts();
-    
+    this.loadProducts()
+  }
+  loadProducts() {
+    this.productService.getAllProducts().subscribe({
+      next: response => {
+        this.products= response;
+      }
+    })
   }
 
-  getAllProducts(){
-   const data= this.http.get<any>(this.baseUrl+'products');
-    data.subscribe({
-      next: prods => this.products = prods
-    })
-    console.log(this.products);
-  }
+
 }

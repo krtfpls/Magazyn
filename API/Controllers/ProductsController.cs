@@ -10,7 +10,6 @@ public class ProductsController : BaseApiController
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] ProductParams param)
     {
-
         return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
     }
 

@@ -14,7 +14,7 @@ public class DocumentsValidator:AbstractValidator<DocumentDto>
         RuleFor(x => x.Number).NotEmpty().MaximumLength(20).WithMessage("Max 20 letters!");
         //Sprawdz czy zostanie wykonana walidacja gdy nie bedzie obiektu CustomersShortDto !!!!
         RuleFor(x => x.CustomerId).NotNull();
-        RuleFor(x => x.Date).NotNull().GreaterThan(DateTime.MinValue).LessThan(DateTime.MaxValue).WithMessage("Wrong date format");
+        RuleFor(x => x.Date).NotNull().GreaterThan(DateOnly.MinValue).LessThan(DateOnly.MaxValue).WithMessage("Wrong date format");
         RuleForEach(x => x.DocumentLines).SetValidator(new DocumentLinesValidator()).NotNull().WithMessage("No Document Lines!");
     }
 }

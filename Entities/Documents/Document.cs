@@ -23,7 +23,10 @@ namespace Entities.Documents
         
          [Required]
         // Date
-        public DateTime? Date { get; set; } //nullable for required work properly
+        public DateOnly? Date { get; set; } //nullable for required work properly
+        
+        [Required]
+        public User User { get; set; }
         // Lines
         public IEnumerable<DocumentLine> DocumentLines { get; set; } = new List<DocumentLine>();
     }

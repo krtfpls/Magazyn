@@ -27,10 +27,11 @@ public class List
             }
 
           public async Task<Result<PagedList<ProductsShortDto>>> Handle(Query request, CancellationToken cancellationToken)
-            {                 
+            {               
                     var query = _context.Products
                     .OrderBy(d => d.Name)
-                    // .Include(u => u.User)
+                     .Include(u => u.User)
+                        .Where(u => u.User.UserName == "admin")
                     //    .Where(u => u.User.UserName == _userAccessor.GetUsername())
                     .ProjectTo<ProductsShortDto>(_mapper.ConfigurationProvider)
                     .AsNoTracking()

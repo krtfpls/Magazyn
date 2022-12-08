@@ -26,7 +26,7 @@ public class Create
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-     //   private readonly IUserAccessor _userAccessor;
+        //private readonly IUserAccessor _userAccessor;
         private readonly IMapper _mapper;
 
         public Handler(DataContext context, IMapper mapper)//, IUserAccessor userAccessor)
@@ -41,8 +41,10 @@ public class Create
             var requestProduct = request.Product;
             
             Product newProduct = _mapper.Map<Product>(requestProduct);
+            newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.UserName == "admin");
 //Zdecyduj czy ID nadawane na Froncie czy na backendzie
            // newProduct.Id = default;
+           
             newProduct.Quantity = 0;
             newProduct.Category= await _context.Categories
                         .FirstOrDefaultAsync(x =>

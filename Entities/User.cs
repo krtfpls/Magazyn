@@ -1,4 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Identity;
 
 namespace Entities
@@ -12,5 +14,9 @@ namespace Entities
         [Required]
         [StringLength(100)]
         public string LastName {get; set;}= string.Empty;
+
+        public IEnumerable<Product>? Products { get; set; }
+        [NotMapped]
+        public IEnumerable<Document>? Documents { get; set; }
     }
 }

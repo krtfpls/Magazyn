@@ -1,22 +1,31 @@
 <h1>Produkty</h1>
+<div class="row col-12">
 <table class="table table-striped" *ngIf="products">
     <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Nazwa</th>
-            <th scope="col">Kategoria</th>
-            <th scope="col">Ilość</th>
-            <th scope="col">Cena Netto</th>
+            <th scope="col" class="text-center col-md-1">#</th>
+            <th scope="col" class="col-md-3">Nazwa</th>
+            <th scope="col" class="col-md-3">Kategoria</th>
+            <th scope="col" class="text-center col-md-1">Ilość</th>
+            <th scope="col" class="text-center col-md-2">Cena Netto</th>
+            <th scope="col" class="col-sm-2"></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let prod of products">
-            <th scope="row"></th>
-            <td>{{prod.name}}</td>
+        <tr *ngFor="let prod of products; let i = index">
+    
+            <td class="text-center">{{i + 1}}</td>
+            <td >{{prod.name}}</td>
             <td>{{prod.categoryName}}</td>
-            <td>{{prod.quantity}}</td>
-            <td>{{prod.priceNetto}}</td>
+            <td class="text-center">{{prod.quantity}}</td>
+            <td class="text-center" >{{prod.priceNetto}}</td>
+            <td>
+                <ul class="list-inline productButtons text-center">
+                    <li class="list-inline-item m-1"><button class="btn btn-primary"><i class="fa fa-eye"></i></button></li>
+                    <li class="list-inline-item m-1"><button class="btn btn-warning"><i class="fa fa-edit"></i></button></li>
+                </ul>
+            </td>
         </tr>
-
     </tbody>
 </table>
+</div>

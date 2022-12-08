@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { HomeComponent } from './home/home/home.component';
+import { HomeComponent } from './home/home.component';
 import { NavComponent } from './nav/nav.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar/sidebar.component';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './register/register/register.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
@@ -19,6 +19,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error/server-
 import { SharedModule } from './_modules/shared.module';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
+import { DocumentsComponent } from './documents/documents.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
     ProductsListComponent,
     NotFoundComponent,
     ServerErrorComponent,
+    DocumentsComponent,
   ],
   imports: [
     BrowserAnimationsModule,

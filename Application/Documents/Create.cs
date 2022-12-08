@@ -40,13 +40,14 @@ public class Create
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 Document doc = new Document();
+                doc.User= await _context.Users.FirstOrDefaultAsync(x=> x.UserName == "admin");
 
 //Set Customer
                 if ((doc.Customer = await _context.Customers.FindAsync(request.Document!.newDocument?.CustomerId)) == null)
                     return Result<Unit>.Failure("Customer dont exist");
 
 // Set Date
-                doc.Date = request.Document.newDocument!.Date;
+                doc.Date = request.Document.newDocument.Date;
                 
 
 // Set Type

@@ -1,0 +1,22 @@
+<h1>Documenty</h1>
+<table class="table table-striped" *ngIf="documents">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Typ</th>
+            <th scope="col">Numer</th>
+            <th scope="col">Kontrahent</th>
+            <th scope="col">Data</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let docu of documents">
+            <th scope="row" id={{docu.id}}></th>
+            <td>{{docu.type}}</td>
+            <td>{{docu.number}}</td>
+            <td>{{docu.customer?.name}}</td>
+            <td>{{docu.date}}</td>
+        </tr>
+
+    </tbody>
+</table>

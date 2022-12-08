@@ -15,7 +15,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
       positionClass: 'toast-bottom-right'
     }),
     NgxSpinnerModule.forRoot({
-      type: 'line-scale-party'
+      type: 'square-jelly-box'
     })
   ],
   exports: [
