@@ -20,6 +20,8 @@ import { SharedModule } from './_modules/shared.module';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { DocumentsComponent } from './documents/documents.component';
+import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
+import { TextInputComponent } from './_forms/text-input/text-input.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { DocumentsComponent } from './documents/documents.component';
     NotFoundComponent,
     ServerErrorComponent,
     DocumentsComponent,
+    ProductsDetailComponent,
+    TextInputComponent,
   ],
   imports: [
     BrowserAnimationsModule,

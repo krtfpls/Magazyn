@@ -29,7 +29,7 @@ currentUser$ = this.currentUserSource.asObservable();
 
   register(model: any) {
     return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
-      map((user) => {
+      map(user => {
         if (user) {
          this.setCurrentUser(user);
         }

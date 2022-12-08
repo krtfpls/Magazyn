@@ -1,24 +1,31 @@
 <div class="row ">
-<form #registerForm="ngForm" (ngSubmit)="register()" autocomplete="off" class="mt5">
-    <h2 class="text-center text-secondary mt-5">Zarejestruj się</h2>
-    <hr>
-    <input 
-    name="username"
-    [(ngModel)]="data.username"
-    class="form-control me-sm-2" 
-    type="text" 
-    placeholder="Nazwa Użytkownika">
-<input 
-    name="password"
-    [(ngModel)]="data.password"
-    class="form-control me-sm-2" 
-    type="password" 
-    placeholder="Hasło">
+    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" 
+        autocomplete="off" class="mt5">
+        <h2 class="text-center text-secondary mt-5">Zarejestruj się</h2>
+        <hr>
+        <div>
+        <app-text-input [formControl]="$any(registerForm.controls['username'])" 
+            [label]="'Nazwa użytkownika'">
+        </app-text-input>
 
+        <app-text-input [formControl]="$any(registerForm.controls['password'])" 
+            [label]="'Hasło'" [type]="'password'">
+        </app-text-input>
+        <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])" 
+            [label]="'Potwierdź hasło'"
+            [type]="'password'"></app-text-input>
+        </div>
+        <!-- <div class="row" *ngIf="validationErrors">
+            <ul class="text-danger">
+                <li *ngFor="let error of validationErrors">
+                    {{error}}
+                </li>
+            </ul>
+        </div> -->
 
-    <div class="d-flex text-center mt-2">
-        <button [disabled]='!data' class="btn btn-warning me-2" type="submit">Zarejestruj</button>
-        <button class="btn btn-default me-2" (click)="cancel()" type="button">Anuluj</button>
-    </div>
-</form>
+        <div class="text-center mt-2">
+            <button [disabled]="!registerForm.valid" class="btn btn-warning me-2" type="submit">Zarejestruj</button>
+            <button class="btn btn-default me-2" (click)="cancel()" type="button">Anuluj</button>
+        </div>
+    </form>
 </div>

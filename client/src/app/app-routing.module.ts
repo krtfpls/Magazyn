@@ -5,6 +5,7 @@ import { DocumentsComponent } from './documents/documents.component';
 import { NotFoundComponent } from './errors/not-found/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error/server-error.component';
 import { HomeComponent } from './home/home.component';
+import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path: 'dashboard', component: DashboardComponent},
     {path: 'documents', component: DocumentsComponent},
     {path: 'productsList', component: ProductsListComponent},
+    {path: 'productDetail', component: ProductsDetailComponent}
   ]
   },
   {path: 'not-found', component: NotFoundComponent},
