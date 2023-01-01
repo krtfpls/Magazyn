@@ -1,6 +1,6 @@
 namespace Application.Documents.DocumentHelpers;
 
-public sealed class CreateWZDocument: CreateOutgoingDocument
+public sealed class CreateWZDocument: CreateOutboundDocument
 {
     public CreateWZDocument(DocumentDto document)
     {

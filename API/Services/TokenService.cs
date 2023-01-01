@@ -18,7 +18,8 @@ namespace API.Services
         public async Task<string> CreateToken(User user)
         {
             var claims = new List<Claim> {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
         };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
@@ -26,7 +27,7 @@ namespace API.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7), // czas do skrócenia- ile ma byc wazny token?
+                Expires = DateTime.Now.AddHours(3), // czas do skrócenia- ile ma byc wazny token?
                 SigningCredentials = creds
             };
 

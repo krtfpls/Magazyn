@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using Data;
 using Entities;
+using Entities.interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,13 +19,13 @@ public class Edit
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        //private readonly IUserAccessor _userAccessor;
+        private readonly IUserAccessor _userAccessor;
 
-        public Handler(DataContext context, IMapper mapper)//, IUserAccessor userAccessor)           
+        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)           
         {
             _context = context;
             _mapper = mapper;
-            //_userAccessor = userAccessor;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -32,20 +33,21 @@ public class Edit
             var requestProduct = request.Product;
 
             var product = await _context.Products
+                        .Where(u => u.User.Id == _userAccessor.GetUserId())
                         .Include(c => c.Category)
                         .FirstOrDefaultAsync(x => x.Id == requestProduct.Id);
 
             if (product == null) return Result<Unit>.Failure("Can't find that Product");
 
-            requestProduct.CategoryName = requestProduct.CategoryName.Trim();
+            string? category = requestProduct.CategoryName.Trim().ToLower();
 
-            if (product.Category.Name != requestProduct.CategoryName)
+            if (category != null && product.Category.Name != category)
             {
 
                 product.Category = await _context.Categories
                                      .FirstOrDefaultAsync(x =>
-                                     x.Name == requestProduct.CategoryName) ??
-                         new Category() { Name = requestProduct.CategoryName };
+                                     x.Name == category) ??
+                         new Category() { Name = category };
             }
 
             // ensure that quantity doesnt change

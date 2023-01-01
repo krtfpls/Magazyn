@@ -6,8 +6,9 @@ namespace Entities.Documents
     {
         public int Id {get;set;}
         [Required]
-        public Guid ProductId {get; set;}
-        public Product? Product { get; set; }
+        public Document Document { get; set; }
+        [Required]
+        public Product Product { get; set; }
          [Required]
         public int Quantity { get; set; }
         

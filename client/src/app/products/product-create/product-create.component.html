@@ -1,0 +1,77 @@
+    <div class="row">
+        <div class="alert alert-info pb-0" *ngIf="newProductForm.dirty">
+            <p><strong>Informacja: </strong>Niezapisane zmiany zostaną utracone</p>
+        </div>
+    </div>
+
+    <div class="row d-grid col-sm-6">
+         <form [formGroup]="newProductForm" id="newProductForm" (ngSubmit)="newProductForm.valid && createProduct()">
+            <div class="mt-2" *ngIf="product">
+                <!-- <input type="text" [(ngModel)]="product.id" hidden name="id"> -->
+                <label>Nazwa</label>
+                <app-text-input [formControl]="$any(newProductForm.controls['name'])" 
+                [label]="'Nazwa'">
+                </app-text-input>
+
+             <div class="m-2" *ngIf="categories">
+                <label>Kategoria</label>
+                <select 
+                    class="form-select"
+                    formControlName="categoryName">
+                <option [ngValue]="null" disabled>Wybierz kategorię</option>
+                <option *ngFor="let cat of categories" [ngValue]="cat.name">
+                        {{cat.name}}
+                </option>
+                </select>
+                <div *ngIf="categoryProp?.invalid && newProductForm.dirty" class="text-danger">Nie wybrano kategorii</div>
+
+             </div>
+             <label>Numer seryjny</label>
+                <div class="m-2">
+                     <app-text-input [formControl]="$any(newProductForm.controls['serialNumber'])" 
+                     [label]="'Numer Seryjny'">
+                     </app-text-input>
+                </div>
+
+                <div class="m-2">
+                   <label>Cena Netto</label>
+                   <app-number-input
+                   [formControl]="$any(newProductForm.controls['priceNetto'])" 
+                   [label]="'Cena netto'"
+                    [step]="'0.25'"    
+                   ></app-number-input>
+                </div>
+                <div class="m-2">
+                    <label>Limit minimalny</label>
+                    <app-number-input
+                    [formControl]="$any(newProductForm.controls['minLimit'])" 
+                    [label]="'Limit minimalny'"
+                     [step]="'0.25'"    
+                    ></app-number-input>
+                </div> 
+                <div class="m-2">
+                    <label>Uwagi</label>
+                    <textarea class="form-control mt-2" 
+                        formControlName="description"
+                        placeholder="Opis"
+                        rows="6"
+                        autocomplete="off"></textarea>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="row" *ngIf="validationErrors">
+        <ul class="text-danger">
+            <li *ngFor="let error of validationErrors">
+                {{error}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="row mt-3 btn-group float-end">
+        <button type="submit" [disabled]="!newProductForm.valid" form="newProductForm" class="btn btn-warning m-2">
+            Zapisz zmiany    
+        </button>
+        <button type="button" class="btn btn-light m-2" routerLink='/productsList'>Powrót</button>
+    </div>

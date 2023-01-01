@@ -12,9 +12,10 @@ namespace Entities.Documents
 
          [Required]
          [StringLength(100)]
-        public string Name { get; set; } = string.Empty;
+        public string Name { get; set; }
         
          [Required]
         public bool isIncomeType { get; set; }
+        public IEnumerable<Document> Documents {get; set;}
     }
 }

@@ -3,7 +3,7 @@ using Entities.Documents;
 
 namespace Application.Documents.DocumentHelpers;
 
-public abstract class CreateOutgoingDocument : NewDocument
+public abstract class CreateOutboundDocument : NewDocument
 {
     private DocumentLine _line;
 

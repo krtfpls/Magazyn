@@ -28,6 +28,6 @@ namespace Entities.Documents
         [StringLength(500)]
         public string? Description {get;set;}
 
-        public IEnumerable<Document> Documents {get; set;} = new List<Document>();
+        public IEnumerable<Document> Documents {get; set;}
     }
 }

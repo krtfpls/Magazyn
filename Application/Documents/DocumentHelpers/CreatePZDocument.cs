@@ -2,7 +2,7 @@ using Entities.Documents;
 
 namespace Application.Documents.DocumentHelpers;
 
-public sealed class CreatePZDocument: CreateIncomingDocument
+public sealed class CreatePZDocument: CreateInboundDocument
 {
     public CreatePZDocument(DocumentDto document)
     {

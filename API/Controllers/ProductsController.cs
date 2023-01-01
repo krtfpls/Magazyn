@@ -19,10 +19,10 @@ public class ProductsController : BaseApiController
         return HandleResult(await Mediator.Send(new Details.Query { id = id }));
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Edit(Guid id, ProductDto item)
+    [HttpPut()]
+    public async Task<IActionResult> Edit(ProductDto item)
     {
-        item.Id = id;
+    
         return HandleResult(await Mediator.Send(new Edit.Command { Product = item }));
     }
 

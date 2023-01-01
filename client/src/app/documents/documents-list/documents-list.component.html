@@ -1,0 +1,26 @@
+<h1>Dokumenty</h1>
+<table class="table table-striped" *ngIf="documents">
+    <thead>
+        <tr>
+            <th scope="col" class="col-sm-2">Typ</th>
+            <th scope="col" class="col-sm-2">Numer</th>
+            <th scope="col" class="col-sm-3">Kontrahent</th>
+            <th scope="col" class="col-sm-3">Data</th>
+            <th class="col-sm-2"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let docu of documents">
+            <td >{{docu.type}}</td>
+            <td >{{docu.number}}</td>
+            <td >{{docu.customer?.name}}</td>
+            <td >{{docu.date}}</td>
+            <td >
+                <ul class="list-inline text-center ">
+                    <li class="list-inline-item m-1"><button class="btn btn-primary" [routerLink]="['/documentsDetail/', docu.id]"><i class="fa fa-eye"></i></button></li>
+                </ul>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

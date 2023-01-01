@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Entities
 {
@@ -12,8 +8,8 @@ namespace Entities
         
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }= string.Empty;
+        public string Name { get; set; }
 
-       // public IEnumerable<Product> Products {get; set;} = new List<Product>();
+        public IEnumerable<Product> Products {get; set;}
     }
 }

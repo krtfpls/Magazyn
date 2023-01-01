@@ -15,7 +15,7 @@ namespace Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.1");
 
             modelBuilder.Entity("Entities.Category", b =>
                 {
@@ -81,8 +81,7 @@ namespace Data.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime?>("Date")
-                        .IsRequired()
+                    b.Property<DateOnly>("Date")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Number")
@@ -114,7 +113,7 @@ namespace Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid?>("DocumentId")
+                    b.Property<Guid>("DocumentId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ProductId")
@@ -161,7 +160,6 @@ namespace Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("TEXT");
 
@@ -267,13 +265,13 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Entities.Documents.DocumentType", "Type")
-                        .WithMany()
+                        .WithMany("Documents")
                         .HasForeignKey("TypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Documents")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -287,9 +285,11 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Entities.Documents.DocumentLine", b =>
                 {
-                    b.HasOne("Entities.Documents.Document", null)
+                    b.HasOne("Entities.Documents.Document", "Document")
                         .WithMany("DocumentLines")
-                        .HasForeignKey("DocumentId");
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Entities.Product", "Product")
                         .WithMany()
@@ -297,13 +297,15 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Document");
+
                     b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Entities.Product", b =>
                 {
                     b.HasOne("Entities.Category", "Category")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -319,6 +321,11 @@ namespace Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Entities.Category", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("Entities.Documents.Customer", b =>
                 {
                     b.Navigation("Documents");
@@ -329,8 +336,15 @@ namespace Data.Migrations
                     b.Navigation("DocumentLines");
                 });
 
+            modelBuilder.Entity("Entities.Documents.DocumentType", b =>
+                {
+                    b.Navigation("Documents");
+                });
+
             modelBuilder.Entity("Entities.User", b =>
                 {
+                    b.Navigation("Documents");
+
                     b.Navigation("Products");
                 });
 #pragma warning restore 612, 618

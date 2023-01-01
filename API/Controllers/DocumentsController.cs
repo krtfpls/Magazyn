@@ -22,13 +22,13 @@ public class DocumentsController: BaseApiController
 
 
     [HttpPost("CreatePZ")]
-    public async Task<IActionResult> CreatePZ(DocumentDto document)
+    public async Task<IActionResult> CreateInbound(DocumentDto document)
     {
         return HandleResult(await Mediator.Send(new Create.Command { Document = new CreatePZDocument(document)}));
     }
 
      [HttpPost("CreateWZ")]
-    public async Task<IActionResult> CreateWZ(DocumentDto document)
+    public async Task<IActionResult> CreateOutbound(DocumentDto document)
     {
         return HandleResult(await Mediator.Send(new Create.Command { Document = new CreateWZDocument(document)}));
     }

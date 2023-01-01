@@ -15,13 +15,13 @@
             [label]="'Potwierdź hasło'"
             [type]="'password'"></app-text-input>
         </div>
-        <!-- <div class="row" *ngIf="validationErrors">
+        <div class="row" *ngIf="validationErrors">
             <ul class="text-danger">
                 <li *ngFor="let error of validationErrors">
                     {{error}}
                 </li>
             </ul>
-        </div> -->
+        </div>
 
         <div class="text-center mt-2">
             <button [disabled]="!registerForm.valid" class="btn btn-warning me-2" type="submit">Zarejestruj</button>

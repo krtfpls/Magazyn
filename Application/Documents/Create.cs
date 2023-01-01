@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using Data;
 using Entities;
 using Entities.Documents;
+using Entities.interfaces;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -27,20 +28,20 @@ public class Create
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            //   private readonly IUserAccessor _userAccessor;
+               private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
 
-            public Handler(DataContext context, IMapper mapper)//, IUserAccessor userAccessor)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _mapper = mapper;
                 _context = context;
-                //  _userAccessor = userAccessor;
+                 _userAccessor = userAccessor;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 Document doc = new Document();
-                doc.User= await _context.Users.FirstOrDefaultAsync(x=> x.UserName == "admin");
+                doc.User= await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
 
 //Set Customer
                 if ((doc.Customer = await _context.Customers.FindAsync(request.Document!.newDocument?.CustomerId)) == null)
@@ -56,13 +57,13 @@ public class Create
 
  // Set Number
                 doc.Number = ((await _context.Documents
-                                    .CountAsync(type => type.TypeId == doc.Type.Id)) + 1).ToString() + "/" + DateTime.Now.Year;
+                                    .CountAsync(type => type.Type.Id == doc.Type.Id)) + 1).ToString() + "/" + DateTime.Now.Year;
 
 //Set Lines
 
                 try
                 {
-                    doc.DocumentLines = await setDocumentLines(request.Document);
+                    doc.DocumentLines = await setDocumentLines(request.Document, doc.User);
                 }
                 catch (InvalidLineException err)
                 {
@@ -80,7 +81,7 @@ public class Create
 
 
 // Private Methods
-            private async Task<IEnumerable<DocumentLine>> setDocumentLines(NewDocument document)
+            private async Task<IEnumerable<DocumentLine>> setDocumentLines(NewDocument document, User user)
             {
                 var productLines = new List<DocumentLine>();
                 var badLines = new List<DocumentLineDto>();
@@ -88,7 +89,9 @@ public class Create
                 foreach (DocumentLineDto documentLine in document.newDocument.DocumentLines)
                 {
                     Product? product = await _context.Products
-                                    .FindAsync(documentLine.ProductId);
+                                    .Include(u => u.User)
+                                    .Where(u => u.User.Id == user.Id)
+                                    .FirstOrDefaultAsync(x => x.Id == documentLine.ProductId);
 
                     if (checkProduct(product))
                     {

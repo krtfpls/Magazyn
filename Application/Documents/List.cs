@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Data;
+using Entities.interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,20 +17,19 @@ public class List
         {
             DataContext _context;
             private readonly IMapper _mapper;
-            //private readonly IUserAccessor _userAccessor;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context, IMapper mapper) //, IUserAccessor userAccessor)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _context= context;
                 _mapper = mapper;
-               // _userAccessor = userAccessor;
+                _userAccessor = userAccessor;
             }
      public async Task<Result<PagedList<DocumentsToReturn>>> Handle(Query request, CancellationToken cancellationToken)
             {                 
                     var query = _context.Documents
                     .OrderBy(d => d.Date)
-                    // .Include(u => u.User)
-                    //    .Where(u => u.User.UserName == _userAccessor.GetUsername())
+                        .Where(u => u.User.Id == _userAccessor.GetUserId())
                     .ProjectTo<DocumentsToReturn>(_mapper.ConfigurationProvider)
                     .AsNoTracking()
                     .AsQueryable();

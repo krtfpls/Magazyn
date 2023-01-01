@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Entities
 {
@@ -14,7 +10,7 @@ namespace Entities
 
         [Required]
         [StringLength(100)]
-        public string Name { get; set; }= string.Empty;
+        public string Name { get; set; }
 
         [StringLength(100)]
         public string? SerialNumber { get; set; }
@@ -29,11 +25,10 @@ namespace Entities
         public int Quantity {get; set;}
 
         [StringLength(500)]
-        public string Description { get; set; } = string.Empty;
+        public string? Description { get; set; }
 
         [Required]
-        public int CategoryId {get;set;}
-        public Category Category { get; set; } = new();
+        public Category Category { get; set; }
         
         [Required]
         public User User {get;set;}

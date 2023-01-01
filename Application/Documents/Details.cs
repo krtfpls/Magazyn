@@ -4,6 +4,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Data;
 using MediatR;
+using Entities.interfaces;
 
 namespace Application.Documents;
 
@@ -18,18 +19,19 @@ public class Details
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-        // private readonly IUserAccessor _userAccessor;
+         private readonly IUserAccessor _userAccessor;
 
-        public Handler(DataContext context, IMapper mapper)//, IUserAccessor userAccessor)
+        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
         {
             _context = context;
             _mapper = mapper;
-            //_userAccessor = userAccessor;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<DocumentDetails>> Handle(Query request, CancellationToken cancellationToken)
         {
             var item = await _context.Documents
+                    .Where(x => x.User.Id == _userAccessor.GetUserId())
                     .Include(l => l.DocumentLines)
             .ProjectTo<DocumentDetails>(_mapper.ConfigurationProvider)
             .AsNoTracking()

@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using Data;
 using Entities;
+using Entities.interfaces;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -26,14 +27,14 @@ public class Create
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;
-        //private readonly IUserAccessor _userAccessor;
+        private readonly IUserAccessor _userAccessor;
         private readonly IMapper _mapper;
 
-        public Handler(DataContext context, IMapper mapper)//, IUserAccessor userAccessor)
+        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
         {
             _mapper = mapper;
             _context = context;
-          //  _userAccessor = userAccessor;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
@@ -41,15 +42,15 @@ public class Create
             var requestProduct = request.Product;
             
             Product newProduct = _mapper.Map<Product>(requestProduct);
-            newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.UserName == "admin");
+            newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
 //Zdecyduj czy ID nadawane na Froncie czy na backendzie
-           // newProduct.Id = default;
-           
+            newProduct.Id = default;
+           string category = requestProduct.CategoryName.Trim().ToLower();
             newProduct.Quantity = 0;
             newProduct.Category= await _context.Categories
                         .FirstOrDefaultAsync(x =>
-                            x.Name == requestProduct.CategoryName.Trim()) ??
-                    new Category() { Name = requestProduct.CategoryName.Trim() };
+                            x.Name == category) ??
+                    new Category() { Name = category};
 
             _context.Products.Add(newProduct);
 

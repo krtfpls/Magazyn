@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
-
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 
 @NgModule({
@@ -16,12 +16,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     }),
     NgxSpinnerModule.forRoot({
       type: 'square-jelly-box'
-    })
+    }),
+    PaginationModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
     ToastrModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    PaginationModule
   ]
 })
 export class SharedModule { }

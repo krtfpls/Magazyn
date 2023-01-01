@@ -1,7 +1,9 @@
+using System.Linq;
 using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Data;
+using Entities.interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,28 +19,27 @@ public class List
         {
             DataContext _context;
             private readonly IMapper _mapper;
-            //private readonly IUserAccessor _userAccessor;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context, IMapper mapper) //, IUserAccessor userAccessor)
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
                 _context= context;
                 _mapper = mapper;
-               // _userAccessor = userAccessor;
+                _userAccessor = userAccessor;
             }
 
           public async Task<Result<PagedList<ProductsShortDto>>> Handle(Query request, CancellationToken cancellationToken)
             {               
                     var query = _context.Products
-                    .OrderBy(d => d.Name)
-                     .Include(u => u.User)
-                        .Where(u => u.User.UserName == "admin")
-                    //    .Where(u => u.User.UserName == _userAccessor.GetUsername())
-                    .ProjectTo<ProductsShortDto>(_mapper.ConfigurationProvider)
+                     .OrderBy(d => d.Name)
+                     .Where(u => u.User.Id == _userAccessor.GetUserId())
                     .AsNoTracking()
+                    .ProjectTo<ProductsShortDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
 
                 if (request.Params.CategoryName != null){
-                    query = query.Where(c => c.CategoryName== request.Params.CategoryName);
+                     string category = request.Params.CategoryName.Trim().ToLower();
+                    query = query.Where(c => c.CategoryName.Contains(category));
                 }
                  
                  return Result<PagedList<ProductsShortDto>>.Success(

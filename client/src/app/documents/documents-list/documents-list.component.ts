@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { DocumentDto } from '../_models/DocumentDto';
+import { DocumentDto } from '../../_models/DocumentDto';
 
 @Component({
   selector: 'app-documents',
-  templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.css']
+  templateUrl: './documents-list.component.html',
+  styleUrls: ['./documents-list.component.css']
 })
-export class DocumentsComponent implements OnInit {
+export class DocumentsListComponent implements OnInit {
 documents: DocumentDto[] = [];
 baseUrl = environment.apiUrl+'documents';
 

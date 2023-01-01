@@ -2,6 +2,7 @@ using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Data;
+using Entities.interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,20 +19,19 @@ public class Details
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
-       // private readonly IUserAccessor _userAccessor;
+        private readonly IUserAccessor _userAccessor;
 
-        public Handler(DataContext context, IMapper mapper )//, IUserAccessor userAccessor)
+        public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
         {
             _context = context;
             _mapper = mapper;
-            //_userAccessor = userAccessor;
+            _userAccessor = userAccessor;
         }
 
         public async Task<Result<ProductDto>> Handle(Query request, CancellationToken cancellationToken)
         {
             var item = await _context.Products
-           // .Include(u => u.User)
-           // .Where(u => u.User.UserName == _userAccessor.GetUsername())
+            .Where(u => u.User.Id == _userAccessor.GetUserId())
             .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
             .AsNoTracking()
             .SingleOrDefaultAsync(x => x.Id == request.id);

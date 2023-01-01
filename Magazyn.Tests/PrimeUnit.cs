@@ -109,7 +109,7 @@ public class PrimeUnit
         return new DocumentDto{
         Number= "1/test",
         CustomerId= 1,
-        Date=DateTime.Now,
+        Date=DateOnly.FromDateTime(DateTime.Now),
         Type= "Test",
         DocumentLines= setDocumentLineDto(productList)
     };

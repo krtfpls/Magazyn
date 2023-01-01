@@ -1,3 +1,4 @@
+using Application.Categories;
 using Application.Customers;
 using Application.Documents;
 using Application.Products;
@@ -11,18 +12,6 @@ public class MappingProfiles : Profile
 {
     public MappingProfiles()
     {
-        // var config = new MapperConfiguration(cfg =>
-        // {
-        //     cfg.AddCollectionMappers();
-        //     // cfg.CreateProjection<Document, DocumentDetails>()
-        //     //     .ForMember(d => d.Type, o => o.MapFrom(s => s.Type.Name));
-        //     // cfg.CreateProjection<DocumentLine, DocumentLineDetails>();
-        //     // cfg.CreateProjection<List<DocumentLine>, List<DocumentLineDetails>>();
-        // });
-
-        // CreateMap<Document, DocumentsToReturn>()
-        //     .ForMember(d => d.Type, o => o.MapFrom(s => s.Type!.Name));
-
         CreateProjection<Document, DocumentsToReturn>()
             .ForMember(d => d.Type, o => o.MapFrom(s => s.Type!.Name));
         CreateProjection<Document, DocumentDetails>()
@@ -30,13 +19,15 @@ public class MappingProfiles : Profile
         CreateProjection<DocumentLine, DocumentLineDetails>();
         CreateProjection<DocumentLine, DocumentLineDto>();//.ReverseMap();
         CreateProjection<Document, DocumentDto>();
-        CreateProjection<Product, ProductDto>();//.ReverseMap();
+        CreateProjection<Product, ProductDto>();
+        CreateProjection<ProductsShortDto, Product>();
+        CreateProjection<Customer, CustomerShortDto>();
+        CreateProjection<Customer, CustomerDto>();//.ReverseMap();
         CreateProjection<Product, ProductsShortDto>();
         CreateProjection<Product, ProductLine>();
         
-
-        CreateProjection<Customer, CustomerShortDto>();
-        CreateProjection<Customer, CustomerDto>();//.ReverseMap();
-
+        CreateMap<Category, CategoryDto>();
+        CreateMap<ProductDto, Product>();
+        
     }
 }

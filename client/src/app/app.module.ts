@@ -19,9 +19,13 @@ import { ServerErrorComponent } from './errors/server-error/server-error/server-
 import { SharedModule } from './_modules/shared.module';
 import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 import { LoadingInterceptor } from './_interceptors/loading.interceptor';
-import { DocumentsComponent } from './documents/documents.component';
+import { DocumentsListComponent } from './documents/documents-list/documents-list.component';
 import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
+import { ProductsEditComponent } from './products/products-edit/products-edit.component';
+import { DocumentsDetailComponent } from './documents/documents-detail/documents-detail.component';
+import { ProductCreateComponent } from './products/product-create/product-create.component';
+import { NumberInputComponent } from './_forms/number-input/number-input.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +38,13 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
     ProductsListComponent,
     NotFoundComponent,
     ServerErrorComponent,
-    DocumentsComponent,
+    DocumentsListComponent,
     ProductsDetailComponent,
     TextInputComponent,
+    ProductsEditComponent,
+    DocumentsDetailComponent,
+    ProductCreateComponent,
+    NumberInputComponent,
   ],
   imports: [
     BrowserAnimationsModule,

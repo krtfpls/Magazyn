@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DocumentsComponent } from './documents/documents.component';
+import { DocumentsDetailComponent } from './documents/documents-detail/documents-detail.component';
+import { DocumentsListComponent } from './documents/documents-list/documents-list.component';
 import { NotFoundComponent } from './errors/not-found/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error/server-error.component';
 import { HomeComponent } from './home/home.component';
+import { ProductCreateComponent } from './products/product-create/product-create.component';
 import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
+import { ProductsEditComponent } from './products/products-edit/products-edit.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 
@@ -16,9 +19,12 @@ const routes: Routes = [
   canActivate: [AuthGuard],
   children:[
     {path: 'dashboard', component: DashboardComponent},
-    {path: 'documents', component: DocumentsComponent},
+    {path: 'documentsList', component: DocumentsListComponent},
+    {path: 'documentsDetail/:id', component: DocumentsDetailComponent},
     {path: 'productsList', component: ProductsListComponent},
-    {path: 'productDetail', component: ProductsDetailComponent}
+    {path: 'productDetail/:id', component: ProductsDetailComponent},
+    {path: 'productEdit/:id', component: ProductsEditComponent},
+    {path: 'productCreate', component: ProductCreateComponent}
   ]
   },
   {path: 'not-found', component: NotFoundComponent},

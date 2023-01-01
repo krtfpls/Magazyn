@@ -1,0 +1,31 @@
+<div class="mb-3">
+    <input 
+        type={{type}}
+        min={{min}}
+        max={{max}}
+        step={{step}}
+        [class.is-invalid]="control.touched && control.invalid"
+        class="form-control" 
+        [formControl]="control"
+        placeholder={{label}}
+        pattern="[0-9]+([\.,][0-9]+)?"
+        onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode== 46) || (event.charCode >= 48 && event.charCode <= 57))"
+    >
+
+    <div class="invalid-feedback" *ngIf="control.errors?.['required']">
+        Pole {{label}} nie może być puste
+    </div>
+    <div class="invalid-feedback" *ngIf="control.errors?.['minlength']">
+        Pole {{label}} musi posiadać co najmniej {{control.errors?.['minlength'].requiredLength}} znaków
+    </div>
+    
+    <div class="invalid-feedback" *ngIf="control.errors?.['maxlength']">
+        Pole {{label}} musi posiadać maksymalnie {{control.errors?.['maxlength'].requiredLength}} znaków
+    </div>
+    <div class="error" *ngIf=" control.errors?.['min']">
+        Najmniejsza wartość pola {{label}} to {{control.errors?.['min'].min}}
+    </div>
+    <div class="invalid-feedback" *ngIf="control.errors?.['max']">
+        Największa wartość pola {{label}} to {{control.errors?.['max'].max}}
+    </div>
+</div>
