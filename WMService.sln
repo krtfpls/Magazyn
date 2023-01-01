@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{F99F2AF1-81A4-459E-9280-939A41712D9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Magazyn.Tests", "Magazyn.Tests\Magazyn.Tests.csproj", "{CC0F35A8-9799-4E54-8596-EF65EFB5CF7B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMService.Tests", "WMService.Tests\WMService.Tests.csproj", "{CC0F35A8-9799-4E54-8596-EF65EFB5CF7B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
