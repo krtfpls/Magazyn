@@ -26,6 +26,7 @@ import { DocumentsDetailComponent } from './documents/documents-detail/documents
 import { ProductCreateComponent } from './products/product-create/product-create.component';
 import { NumberInputComponent } from './_forms/number-input/number-input.component';
 import { ConfirmDialogComponent } from './_modals/confirm-dialog/confirm-dialog.component';
+import { DocumentsCreateComponent } from './documents/documents-create/documents-create.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ConfirmDialogComponent } from './_modals/confirm-dialog/confirm-dialog.
     DocumentsDetailComponent,
     ProductCreateComponent,
     NumberInputComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    DocumentsCreateComponent
   ],
   imports: [
     BrowserAnimationsModule,

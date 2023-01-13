@@ -1,6 +1,8 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentEntity } from 'src/app/_models/DocumentEntity';
+import { Product } from 'src/app/_models/product';
 import { DocumentsService } from 'src/app/_services/documents.service';
 
 @Component({
@@ -15,14 +17,17 @@ export class DocumentsDetailComponent implements OnInit {
   constructor(private documentService: DocumentsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getDocument(this.id);
+    this.getDocument();
   }
   
-  getDocument(id: string | undefined) {
+  getDocument() {
       this.route.params.subscribe(params => this.id = params['id']);
       if (this.id) {
         this.documentService.getDocumentDetails(this.id)?.subscribe({
-          next: response => this.documentEntity = response,
+          next: response => {
+            response.date = formatDate(response.date, 'dd.MM.yyyy', 'en-EN')
+            this.documentEntity = response;
+          },
           error: error => console.log(error)
         });
       }

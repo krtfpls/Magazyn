@@ -7,5 +7,10 @@ export interface DocumentEntity {
     customer: Customer | undefined;
     number: string;
     date: string;
-    productLines: Product[]
+    documentLines: DocumentLine[]
+}
+
+export interface DocumentLine {
+    product: Product
+    quantity: number;
 }

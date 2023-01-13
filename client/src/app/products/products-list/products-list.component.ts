@@ -19,7 +19,7 @@ productParams: ProductParams | undefined;
 constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
-    this.productParams= this.productService.getProductParams();
+    this.productParams= this.productService.getParams();
     this.loadProducts()
   }
 
@@ -27,7 +27,7 @@ constructor(private productService: ProductService) {}
   
     if (this.productParams){
 
-      this.productService.setProductParams(this.productParams);
+      this.productService.setParams(this.productParams);
       this.productService.getStockProducts(this.productParams).subscribe({
         next: response => {
           if (response.result && response.pagination){
@@ -40,14 +40,14 @@ constructor(private productService: ProductService) {}
   }
 
   resetFilters() {
-    this.productParams = this.productService.resetProductParams();
+    this.productParams = this.productService.resetParams();
     this.loadProducts();
   }
 
   pageChanged(event: any) {
     if (this.productParams && this.productParams?.pageNumber !== event.page){
       this.productParams.pageNumber = event.page;
-      this.productService.setProductParams(this.productParams);
+      this.productService.setParams(this.productParams);
       this.loadProducts();
     }
     }

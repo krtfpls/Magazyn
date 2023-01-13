@@ -11,7 +11,7 @@ namespace Application.Documents;
 public class List
 {
     public class Query: IRequest<Result<PagedList<DocumentsToReturn>>> {
-            public DocumentParams Params { get; set; } = new DocumentParams();
+            public DocumentParams Params { get; set; }
         }
      public class Handler : IRequestHandler<Query, Result<PagedList<DocumentsToReturn>>>
         {

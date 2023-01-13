@@ -17,10 +17,10 @@ export class ProductService {
   product: Product | undefined;
   baseUrl = environment.apiUrl + 'products/';
   categoryUrl = environment.apiUrl + 'category/';
-  productParams: ProductParams | undefined;
+  params: ProductParams | undefined;
   
   constructor(private http: HttpClient) {
-    this.productParams = new ProductParams();
+    this.params = new ProductParams();
    }
 
   getCategories(){
@@ -88,16 +88,16 @@ export class ProductService {
     this.productsCache.set(Object.values(params).join('-'), data);
   }
 
-  resetProductParams() {
-      this.productParams= new ProductParams();
-      return this.productParams;
+  resetParams() {
+      this.params= new ProductParams();
+      return this.params;
   }
 
-  getProductParams() {
-    return this.productParams;
+  getParams() {
+    return this.params;
   }
 
-  setProductParams(params: ProductParams){
-    this.productParams = params;
+  setParams(params: ProductParams){
+    this.params = params;
   }
 }

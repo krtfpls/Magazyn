@@ -1,62 +1,54 @@
 <h1>Produkty</h1>
-<div class="row col-12">
-    <hr>
-    <div class="container mt-3" *ngIf="productParams">
-    <form #ngForm="ngForm" class="d-flex mb-3" (ngSubmit)="loadProducts()" autocomplete="off">
-        <div class="d-flex mx-2">
-            <label class="col-form-label">Kategoria</label>
-            <input 
-                type="search"
-                class="form-control ms-1"
-                name="categoryName"
-                [(ngModel)]="productParams.CategoryName"
-            >
-        </div>
-        <button class="btn btn-primary ms-1" type="submit">Filtruj</button>
-        <button (click)="resetFilters()" class="btn btn-warning ms-1" type="submit">Reset</button>
-    </form>
-    <hr>
-    </div>
-    <table class="table table-striped" *ngIf="products">
-        <thead>
-            <tr>
-                <th scope="col" class="col-sm-3">Nazwa</th>
-                <th scope="col" class="col-sm-3">Kategoria</th>
-                <th scope="col" class="text-center col-sm-2">Ilość</th>
-                <th scope="col" class="text-center col-sm-2">Cena Netto</th>
-                <th scope="col" class="col-lg-2"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let prod of products; let i = index">
-                <td class="">{{prod.name}}</td>
-                <td class="">{{prod.categoryName}}</td>
-                <td class="text-center">{{prod.quantity}}</td>
-                <td class="text-center">{{prod.priceNetto}}</td>
-                <td class="">
-                    <ul class="list-inline text-center ">
-                        <li class="list-inline-item m-1"><button class="btn btn-primary"
-                                routerLink="/productDetail/{{prod.id}}"><i class="fa fa-eye"></i></button></li>
-                        <li class="list-inline-item m-1"><button class="btn btn-warning"
-                                [routerLink]="['/productCreate/', prod.id]"><i class="fa fa-edit"></i></button></li>
-                    </ul>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<div class="container mt-3" *ngIf="productParams">
+    <div class="row col-12">
+        <hr>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination 
-        [boundaryLinks]="true" 
-        [totalItems]="pagination.totalItems" 
-        [itemsPerPage]="pagination.itemsPerPage"
-        [maxSize]="5" 
-        [(ngModel)]="pagination.currentPage"
-        (pageChanged)="pageChanged($event)"
-        previousText="&lsaquo;"
-        nextText="&rsaquo;" 
-        firstText="&laquo;" 
-        lastText="&raquo;">
-    </pagination>
+        <form #ngForm="ngForm" class="d-flex mb-3" (ngSubmit)="loadProducts()" autocomplete="off">
+            <div class="d-flex mx-2">
+                <label class="col-form-label">Kategoria</label>
+                <input type="search" class="form-control ms-1" name="categoryName"
+                    [(ngModel)]="productParams.CategoryName" aria-label="Category">
+            </div>
+            <button class="btn btn-primary ms-1" type="submit">Filtruj</button>
+            <button (click)="resetFilters()" class="btn btn-warning ms-1" type="submit">Reset</button>
+        </form>
+        <hr>
+
+    </div>
+    <div class="row col-12">
+        <table class="table table-striped" *ngIf="products">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-sm-3">Nazwa</th>
+                    <th scope="col" class="col-sm-3">Kategoria</th>
+                    <th scope="col" class="text-center col-sm-2">Ilość</th>
+                    <th scope="col" class="text-center col-sm-2">Cena Netto</th>
+                    <th scope="col" class="col-lg-2"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let prod of products; let i = index">
+                    <td class="">{{prod.name}}</td>
+                    <td class="">{{prod.categoryName}}</td>
+                    <td class="text-center">{{prod.quantity}}</td>
+                    <td class="text-center">{{prod.priceNetto}}</td>
+                    <td class="">
+                        <ul class="list-inline text-center ">
+                            <li class="list-inline-item m-1"><button class="btn btn-primary"
+                                    routerLink="/productDetail/{{prod.id}}"><i class="fa fa-eye"></i></button></li>
+                            <li class="list-inline-item m-1"><button class="btn btn-warning"
+                                    [routerLink]="['/productCreate/', prod.id]"><i class="fa fa-edit"></i></button></li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row-col-12 d-flex justify-content-center" *ngIf="pagination && pagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+            [maxSize]="5" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+    </div>
 </div>

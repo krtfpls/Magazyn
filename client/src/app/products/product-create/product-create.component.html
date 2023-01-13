@@ -4,15 +4,15 @@
         </div>
     </div>
 
-    <div class="row d-grid col-sm-6">
+    <div class="row d-grid col-sm-6" >
          <form [formGroup]="productForm" id="productForm" (ngSubmit)="productForm.valid && addProduct()">
-            <div class="mt-2" >
+            <div class="mt-2 " >
                 <label>Nazwa</label>
                 <app-text-input [formControl]="$any(productForm.controls['name'])" 
                 [label]="'Nazwa'">
                 </app-text-input>
 
-             <div class="m-2" *ngIf="categories">
+             <div class="m-2 " *ngIf="categories">
                 <label>Kategoria</label>
                 <select 
                     class="form-select"
