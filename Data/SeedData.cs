@@ -81,10 +81,15 @@ public class Seed
 
             foreach (var line in _productList1)
             {
+                int qty = 1;
+                Product _product = context.Products.SingleOrDefault(x => x.Name == line.Name);
+                if (_product != null){
+                    _product.Quantity = qty;
+                }
                 docLines.Add(new DocumentLine
                 {
                     Product = line,
-                    Quantity = 1
+                    Quantity = qty
                 });
             }
 
@@ -94,9 +99,6 @@ public class Seed
             context.SaveChanges();
         }
     }
-
-
-
 
     // private methods
 
@@ -231,15 +233,16 @@ public class Seed
                                 MinLimit = 20,
                                 Description = "patchcord testowy",
                                 Category = context.Categories.SingleOrDefault(x => x.Name == "Patchcord".ToLower())
-                            },new Product
-                    {
-                        Name = "patchcord 0,5m",
-                        SerialNumber = "",
-                        PriceNetto = 5,
-                        MinLimit = 20,
-                        Description = "patchcord testowy",
-                        Category = context.Categories.SingleOrDefault(x => x.Name == "Patchcord".ToLower())
-                    },
+                            }
+                    //         },new Product
+                    // {
+                    //     Name = "patchcord 0,5m",
+                    //     SerialNumber = "",
+                    //     PriceNetto = 5,
+                    //     MinLimit = 20,
+                    //     Description = "patchcord testowy",
+                    //     Category = context.Categories.SingleOrDefault(x => x.Name == "Patchcord".ToLower())
+                    // },
          };
     }
 
@@ -337,6 +340,8 @@ public class Seed
         var user = new User
         {
             UserName = "admin",
+            FirstName= "admin",
+            LastName= "admin",
             Email = "admin@test.pl"
         };
 

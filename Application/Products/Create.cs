@@ -11,7 +11,7 @@ namespace Application.Products;
 
 public class Create
 {
-    public class Command : IRequest<Result<Unit>>
+    public class Command : IRequest<Result<Guid>>
     {
         public ProductDto Product { get; set; } = new ProductDto();
 
@@ -24,7 +24,7 @@ public class Create
             RuleFor(x => x.Product).SetValidator(new ProductsValidator());
         }
     }
-    public class Handler : IRequestHandler<Command, Result<Unit>>
+    public class Handler : IRequestHandler<Command, Result<Guid>>
     {
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
@@ -37,14 +37,14 @@ public class Create
             _userAccessor = userAccessor;
         }
 
-        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
         {
             var requestProduct = request.Product;
             
             Product newProduct = _mapper.Map<Product>(requestProduct);
             newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
 //Zdecyduj czy ID nadawane na Froncie czy na backendzie
-            newProduct.Id = default;
+            newProduct.Id = new Guid();
            string category = requestProduct.CategoryName.Trim().ToLower();
             newProduct.Quantity = 0;
             newProduct.Category= await _context.Categories
@@ -56,8 +56,8 @@ public class Create
 
             var result = await _context.SaveChangesAsync() > 0;
             if (!result)
-                return Result<Unit>.Failure("Failed to create new Product");
-            return Result<Unit>.Success(Unit.Value);
+                return Result<Guid>.Failure("Failed to create new Product");
+            return Result<Guid>.Success(newProduct.Id);
         }
     }
 }

@@ -23,9 +23,8 @@ export class ProductService {
     this.productParams = new ProductParams();
    }
 
-   getCategories(){
+  getCategories(){
     return this.http.get<Category[]>(this.categoryUrl);
-    
    }
 
   getAllProducts(productParams: ProductParams){
@@ -44,31 +43,43 @@ export class ProductService {
     
   }
 
-  getProductDetail(id: string | undefined) {
-    if (id) {
+
+  getStockProducts(productParams: ProductParams){
+    const response = this.productsCache.get(Object.values(productParams).join('-'));
+    if (response) return of(response);
+
+    let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
+    params = params.append('CategoryName', productParams.CategoryName);
+    
+    return getPaginatedResult<Product[]>(this.baseUrl+'stock', params, this.http).pipe(
+      map (response => {
+        this.addToMapObject(productParams, response);
+        return response;
+      })
+    );
+    
+  }
+
+  getProductDetail(id: string) {
       return this.http.get<Product>(this.baseUrl + id);
-    }
-    else
-    return undefined
   }
 
   createProduct(product: Product){
-    return this.http.post<Product>(this.baseUrl, product).pipe(
-      map( _ => {
-        this.productsCache.clear();
-      })
-    );
+    return this.http.post<Product>(this.baseUrl, product);
+  }
+  clearProductsCache() {
+    this.productsCache.clear();
   }
 
   updateProduct(product: Product){
-    return this.http.put(this.baseUrl,product).pipe(
-      map(() => {
-        if (this.products){
-        const index = this.products.indexOf(product);
-        this.products[index] = {...this.products[index], ...product};
-        }
-      })
-    )
+    return this.http.put(this.baseUrl,product);
+    // .pipe(
+    //   map(() => {
+    //     this.productsCache.set([...this.productsCache.values()]
+    //     .reduce((arr, elem) => arr.concat(elem.result), [])
+    //     .find((prod: Product) => prod.id == product.id), product);
+    //   })
+    // )
   }
 
   addToMapObject(params: ProductParams, data: PaginatedResult<Product[]>){
@@ -89,5 +100,4 @@ export class ProductService {
   setProductParams(params: ProductParams){
     this.productParams = params;
   }
-
 }

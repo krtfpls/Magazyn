@@ -1,15 +1,14 @@
     <div class="row">
-        <div class="alert alert-info pb-0" *ngIf="newProductForm.dirty">
+        <div class="alert alert-info pb-0" *ngIf="productForm.dirty">
             <p><strong>Informacja: </strong>Niezapisane zmiany zostaną utracone</p>
         </div>
     </div>
 
     <div class="row d-grid col-sm-6">
-         <form [formGroup]="newProductForm" id="newProductForm" (ngSubmit)="newProductForm.valid && createProduct()">
-            <div class="mt-2" *ngIf="product">
-                <!-- <input type="text" [(ngModel)]="product.id" hidden name="id"> -->
+         <form [formGroup]="productForm" id="productForm" (ngSubmit)="productForm.valid && addProduct()">
+            <div class="mt-2" >
                 <label>Nazwa</label>
-                <app-text-input [formControl]="$any(newProductForm.controls['name'])" 
+                <app-text-input [formControl]="$any(productForm.controls['name'])" 
                 [label]="'Nazwa'">
                 </app-text-input>
 
@@ -23,12 +22,12 @@
                         {{cat.name}}
                 </option>
                 </select>
-                <div *ngIf="categoryProp?.invalid && newProductForm.dirty" class="text-danger">Nie wybrano kategorii</div>
+                <div *ngIf="categoryProp?.invalid && productForm.dirty" class="text-danger">Nie wybrano kategorii</div>
 
              </div>
              <label>Numer seryjny</label>
                 <div class="m-2">
-                     <app-text-input [formControl]="$any(newProductForm.controls['serialNumber'])" 
+                     <app-text-input [formControl]="$any(productForm.controls['serialNumber'])" 
                      [label]="'Numer Seryjny'">
                      </app-text-input>
                 </div>
@@ -36,7 +35,7 @@
                 <div class="m-2">
                    <label>Cena Netto</label>
                    <app-number-input
-                   [formControl]="$any(newProductForm.controls['priceNetto'])" 
+                   [formControl]="$any(productForm.controls['priceNetto'])" 
                    [label]="'Cena netto'"
                     [step]="'0.25'"    
                    ></app-number-input>
@@ -44,7 +43,7 @@
                 <div class="m-2">
                     <label>Limit minimalny</label>
                     <app-number-input
-                    [formControl]="$any(newProductForm.controls['minLimit'])" 
+                    [formControl]="$any(productForm.controls['minLimit'])" 
                     [label]="'Limit minimalny'"
                      [step]="'0.25'"    
                     ></app-number-input>
@@ -70,7 +69,7 @@
     </div>
 
     <div class="row mt-3 btn-group float-end">
-        <button type="submit" [disabled]="!newProductForm.valid" form="newProductForm" class="btn btn-warning m-2">
+        <button type="submit" [disabled]="!productForm.dirty || !productForm.valid" form="productForm" class="btn btn-warning m-2">
             Zapisz zmiany    
         </button>
         <button type="button" class="btn btn-light m-2" routerLink='/productsList'>Powrót</button>

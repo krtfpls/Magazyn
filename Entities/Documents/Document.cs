@@ -20,7 +20,7 @@ namespace Entities.Documents
         
          [Required]
         // Date
-        public DateOnly Date { get; set; } //nullable for required work properly
+        public DateOnly Date { get; set; }
         
         [Required]
         public User User { get; set; }

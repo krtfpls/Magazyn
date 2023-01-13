@@ -4,11 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities;
 using Entities.Documents;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data
 {
-    public class DataContext: DbContext
+    public class DataContext: IdentityDbContext<User>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options){
             

@@ -28,7 +28,7 @@ constructor(private productService: ProductService) {}
     if (this.productParams){
 
       this.productService.setProductParams(this.productParams);
-      this.productService.getAllProducts(this.productParams).subscribe({
+      this.productService.getStockProducts(this.productParams).subscribe({
         next: response => {
           if (response.result && response.pagination){
             this.products= response.result;

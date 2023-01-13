@@ -8,9 +8,9 @@ import { ServerErrorComponent } from './errors/server-error/server-error/server-
 import { HomeComponent } from './home/home.component';
 import { ProductCreateComponent } from './products/product-create/product-create.component';
 import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
-import { ProductsEditComponent } from './products/products-edit/products-edit.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,8 +23,8 @@ const routes: Routes = [
     {path: 'documentsDetail/:id', component: DocumentsDetailComponent},
     {path: 'productsList', component: ProductsListComponent},
     {path: 'productDetail/:id', component: ProductsDetailComponent},
-    {path: 'productEdit/:id', component: ProductsEditComponent},
-    {path: 'productCreate', component: ProductCreateComponent}
+    {path: 'productCreate', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
+    {path: 'productCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]}
   ]
   },
   {path: 'not-found', component: NotFoundComponent},

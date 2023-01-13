@@ -9,11 +9,11 @@ namespace Entities
         
         [Required]
         [StringLength(100)]
-        public string FirstName { get; set; }= string.Empty;
+        public string FirstName { get; set; }
 
         [Required]
         [StringLength(100)]
-        public string LastName {get; set;}= string.Empty;
+        public string LastName {get; set;}
 
         public IEnumerable<Product> Products { get; set; } 
 

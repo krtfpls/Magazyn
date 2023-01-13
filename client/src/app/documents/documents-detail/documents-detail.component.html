@@ -1,1 +1,10 @@
-<p>documents-detail works!</p>
+<ng-container *ngIf="documentEntity">
+    <div>{{documentEntity.number}}</div>
+    <div>{{documentEntity.date}}</div>
+    <div>{{documentEntity.type}}</div>
+    <div>{{documentEntity.customer?.name}}</div>
+    <div>{{documentEntity.customer?.city}}</div>
+    <div *ngFor="let product of documentEntity.productLines">
+        
+    </div>
+</ng-container>

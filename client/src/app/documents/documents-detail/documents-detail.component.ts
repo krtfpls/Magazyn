@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentDto } from 'src/app/_models/DocumentDto';
+import { ActivatedRoute } from '@angular/router';
+import { DocumentEntity } from 'src/app/_models/DocumentEntity';
 import { DocumentsService } from 'src/app/_services/documents.service';
 
 @Component({
@@ -9,11 +10,23 @@ import { DocumentsService } from 'src/app/_services/documents.service';
 })
 export class DocumentsDetailComponent implements OnInit {
   id: string | undefined;  
-  documentDto: DocumentDto | undefined;
+  documentEntity: DocumentEntity | undefined;
 
-  constructor(documentService: DocumentsService) { }
+  constructor(private documentService: DocumentsService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.getDocument(this.id);
   }
+  
+  getDocument(id: string | undefined) {
+      this.route.params.subscribe(params => this.id = params['id']);
+      if (this.id) {
+        this.documentService.getDocumentDetails(this.id)?.subscribe({
+          next: response => this.documentEntity = response,
+          error: error => console.log(error)
+        });
+      }
+  }
+
 
 }

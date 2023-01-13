@@ -13,6 +13,7 @@ public class List
 {
     public class Query: IRequest<Result<PagedList<ProductsShortDto>>> {
             public ProductParams Params { get; set; } = new ProductParams(); 
+            public bool stock {get; set;} = false;
         }
     
     public class Handler : IRequestHandler<Query, Result<PagedList<ProductsShortDto>>>
@@ -36,6 +37,10 @@ public class List
                     .AsNoTracking()
                     .ProjectTo<ProductsShortDto>(_mapper.ConfigurationProvider)
                     .AsQueryable();
+                
+                if (request.stock){
+                    query = query.Where(q => q.Quantity != 0 );
+                }
 
                 if (request.Params.CategoryName != null){
                      string category = request.Params.CategoryName.Trim().ToLower();

@@ -22,10 +22,10 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { DocumentsListComponent } from './documents/documents-list/documents-list.component';
 import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
-import { ProductsEditComponent } from './products/products-edit/products-edit.component';
 import { DocumentsDetailComponent } from './documents/documents-detail/documents-detail.component';
 import { ProductCreateComponent } from './products/product-create/product-create.component';
 import { NumberInputComponent } from './_forms/number-input/number-input.component';
+import { ConfirmDialogComponent } from './_modals/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -41,10 +41,10 @@ import { NumberInputComponent } from './_forms/number-input/number-input.compone
     DocumentsListComponent,
     ProductsDetailComponent,
     TextInputComponent,
-    ProductsEditComponent,
     DocumentsDetailComponent,
     ProductCreateComponent,
     NumberInputComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,

@@ -12,20 +12,19 @@ export class ProductsDetailComponent implements OnInit {
 id: string | undefined;  
 product: Product | undefined;
 
-constructor(private productService: ProductService, private route: ActivatedRoute) { }
+constructor(private productService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params =>
-      this.id= params['id']);
-  
-    this.productService.getProductDetail(this.id)?.subscribe({
-      next: response => this.product=response,
-      error: error => console.log(error)
-    });
+    this.getProduct();
   }
 
-  // ngOnDestroy(): void{
-  //   this.id= undefined;
-  //   this.product= undefined;
-  // }
+  private getProduct() {
+    this.route.params.subscribe(params => this.id = params['id']);
+    if (this.id) {
+      this.productService.getProductDetail(this.id)?.subscribe({
+        next: response => this.product = response,
+        error: error => console.log(error)
+      });
+    }
+  }
 }

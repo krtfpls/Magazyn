@@ -1,21 +1,21 @@
 export interface Product {
-    id: string | undefined;
+    id: string ;
     name: string;
-    serialNumber: string | undefined;
+    serialNumber: string ;
     priceNetto: number;
-    minLimit: number | undefined;
+    minLimit: number ;
     quantity: number;
-    description: string | undefined;
+    description: string;
     categoryName: string;
 }
 
-export class newProduct implements Product{
-    id= undefined;
+export class ProductClass implements Product{
+    id= '';
     name= '';
     serialNumber= '';
     priceNetto= 0.01;
     minLimit= 1;
-    quantity= 1;
+    quantity= 0;
     description= '';
     categoryName= '';
 

@@ -16,9 +16,10 @@ public class MappingProfiles : Profile
             .ForMember(d => d.Type, o => o.MapFrom(s => s.Type!.Name));
         CreateProjection<Document, DocumentDetails>()
             .ForMember(d => d.Type, o => o.MapFrom(s => s.Type.Name));
+        CreateProjection<Document, DocumentDto>()
+            .ForMember(d => d.Type, o => o.MapFrom(s => s.Type.Name));;
         CreateProjection<DocumentLine, DocumentLineDetails>();
         CreateProjection<DocumentLine, DocumentLineDto>();//.ReverseMap();
-        CreateProjection<Document, DocumentDto>();
         CreateProjection<Product, ProductDto>();
         CreateProjection<ProductsShortDto, Product>();
         CreateProjection<Customer, CustomerShortDto>();
