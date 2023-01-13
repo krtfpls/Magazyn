@@ -1,0 +1,10 @@
+.btn-warning{
+    background-color:aliceblue;
+    border-color: grey;
+}
+
+.btn-primary{
+    color: black;
+    background-color: beige;
+    border-color: gray;
+}

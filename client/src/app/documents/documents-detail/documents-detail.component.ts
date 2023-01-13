@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DocumentEntity } from 'src/app/_models/DocumentEntity';
-import { Product } from 'src/app/_models/product';
 import { DocumentsService } from 'src/app/_services/documents.service';
 
 @Component({

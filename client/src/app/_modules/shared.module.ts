@@ -5,6 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [],
@@ -18,14 +19,16 @@ import { ModalModule } from 'ngx-bootstrap/modal';
       type: 'square-jelly-box'
     }),
     PaginationModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    AlertModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
     ToastrModule,
     NgxSpinnerModule,
     PaginationModule,
-    ModalModule
+    ModalModule,
+    AlertModule
   ]
 })
 export class SharedModule { }

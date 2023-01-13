@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DocumentsCreateComponent } from './documents/documents-create/documents-create.component';
 import { DocumentsDetailComponent } from './documents/documents-detail/documents-detail.component';
 import { DocumentsListComponent } from './documents/documents-list/documents-list.component';
 import { NotFoundComponent } from './errors/not-found/not-found/not-found.component';
@@ -20,6 +21,7 @@ const routes: Routes = [
   children:[
     {path: 'dashboard', component: DashboardComponent},
     {path: 'documentsList', component: DocumentsListComponent},
+    {path: 'documentsCreate', component: DocumentsCreateComponent},
     {path: 'documentsDetail/:id', component: DocumentsDetailComponent},
     {path: 'productsList', component: ProductsListComponent},
     {path: 'productDetail/:id', component: ProductsDetailComponent},

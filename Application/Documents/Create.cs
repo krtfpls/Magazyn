@@ -93,13 +93,13 @@ public class Create
                                     .Where(u => u.User.Id == user.Id)
                                     .FirstOrDefaultAsync(x => x.Id == documentLine.ProductId);
 
-                    if (checkProduct(product))
+                    if (product != null)
                     {
                         productLines.Add(document.UpdateProductLine(product, documentLine.Quantity));
-                    }
-                    else
-                    {
-                        badLines.Add(documentLine);
+                        int index = productLines.Count-1;
+                        
+                       if (!checkProduct(productLines[index].Product))
+                            badLines.Add(documentLine);
                     }
                 }
 
@@ -109,7 +109,7 @@ public class Create
                         foreach (var item in badLines)
                         {
 
-                            message += "Id: " + item.Id + " Qty: " + item.Quantity + ", " + System.Environment.NewLine;
+                            message += "Position: " + item.Id + " item id: " + item.ProductId + " Qty: " + item.Quantity + ", " + System.Environment.NewLine;
                         }
                             message+= "Products don't exists or trying to add unique item with plural numbers";
                 
@@ -123,10 +123,9 @@ public class Create
 
             private bool checkProduct(Product? product)
             {
-                if (product == null)
-                    return false;
+          
 // Check if unique item and so qty on storage cannot be less than -1 and gt than 1
-                else if ((product.SerialNumber?.Length > 0) && (product.Quantity<= -1 || product.Quantity >= 1))
+                 if ((product.SerialNumber?.Length > 0) && (product.Quantity< -1 || product.Quantity > 1))
                     return false;
                 else
                     return true;

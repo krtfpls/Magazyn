@@ -1,27 +1,32 @@
 <h1>Dokumenty</h1>
-<div class="container mt-3" *ngIf="documentParams">
-    <table class="table table-striped" *ngIf="documents">
+<alert type="success">
+Kliknij w wiersz aby podejrzeć szczegóły dokumentu
+  </alert>
+
+<div class="container">
+<div class=" mt-3" *ngIf="documentParams">
+    <table class="table table-hover" *ngIf="documents">
         <thead>
             <tr>
                 <th scope="col" class="col-sm-2">Typ</th>
                 <th scope="col" class="col-sm-2">Numer</th>
                 <th scope="col" class="col-sm-3">Kontrahent</th>
                 <th scope="col" class="col-sm-3">Data</th>
-                <th class="col-sm-2"></th>
+                <!-- <th class="col-sm-2"></th> -->
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let docu of documents">
+            <tr *ngFor="let docu of documents"  [routerLink]="['/documentsDetail/', docu.id]">
                 <td>{{docu.type}}</td>
                 <td>{{docu.number}}</td>
                 <td>{{docu.customer?.name}}</td>
                 <td>{{docu.date}}</td>
-                <td>
+                <!-- <td>
                     <ul class="list-inline text-center ">
                         <li class="list-inline-item m-1"><button class="btn btn-primary"
                                 [routerLink]="['/documentsDetail/', docu.id]"><i class="fa fa-eye"></i></button></li>
                     </ul>
-                </td>
+                </td> -->
             </tr>
 
         </tbody>
@@ -32,4 +37,5 @@
             previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
         </pagination>
     </div>
+</div>
 </div>
