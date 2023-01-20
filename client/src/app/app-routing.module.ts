@@ -24,9 +24,9 @@ const routes: Routes = [
     {path: 'documentsCreate', component: DocumentsCreateComponent},
     {path: 'documentsDetail/:id', component: DocumentsDetailComponent},
     {path: 'productsList', component: ProductsListComponent},
-    {path: 'productDetail/:id', component: ProductsDetailComponent},
-    {path: 'productCreate', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
-    {path: 'productCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]}
+    {path: 'productsDetail/:id', component: ProductsDetailComponent},
+    {path: 'productsCreate', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
+    {path: 'productsCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]}
   ]
   },
   {path: 'not-found', component: NotFoundComponent},

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -9,10 +8,10 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  @Output() cancelRegister = new EventEmitter();
+  // @Output() cancelRegister = new EventEmitter();
   model: any = {}
 
-  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) { }
+  constructor(public accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -33,8 +32,8 @@ export class NavComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  cancel(){
-    this.cancelRegister.emit(false);
-  }
+  // cancel(){
+  //   this.cancelRegister.emit(false);
+  // }
 
 }

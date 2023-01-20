@@ -1,1 +1,13 @@
-<p>documents-create works!</p>
+<h1>
+    Dodaj produkty
+</h1>
+
+<button class="btn btn-primary" (click)="getProductList()" *ngIf="!displayProductList">Lista towarów</button>
+<button class="btn btn-primary" (click)="getProductList()" *ngIf="displayProductList">Powrót</button>
+<hr>
+<ng-container *ngIf="documentEntity && !displayProductList">
+    <app-document-lines [documentLines]="documentEntity.documentLines"></app-document-lines>
+</ng-container>
+<ng-container *ngIf="displayProductList">
+    <app-products-table [showAll]="true"></app-products-table>
+</ng-container>

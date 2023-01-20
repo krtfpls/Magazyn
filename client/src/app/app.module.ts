@@ -27,6 +27,8 @@ import { ProductCreateComponent } from './products/product-create/product-create
 import { NumberInputComponent } from './_forms/number-input/number-input.component';
 import { ConfirmDialogComponent } from './_modals/confirm-dialog/confirm-dialog.component';
 import { DocumentsCreateComponent } from './documents/documents-create/documents-create.component';
+import { DocumentLinesComponent } from './documents/document-lines/document-lines.component';
+import { ProductsTableComponent } from './products/products-table/products-table.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { DocumentsCreateComponent } from './documents/documents-create/documents
     ProductCreateComponent,
     NumberInputComponent,
     ConfirmDialogComponent,
-    DocumentsCreateComponent
+    DocumentsCreateComponent,
+    DocumentLinesComponent,
+    ProductsTableComponent
   ],
   imports: [
     BrowserAnimationsModule,

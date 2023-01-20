@@ -28,18 +28,19 @@ export class ProductService {
    }
 
   getAllProducts(productParams: ProductParams){
-    const response = this.productsCache.get(Object.values(productParams).join('-'));
-    if (response) return of(response);
+    // const response = this.productsCache.get(Object.values(productParams).join('-'));
+    // if (response) return of(response);
 
     let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
     params = params.append('CategoryName', productParams.CategoryName);
     
-    return getPaginatedResult<Product[]>(this.baseUrl, params, this.http).pipe(
-      map (response => {
-        this.addToMapObject(productParams, response);
-        return response;
-      })
-    );
+    return getPaginatedResult<Product[]>(this.baseUrl, params, this.http);
+    // .pipe(
+    //   map (response => {
+    //     this.addToMapObject(productParams, response);
+    //     return response;
+    //   })
+    // );
     
   }
 

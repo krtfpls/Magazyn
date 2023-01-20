@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark sticky-top">
   <div class="container">
+
       <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Magazyn</a>
 
       <ul class="navbar-nav me-auto">
           <ng-container *ngIf="accountService.currentUser$ | async">
-
               <li class="nav-item">
                   <a class="nav-link" routerLink='/dashboard' routerLinkActive='active' >Dashboard</a>
               </li>
@@ -15,11 +15,14 @@
                   <a class="nav-link" routerLink='/productsList'routerLinkActive='active' >Produkty</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" routerLink='/productCreate' routerLinkActive='active' >Dodaj Produkt</a>
+                <a class="nav-link" routerLink='/productsCreate' routerLinkActive='active' >Dodaj Produkt</a>
             </li>
-            
+            <li class="nav-item">
+                <a class="nav-link" routerLink='/documentsCreate' routerLinkActive='active'>Dokument PZ</a> 
+            </li>
           </ng-container>
       </ul>
+
       <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
         <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>Welcome {{user.username}}</a>
         <div class="dropdown-menu mt-3" *dropdownMenu>
