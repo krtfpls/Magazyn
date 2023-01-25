@@ -2,12 +2,24 @@
     Dodaj produkty
 </h1>
 
-<button class="btn btn-primary" (click)="getProductList()" *ngIf="!displayProductList">Lista towarów</button>
-<button class="btn btn-primary" (click)="getProductList()" *ngIf="displayProductList">Powrót</button>
+<button class="btn btn-primary" (click)="productListModeChange()" *ngIf="!displayProductList">Lista towarów</button>
+<button class="btn btn-primary" (click)="productListModeChange()" *ngIf="displayProductList">Powrót</button>
 <hr>
+<ng-container *ngIf="documentLinesHandle.documentLines && !displayProductList">
+    <div *ngFor="let item of documentLinesHandle.documentLines">
+        <div>{{item.product.name}}</div>
+        <div>{{item.quantity}}</div>
+    </div>
+</ng-container>
+
 <ng-container *ngIf="documentEntity && !displayProductList">
     <app-document-lines [documentLines]="documentEntity.documentLines"></app-document-lines>
 </ng-container>
+
 <ng-container *ngIf="displayProductList">
-    <app-products-table [showAll]="true"></app-products-table>
+    <app-products-table [showAll]="true" 
+    [iconAwesome]="'fa fa-plus'" 
+    [actionColumnCaption]="'Dodaj'"
+    (buttonAction)="openQtyModal($event)">
+</app-products-table>
 </ng-container>

@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'src/app/_models/product';
@@ -12,7 +13,7 @@ export class ProductsDetailComponent implements OnInit {
 id: string | undefined;  
 product: Product | undefined;
 
-constructor(private productService: ProductService, private route: ActivatedRoute) {}
+constructor(private productService: ProductService, private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit(): void {
     this.getProduct();
@@ -26,5 +27,9 @@ constructor(private productService: ProductService, private route: ActivatedRout
         error: error => console.log(error)
       });
     }
+  }
+
+  backButton(){
+    this.location.back();
   }
 }

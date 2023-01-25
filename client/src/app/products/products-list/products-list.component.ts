@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Product } from 'src/app/_models/product';
 
 @Component({
   selector: 'app-products-list',
@@ -13,8 +14,8 @@ constructor(private router: Router) {}
 
   ngOnInit(): void { }
 
-    editProductMode(id: string){
-      this.router.navigateByUrl('/productsCreate/'+ id);
+  editProductMode(product: Product){
+      this.router.navigateByUrl('/productsCreate/'+ product.id);
     }
 
 }

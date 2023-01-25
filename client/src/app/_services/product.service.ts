@@ -28,36 +28,36 @@ export class ProductService {
    }
 
   getAllProducts(productParams: ProductParams){
-    // const response = this.productsCache.get(Object.values(productParams).join('-'));
-    // if (response) return of(response);
-
-    let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
-    params = params.append('CategoryName', productParams.CategoryName);
-    
-    return getPaginatedResult<Product[]>(this.baseUrl, params, this.http);
-    // .pipe(
-    //   map (response => {
-    //     this.addToMapObject(productParams, response);
-    //     return response;
-    //   })
-    // );
-    
-  }
-
-
-  getStockProducts(productParams: ProductParams){
     const response = this.productsCache.get(Object.values(productParams).join('-'));
     if (response) return of(response);
 
     let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
     params = params.append('CategoryName', productParams.CategoryName);
     
-    return getPaginatedResult<Product[]>(this.baseUrl+'stock', params, this.http).pipe(
+    return getPaginatedResult<Product[]>(this.baseUrl, params, this.http).pipe(
       map (response => {
         this.addToMapObject(productParams, response);
         return response;
       })
     );
+    
+  }
+
+
+  getStockProducts(productParams: ProductParams){
+    // const response = this.productsCache.get(Object.values(productParams).join('-'));
+    // if (response) return of(response);
+
+    let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
+    params = params.append('CategoryName', productParams.CategoryName);
+    
+    return getPaginatedResult<Product[]>(this.baseUrl+'stock', params, this.http);
+    // .pipe(
+    //   map (response => {
+    //     this.addToMapObject(productParams, response);
+    //     return response;
+    //   })
+    // );
     
   }
 
@@ -68,6 +68,7 @@ export class ProductService {
   createProduct(product: Product){
     return this.http.post<Product>(this.baseUrl, product);
   }
+  
   clearProductsCache() {
     this.productsCache.clear();
   }
@@ -101,4 +102,5 @@ export class ProductService {
   setParams(params: ProductParams){
     this.params = params;
   }
+
 }

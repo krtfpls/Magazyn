@@ -14,11 +14,13 @@ import { ProductService } from 'src/app/_services/product.service';
 
 export class ProductCreateComponent implements OnInit {
   productForm: FormGroup = new FormGroup({});
+
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any) {
     if (this.productForm?.dirty) {
       $event.returnValue = true;
     }
   }
+  
   id: string | undefined;  
   product: ProductClass = new ProductClass();
   validationErrors: string[] | undefined;

@@ -25,20 +25,20 @@
             <th  class="col-sm-4">Nazwa</th>
             <th  class="text-center col-3">Nr Seryjny</th>
             <th  class="text-center col-2">Ilość</th>
-            <th  class="text-center col-2">Cena Netto</th>
+            <th *ngIf="smallScreen" class="text-center col-2">Cena Netto</th>
             <th  class="text-center col-1">{{actionColumnCaption}}</th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let prod of products; let i = index" routerLink="/productsDetail/{{prod.id}}">
-            <td>{{prod.name}}</td>
-            <td class="text-center">{{prod.serialNumber}}</td>
-            <td class="text-center">{{prod.quantity}}</td>
-            <td class="text-center">{{prod.priceNetto}}</td>
+        <tr *ngFor="let prod of products; let i = index" >
+            <td routerLink="/productsDetail/{{prod.id}}">{{prod.name}}</td>
+            <td class="text-center" routerLink="/productsDetail/{{prod.id}}">{{prod.serialNumber}}</td>
+            <td class="text-center" routerLink="/productsDetail/{{prod.id}}">{{prod.quantity}}</td>
+            <td *ngIf="smallScreen" class="text-center" routerLink="/productsDetail/{{prod.id}}">{{prod.priceNetto}}</td>
             <td class="">
                 <ul class="list-inline text-center ">
                     <li class="list-inline-item m-1"><button class="btn btn-warning"
-                            (click)="clickButton(prod.id)"><i class="{{iconAwesome}}"></i></button></li>
+                            (click)="clickButton(prod)"><i class="{{iconAwesome}}"></i></button></li>
                 </ul>
             </td>
         </tr>

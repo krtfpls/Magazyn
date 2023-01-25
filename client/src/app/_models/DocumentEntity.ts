@@ -10,7 +10,11 @@ export interface DocumentEntity {
     documentLines: DocumentLine[]
 }
 
-export interface DocumentLine {
-    product: Product
-    quantity: number;
+export class DocumentLine {
+  constructor ( public product: Product, public quantity: number) {}
+
+  get total(): number {
+    return this.product.priceNetto * this.quantity;
+
+  }
 }

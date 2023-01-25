@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Pagination } from 'src/app/_models/pagination';
 import { Product } from 'src/app/_models/product';
 import { ProductParams } from 'src/app/_models/ProductParams';
@@ -19,16 +19,21 @@ export class ProductsTableComponent implements OnInit {
 products: Product[] = [];
 pagination: Pagination | undefined;
 productParams: ProductParams | undefined;
+smallScreen: boolean = false;
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.productParams= this.productService.getParams();
     this.loadProducts()
+    if (window.screen.width > 390) {
+      this.smallScreen = true;
+    }
   }
 
-  clickButton(id: string) {
-    this.buttonAction.emit(id);
+
+  clickButton(product: Product) {
+    this.buttonAction.emit(product);
   }
 
   loadProducts() {
@@ -62,4 +67,5 @@ productParams: ProductParams | undefined;
     }
     }
 
+    
 }

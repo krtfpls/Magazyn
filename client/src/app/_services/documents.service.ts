@@ -23,4 +23,6 @@ export class DocumentsService {
   getDocumentDetails(id: string) {
     return this.http.get<DocumentEntity>(this.baseUrl + id);
   }
+
+
 }

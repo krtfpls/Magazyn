@@ -25,10 +25,11 @@ import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { DocumentsDetailComponent } from './documents/documents-detail/documents-detail.component';
 import { ProductCreateComponent } from './products/product-create/product-create.component';
 import { NumberInputComponent } from './_forms/number-input/number-input.component';
-import { ConfirmDialogComponent } from './_modals/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { DocumentsCreateComponent } from './documents/documents-create/documents-create.component';
 import { DocumentLinesComponent } from './documents/document-lines/document-lines.component';
 import { ProductsTableComponent } from './products/products-table/products-table.component';
+import { QuantityModalComponent } from './modals/quantity-modal/quantity-modal.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { ProductsTableComponent } from './products/products-table/products-table
     ConfirmDialogComponent,
     DocumentsCreateComponent,
     DocumentLinesComponent,
-    ProductsTableComponent
+    ProductsTableComponent,
+    QuantityModalComponent
   ],
   imports: [
     BrowserAnimationsModule,
