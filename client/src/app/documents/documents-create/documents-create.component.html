@@ -1,25 +1,56 @@
-<h1>
-    Dodaj produkty
-</h1>
-
-<button class="btn btn-primary" (click)="productListModeChange()" *ngIf="!displayProductList">Lista towarów</button>
-<button class="btn btn-primary" (click)="productListModeChange()" *ngIf="displayProductList">Powrót</button>
-<hr>
-<ng-container *ngIf="documentLinesHandle.documentLines && !displayProductList">
-    <div *ngFor="let item of documentLinesHandle.documentLines">
-        <div>{{item.product.name}}</div>
-        <div>{{item.quantity}}</div>
+<div class="row">
+    <div class="alert alert-info pb-0" *ngIf="documentLines.length > 0">
+        <p><strong>Informacja: </strong>Niezapisane zmiany zostaną utracone po odświeżeniu strony</p>
     </div>
-</ng-container>
+</div>
+<div class="row">
+    <h1>
+        Dodaj towary
+    </h1>
+</div>
+<div class="row col-6 mx-3 px-1 listButton">
+    <button class="btn btn-danger" (click)="productListModeChange()" *ngIf="!displayProductList">Lista towarów</button>
+    <button class="btn btn-danger" (click)="productListModeChange()" *ngIf="displayProductList">Powrót</button>
+    <hr>
+</div>
+<div class="row">
+    <ng-container *ngIf="!displayProductList">
+        <div class="table-responsive">
+            <table class="table text-center">
+                <thead>
+                    <tr class="table-secondary">
+                        <th class="col-2">ilość</th>
+                        <th class="col-2">nazwa</th>
+                        <th class="col-2">s/n</th>
+                        <th class="col-2">kategoria</th>
+                        <th class="col-2">cena netto</th>
+                        <th class="col-2">wartość</th>
+                    </tr>
+                </thead>
+                <tbody class="mb-3" *ngFor="let item of documentLines">
+                    <tr (click)="openQtyModal(item.product, true)">
+                        <th>{{item.quantity}}</th>
+                        <td>{{item.product.name}}</td>
+                        <td>{{item.product.serialNumber}}</td>
+                        <td>{{item.product.categoryName}}</td>
+                        <td>{{item.product.priceNetto}}</td>
+                        <th>{{item.total}}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-5 text-end">
+            <h3>Suma: {{total}}</h3>
+        </div>
+    </ng-container>
 
-<ng-container *ngIf="documentEntity && !displayProductList">
-    <app-document-lines [documentLines]="documentEntity.documentLines"></app-document-lines>
-</ng-container>
+    <ng-container *ngIf="documentEntity && !displayProductList">
+        <app-document-lines [documentLines]="documentEntity.documentLines"></app-document-lines>
+    </ng-container>
 
-<ng-container *ngIf="displayProductList">
-    <app-products-table [showAll]="true" 
-    [iconAwesome]="'fa fa-plus'" 
-    [actionColumnCaption]="'Dodaj'"
-    (buttonAction)="openQtyModal($event)">
-</app-products-table>
-</ng-container>
+    <ng-container *ngIf="displayProductList">
+        <app-products-table [showAll]="true" [iconAwesome]="'fa fa-plus'" [actionColumnCaption]="'Dodaj'"
+            (buttonAction)="openQtyModal($event)">
+        </app-products-table>
+    </ng-container>
+</div>

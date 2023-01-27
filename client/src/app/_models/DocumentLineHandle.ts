@@ -16,10 +16,13 @@ export class DocumentLineHandle {
       if (quantity === 0) {
         this.removeProduct(prod.id);
       } else {
-        if (prod.serialNumber.length >0)
-        this.lines.get(prod.id)!.quantity = 1;
-        else
-        this.lines.get(prod.id)!.quantity += quantity;
+        if (prod.serialNumber.length > 0)
+          this.lines.get(prod.id)!.quantity = 1;
+        else {
+          const check = this.lines.get(prod.id)!.quantity += quantity;
+          if (check === 0)
+            this.removeProduct(prod.id);
+        }
       }
     } else {
       this.lines.set(prod.id, new DocumentLine(prod, quantity));
@@ -28,6 +31,25 @@ export class DocumentLineHandle {
 
   public removeProduct(id: string) {
     this.lines.delete(id);
+  }
+
+  public stepUpQty(id: string) {
+    if (this.canStepUp(id))
+      this.lines.get(id)!.quantity += 1;
+  }
+
+  public stepDownQty(id: string) {
+    if (this.canStepDown(id))
+      this.lines.get(id)!.quantity -= 1;
+  }
+
+  public canStepUp(id: string): boolean {
+
+    return true
+  }
+
+  public canStepDown(id: string): boolean {
+    return true;
   }
 
   get documentLines(): DocumentLine[] {

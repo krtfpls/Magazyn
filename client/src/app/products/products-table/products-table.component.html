@@ -1,54 +1,59 @@
-<alert type="success">
-    Kliknij w wiersz aby podejrzeć szczegóły produktu
-</alert>
-<div class="container mt-3" *ngIf="productParams">
-    <div class="row">
-        <div class="col-6">
-            <hr>
-            <form #ngForm="ngForm" class="d-flex mb-3" (ngSubmit)="loadProducts()" autocomplete="off">
-                <div class="d-flex mx-2">
-                    <label class="col-form-label">Kategoria</label>
-                    <input type="search" class="form-control ms-1" name="categoryName"
+<div class="container" *ngIf="productParams">
+    <div class="row mb-3">
+        <div class="col-12">
+            <form #ngForm="ngForm" (ngSubmit)="loadProducts()" autocomplete="off">             
+                    <div class="m-2">
+                    <label class="col-form-label d-inline-block me-3"><h6>Kategoria: </h6></label>
+                    <input type="search" class="form-control ms-1 category d-inline-block" name="categoryName"
                         [(ngModel)]="productParams.CategoryName" aria-label="Category">
                 </div>
-                <button class="btn btn-primary ms-1" type="submit">Filtruj</button>
-                <button (click)="resetFilters()" class="btn btn-warning ms-1" type="submit">Reset</button>
+                <div class="text-center">
+                    <button class="btn btn-primary ms-1" type="submit">Filtruj</button>
+                    <button (click)="resetFilters()" class="btn btn-warning ms-1" type="submit">Reset</button>
+                </div>
             </form>
         </div>
     </div>
     <hr>
-    <div class="row col-12">
 
-<table class="table table-hover" *ngIf="products">
-    <thead>
-        <tr>
-            <th  class="col-sm-4">Nazwa</th>
-            <th  class="text-center col-3">Nr Seryjny</th>
-            <th  class="text-center col-2">Ilość</th>
-            <th *ngIf="smallScreen" class="text-center col-2">Cena Netto</th>
-            <th  class="text-center col-1">{{actionColumnCaption}}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let prod of products; let i = index" >
-            <td routerLink="/productsDetail/{{prod.id}}">{{prod.name}}</td>
-            <td class="text-center" routerLink="/productsDetail/{{prod.id}}">{{prod.serialNumber}}</td>
-            <td class="text-center" routerLink="/productsDetail/{{prod.id}}">{{prod.quantity}}</td>
-            <td *ngIf="smallScreen" class="text-center" routerLink="/productsDetail/{{prod.id}}">{{prod.priceNetto}}</td>
-            <td class="">
-                <ul class="list-inline text-center ">
-                    <li class="list-inline-item m-1"><button class="btn btn-warning"
-                            (click)="clickButton(prod)"><i class="{{iconAwesome}}"></i></button></li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
+    <div class="row table-responsive">
+        <table class="table table-hover text-center" *ngIf="products">
+            <thead>
+                <tr>
+                    <th class="col-sm-4">Nazwa</th>
+                    <th class="col-3">Nr Seryjny</th>
+                    <th class="col-2">Ilość</th>
+                    <th *ngIf="smallScreen" class="col-2">Cena Netto</th>
+                    <th class="col-1">{{actionColumnCaption}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let prod of products; let i = index">
+                    <td routerLink="/productsDetail/{{prod.id}}" class="text-start">{{prod.name}}</td>
+                    <td routerLink="/productsDetail/{{prod.id}}">{{prod.serialNumber}}</td>
+                    <td routerLink="/productsDetail/{{prod.id}}">{{prod.quantity}}</td>
+                    <td *ngIf="smallScreen" routerLink="/productsDetail/{{prod.id}}">
+                        {{prod.priceNetto}}</td>
+                    <td class="">
+                        <ul class="list-inline text-center ">
+                            <li class="list-inline-item m-1"><button class="btn btn-warning"
+                                    (click)="clickButton(prod)"><i class="{{iconAwesome}}"></i></button></li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-12 d-flex justify-content-center" *ngIf="pagination && pagination.totalPages > 1">
+            <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems"
+                [itemsPerPage]="pagination.itemsPerPage" [maxSize]="5" [(ngModel)]="pagination.currentPage"
+                (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;"
+                lastText="&raquo;">
+            </pagination>
+        </div>
+    </div>
 </div>
-</div>
-<div class="row-col-12 d-flex justify-content-center" *ngIf="pagination && pagination.totalPages > 1">
-    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-        [maxSize]="5" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
-        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
-    </pagination>
-</div>
+<alert type="success">
+    Kliknij w wiersz aby podejrzeć szczegóły produktu
+</alert>

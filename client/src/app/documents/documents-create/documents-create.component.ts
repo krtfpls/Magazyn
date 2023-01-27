@@ -1,50 +1,66 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { QuantityModalComponent } from 'src/app/modals/quantity-modal/quantity-modal.component';
-import { DocumentEntity } from 'src/app/_models/DocumentEntity';
-import { DocumentLineHandle } from 'src/app/_models/DocumentLineHandle';
+import { DocumentEntity, DocumentLine } from 'src/app/_models/DocumentEntity';
 import { Product } from 'src/app/_models/product';
-import { ProductService } from 'src/app/_services/product.service';
+import { DocumentsService } from 'src/app/_services/documents.service';
 
 @Component({
   selector: 'app-documents-create',
   templateUrl: './documents-create.component.html',
   styleUrls: ['./documents-create.component.css']
 })
-export class DocumentsCreateComponent implements OnInit, OnDestroy {
+
+export class DocumentsCreateComponent implements OnInit {
   bsModalRef?: BsModalRef;
   documentEntity: DocumentEntity | undefined;
-  documentLinesHandle: DocumentLineHandle= new DocumentLineHandle();
   displayProductList: boolean = false;
 
-  constructor(private productService: ProductService, private modalService: BsModalService) {
+  // @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any) {
+  //   if (this.documentLines.length > 0) {
+  //     $event.returnValue = true;
+  //   }
+  // }
 
-  }
-
-  ngOnDestroy(): void {
-    this.productService.clearProductsCache();
-  }
+  constructor(private documentService: DocumentsService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
+
   }
 
-  openQtyModal(product: Product) {
+  get documentLines(){
+    return this.documentService.documentLinesHandle.documentLines;
+  }
+
+  get total(){
+    return this.documentService.documentLinesHandle.total;
+  }
+
+  openQtyModal(product: Product, change?: boolean) {
 
     if (product.serialNumber.length > 0) {
-      this.documentLinesHandle.addProduct(product, 1)
+      this.documentService.documentLinesHandle.addProduct(product, 1)
     }
     else {
       this.bsModalRef = this.modalService.show(QuantityModalComponent, this.modalConfig(product));
-      this.bsModalRef.content.closeBtnName = 'Anuluj';
       this.bsModalRef.content.event.subscribe((res: any) => {
-        this.documentLinesHandle.addProduct(product, parseInt(res.qty));
+        this.documentService.documentLinesHandle.addProduct(product, parseInt(res.qty));
       });
     }
+    if (!change)
     this.productListModeChange();
   }
 
   productListModeChange() {
     this.displayProductList = !this.displayProductList;
+  }
+
+  qtyStepUp(itemId: string){
+    this.documentService.documentLinesHandle.stepUpQty(itemId);
+  }
+
+  qtyStepDown(itemId: string){
+    this.documentService.documentLinesHandle.stepDownQty(itemId);
   }
 
   private modalConfig(initial: Product): ModalOptions{

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter,  OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Product } from 'src/app/_models/product';
@@ -22,10 +22,14 @@ export class QuantityModalComponent implements OnInit {
     this.initializeForm();
   }
 
-  initializeForm(){
-    this.qtyForm = this.formBuilder.group({
-      qty: [1, [Validators.required, Validators.min(0), Validators.max(9999)]]
-    })
+  qtyRemove(){
+    const qty = parseInt(this.qtyForm.get('qty')?.value)  as number -1;
+    this.qtyForm.get('qty')!.setValue(qty);
+  }
+
+  qtyAdd(){
+    const qty = parseInt(this.qtyForm.get('qty')?.value)  as number +1;
+    this.qtyForm.get('qty')!.setValue(qty);
   }
 
   addToList(form: FormGroup) {
@@ -36,12 +40,18 @@ export class QuantityModalComponent implements OnInit {
     }
   }
 
-  triggerEvent(line: number) {
-    this.event.emit(line);
-  }
-
   cancel() {
     this.bsModalRef?.hide()
+  }
+
+  private initializeForm(){
+    this.qtyForm = this.formBuilder.group({
+      qty: [1, [Validators.required, Validators.min(-9999), Validators.max(9999)]]
+    })
+  }
+
+  private triggerEvent(line: number) {
+    this.event.emit(line);
   }
 
 }

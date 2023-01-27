@@ -1,3 +1,4 @@
+
 <div class="modal-header">
   <h4 class="modal-title pull-left">{{title}}</h4>
   <button type="button" class="btn-close close pull-right" aria-label="Anuluj" (click)="cancel()">
@@ -6,16 +7,19 @@
 </div>
 <div class="modal-body">
 
-  <table class="table" *ngIf="product">
-    <td><h4>{{product.name}}</h4></td>
-    <td><h4>{{product.categoryName}}</h4></td>
-  </table>
+  <div class="text-center mb-4" *ngIf="product">
+      <h5>{{product.name}}</h5>
+      <h3>{{product.categoryName}}</h3>
+  </div>
 
   <form id="qtyForm" [formGroup]="qtyForm" (ngSubmit)="addToList(qtyForm)">
-    <div class="m-2">
-   
-      <app-number-input class="quantity" [formControl]="$any(qtyForm.controls['qty'])" [label]="'Podaj Ilość'"></app-number-input>
-
+    <div class="m-2 qtyInput">
+      <button class="btn btn-primary d-inline-block m-1" type="button" (click)="qtyRemove()"><i
+          class="fa fa-minus"></i></button>
+      <app-number-input class="m-1 d-inline-block" style="width: 50px;"
+        [formControl]="$any(qtyForm.controls['qty'])" min="-9999"></app-number-input>
+      <button class="btn btn-primary d-inline-block m-1" type="button" (click)="qtyAdd()"><i
+          class="fa fa-plus"></i></button>
     </div>
   </form>
 
