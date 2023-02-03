@@ -6,12 +6,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     BsDropdownModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right'
     }),
@@ -20,7 +22,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     }),
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
   ],
   exports: [
     BsDropdownModule,
@@ -28,7 +30,8 @@ import { AlertModule } from 'ngx-bootstrap/alert';
     NgxSpinnerModule,
     PaginationModule,
     ModalModule,
-    AlertModule
+    AlertModule,
+    BsDatepickerModule
   ]
 })
 export class SharedModule { }

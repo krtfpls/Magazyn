@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="row">
+        <div class="input-group">
+            <div class="inputClass">
+                <span class="input-group-text">Data dokumentu: </span>
+                <input #dp="bsDatepicker" type="text" placeholder="Datepicker" class="form-control" [(ngModel)]="date"
+                    bsDatepicker [bsConfig]="bsConfig">
+                <input id="type" type="text" class="form-control" placeholder="Typ" value="{{type}}" readonly disabled>
+                <input id="number" type="text" class="form-control" placeholder="Numer" value="{{number}}" readonly disabled>
+          
+            </div>
+        </div>
+        <button (click)="displayCustomerModeChange()" class="btn btn-outline-secondary w-50 m-3" type="button" id="button-addon1">Wybierz
+            Dostawcę</button>
+        <div *ngIf="customer" class="input-group">
+            <div class="inputClass">
+                <span class="input-group-text">Nazwa Dostawcy: </span>
+                <input id="customerName" value="{{customer.name}}" type="text" class="form-control" placeholder="Wybierz dostawcę" readonly>
+            </div>
+
+            <div class="inputClass">
+                <span class="input-group-text">Adres: </span>
+                <input value="{{customer.street}} {{customer.streetNumber}}" id="customerStreet" type="text" class="form-control" readonly placeholder="Wybierz dostawcę">
+            </div>
+            <div class="inputClass">
+                <span class="input-group-text">Miejscowość: </span>
+                <input id="customerCity" value="{{customer.city}}" type="text" class="form-control" readonly placeholder="Wybierz dostawcę">
+            </div>
+        </div>
+        <div *ngIf="displayCustomerMode">
+            <app-list-customer (event)="setCustomer($event)"></app-list-customer>
+        </div>
+    </div>
+
+    <div class="row m-5">
+        <div class="col-sm-12 text-center position-sticky">
+            <div class="col-sm-3 text-start m-1 d-inline-block">
+                <button class="btn btn-danger" (click)="listDoneEvent()">
+                    Powrót
+                </button>
+            </div>
+            <div class="col-sm-3 text-end m-1 d-inline-block">
+                <button class="btn btn-primary" [disabled]="checkData" type="button" (click)="sendDocument()">
+                    Dalej
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

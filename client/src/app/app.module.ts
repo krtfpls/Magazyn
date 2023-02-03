@@ -30,6 +30,10 @@ import { DocumentsCreateComponent } from './documents/documents-create/documents
 import { DocumentLinesComponent } from './documents/document-lines/document-lines.component';
 import { ProductsTableComponent } from './products/products-table/products-table.component';
 import { QuantityModalComponent } from './modals/quantity-modal/quantity-modal.component';
+import { DocumentCreateHeaderComponent } from './documents/document-create-header/document-create-header.component';
+import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
+import { DocumentCreateLinesComponent } from './documents/document-create-lines/document-create-lines.component';
+import { ListCustomerComponent } from './customers/list-customer/list-customer.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,11 @@ import { QuantityModalComponent } from './modals/quantity-modal/quantity-modal.c
     DocumentsCreateComponent,
     DocumentLinesComponent,
     ProductsTableComponent,
-    QuantityModalComponent
+    QuantityModalComponent,
+    DocumentCreateHeaderComponent,
+    DatePickerComponent,
+    DocumentCreateLinesComponent,
+    ListCustomerComponent
   ],
   imports: [
     BrowserAnimationsModule,

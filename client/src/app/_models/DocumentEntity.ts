@@ -18,3 +18,17 @@ export class DocumentLine {
 
   }
 }
+
+export interface DocumentToSend {
+  id: string;
+  type: string;
+  customerId: string;
+  number: string;
+  date: string;
+  documentLines: DocumentLineToSend[]
+}
+
+export interface DocumentLineToSend {
+  productId: string;
+  quantity: number;
+}

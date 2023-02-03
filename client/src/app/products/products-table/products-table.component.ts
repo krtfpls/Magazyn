@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Pagination } from 'src/app/_models/pagination';
 import { Product } from 'src/app/_models/product';
 import { ProductParams } from 'src/app/_models/ProductParams';

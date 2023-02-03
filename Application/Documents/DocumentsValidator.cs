@@ -15,17 +15,18 @@ public class DocumentsValidator:AbstractValidator<DocumentDto>
         //Sprawdz czy zostanie wykonana walidacja gdy nie bedzie obiektu CustomersShortDto !!!!
         RuleFor(x => x.CustomerId).NotNull();
         RuleFor(x => x.Date).NotNull().GreaterThan(DateOnly.MinValue).LessThan(DateOnly.MaxValue).WithMessage("Wrong date format");
-        RuleForEach(x => x.DocumentLines).SetValidator(new DocumentLinesValidator()).NotNull().WithMessage("No Document Lines!");
+        RuleFor(x => x.DocumentLines).NotEmpty().NotNull().WithMessage("No Document Lines!");
+        RuleForEach(x => x.DocumentLines).SetValidator(new DocumentLinesValidator()).NotEmpty().NotNull().WithMessage("No Document Lines!");
     }
 }
 
 public class DocumentLinesValidator:AbstractValidator<DocumentLineDto>
 {
     public DocumentLinesValidator()
-    {
+    {   
         RuleFor(x => x.Quantity).NotNull().GreaterThan(0).LessThan(99999).WithMessage("Quantity must be in range 1-99999!");
             // linia sprawdzająca  .LessThanOrEqualTo(1).When(x => x.Product.SerialNumber?.Length > 0).WithMessage("Try to create product with serial number and quantity more than 1");
     //Sprawdz czy zostanie wykonana walidacja gdy nie bedzie obiektu CustomersShortDto !!!!
-        // RuleFor(x => x.Product).SetValidator(new ProductsShortValidator()).NotNull().WithMessage("Products are null!");
+         RuleFor(x => x.ProductId).NotNull().NotEmpty().WithMessage("Products are null!");
     }
 }

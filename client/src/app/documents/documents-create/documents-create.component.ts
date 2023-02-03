@@ -1,8 +1,8 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
-import { QuantityModalComponent } from 'src/app/modals/quantity-modal/quantity-modal.component';
-import { DocumentEntity, DocumentLine } from 'src/app/_models/DocumentEntity';
-import { Product } from 'src/app/_models/product';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { DocumentLineHandle } from 'src/app/_models/DocumentLineHandle';
+import { DocumentType } from 'src/app/_models/DocumentType';
 import { DocumentsService } from 'src/app/_services/documents.service';
 
 @Component({
@@ -13,66 +13,30 @@ import { DocumentsService } from 'src/app/_services/documents.service';
 
 export class DocumentsCreateComponent implements OnInit {
   bsModalRef?: BsModalRef;
-  documentEntity: DocumentEntity | undefined;
-  displayProductList: boolean = false;
+  displayCustomerMode: boolean  = false;
+  displayLinesMode: boolean = true;
+  type: DocumentType | undefined;
+  documentLinesHandle: DocumentLineHandle= new DocumentLineHandle();
+  
+  constructor(private documentService: DocumentsService, private activatedRoute: ActivatedRoute) {
+    this.activatedRoute.params.subscribe(params => this.type = params['type']);
+   }
 
-  // @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any) {
-  //   if (this.documentLines.length > 0) {
-  //     $event.returnValue = true;
-  //   }
-  // }
+  ngOnInit(): void { 
+   
+   }
 
-  constructor(private documentService: DocumentsService, private modalService: BsModalService) { }
-
-  ngOnInit(): void {
-
+   displayModeChange(){
+    this.displayLinesMode=!this.displayLinesMode;
+    this.displayCustomerMode = !this.displayCustomerMode;
   }
 
   get documentLines(){
-    return this.documentService.documentLinesHandle.documentLines;
+    return this.documentLinesHandle.documentLines;
   }
 
-  get total(){
-    return this.documentService.documentLinesHandle.total;
+  clearDocumentLines(){
+    this.documentLinesHandle.clearAll();
   }
 
-  openQtyModal(product: Product, change?: boolean) {
-
-    if (product.serialNumber.length > 0) {
-      this.documentService.documentLinesHandle.addProduct(product, 1)
-    }
-    else {
-      this.bsModalRef = this.modalService.show(QuantityModalComponent, this.modalConfig(product));
-      this.bsModalRef.content.event.subscribe((res: any) => {
-        this.documentService.documentLinesHandle.addProduct(product, parseInt(res.qty));
-      });
-    }
-    if (!change)
-    this.productListModeChange();
-  }
-
-  productListModeChange() {
-    this.displayProductList = !this.displayProductList;
-  }
-
-  qtyStepUp(itemId: string){
-    this.documentService.documentLinesHandle.stepUpQty(itemId);
-  }
-
-  qtyStepDown(itemId: string){
-    this.documentService.documentLinesHandle.stepDownQty(itemId);
-  }
-
-  private modalConfig(initial: Product): ModalOptions{
-
-    const initialState: ModalOptions = {
-      initialState: {
-        product: initial
-      },
-      class: 'modal-dialog-centered',
-      backdrop: true,
-      ignoreBackdropClick: true
-    };
-    return initialState;
-  }
 }

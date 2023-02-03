@@ -12,44 +12,32 @@ export class DocumentLineHandle {
   }
 
   public addProduct(prod: Product, quantity: number) {
-    if (this.lines.has(prod.id)) {
-      if (quantity === 0) {
-        this.removeProduct(prod.id);
-      } else {
+    if (quantity === 0) {
+      this.removeProduct(prod.id);
+    }
+    else {
+      if (this.lines.has(prod.id)) {
         if (prod.serialNumber.length > 0)
           this.lines.get(prod.id)!.quantity = 1;
         else {
           const check = this.lines.get(prod.id)!.quantity += quantity;
-          if (check === 0)
+          if (check === 0 || check <0)
             this.removeProduct(prod.id);
         }
       }
-    } else {
-      this.lines.set(prod.id, new DocumentLine(prod, quantity));
+      else {
+        if(quantity > 0)
+        this.lines.set(prod.id, new DocumentLine(prod, quantity));
+      }
     }
+  }
+
+  public clearAll(){
+    this.lines.clear();
   }
 
   public removeProduct(id: string) {
     this.lines.delete(id);
-  }
-
-  public stepUpQty(id: string) {
-    if (this.canStepUp(id))
-      this.lines.get(id)!.quantity += 1;
-  }
-
-  public stepDownQty(id: string) {
-    if (this.canStepDown(id))
-      this.lines.get(id)!.quantity -= 1;
-  }
-
-  public canStepUp(id: string): boolean {
-
-    return true
-  }
-
-  public canStepDown(id: string): boolean {
-    return true;
   }
 
   get documentLines(): DocumentLine[] {
@@ -64,5 +52,4 @@ export class DocumentLineHandle {
   get total(): number {
     return [...this.lines.values()].reduce((total, dl) => total += dl.total, 0);
   }
-
 }

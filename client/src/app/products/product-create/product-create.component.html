@@ -72,5 +72,5 @@
         <button type="submit" [disabled]="!productForm.dirty || !productForm.valid" form="productForm" class="btn btn-warning m-2">
             Zapisz zmiany    
         </button>
-        <button type="button" class="btn btn-light m-2" routerLink='/productsList'>Powrót</button>
+        <button *ngIf="setBackButton" type="button" class="btn btn-light m-2" (click)="backButton()">Powrót</button>
     </div>

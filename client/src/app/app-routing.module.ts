@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { DocumentCreateHeaderComponent } from './documents/document-create-header/document-create-header.component';
 import { DocumentsCreateComponent } from './documents/documents-create/documents-create.component';
 import { DocumentsDetailComponent } from './documents/documents-detail/documents-detail.component';
 import { DocumentsListComponent } from './documents/documents-list/documents-list.component';
@@ -12,6 +13,7 @@ import { ProductsDetailComponent } from './products/products-detail/products-det
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { DocumentType } from './_models/DocumentType';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,7 +23,7 @@ const routes: Routes = [
   children:[
     {path: 'dashboard', component: DashboardComponent},
     {path: 'documentsList', component: DocumentsListComponent},
-    {path: 'documentsCreate', component: DocumentsCreateComponent},
+    {path: 'documentsCreate/:type', component: DocumentsCreateComponent},
     {path: 'documentsDetail/:id', component: DocumentsDetailComponent},
     {path: 'productsList', component: ProductsListComponent},
     {path: 'productsDetail/:id', component: ProductsDetailComponent},

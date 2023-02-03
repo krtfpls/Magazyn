@@ -14,7 +14,7 @@ namespace Application.Documents;
 
 public class Create
 {
-    public class Command : IRequest<Result<Unit>>
+    public class Command : IRequest<Result<Guid>>
     {
         public NewDocument Document { get; set; }
     }
@@ -25,7 +25,7 @@ public class Create
         {
             RuleFor(x => x.Document.newDocument).SetValidator(new DocumentsValidator());
         }
-        public class Handler : IRequestHandler<Command, Result<Unit>>
+        public class Handler : IRequestHandler<Command, Result<Guid>>
         {
             private readonly DataContext _context;
                private readonly IUserAccessor _userAccessor;
@@ -38,14 +38,14 @@ public class Create
                  _userAccessor = userAccessor;
             }
 
-            public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
                 Document doc = new Document();
                 doc.User= await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
 
 //Set Customer
                 if ((doc.Customer = await _context.Customers.FindAsync(request.Document!.newDocument?.CustomerId)) == null)
-                    return Result<Unit>.Failure("Customer dont exist");
+                    return Result<Guid>.Failure("Customer dont exist");
 
 // Set Date
                 doc.Date = request.Document.newDocument.Date;
@@ -53,7 +53,7 @@ public class Create
 
 // Set Type
                 if ((doc.Type = await _context.DocumentTypes.FirstOrDefaultAsync(type => type.Name == request.Document.newDocument.Type)) == null)
-                    return Result<Unit>.Failure("Wrong Document Type");
+                    return Result<Guid>.Failure("Wrong Document Type");
 
  // Set Number
                 doc.Number = ((await _context.Documents
@@ -67,7 +67,7 @@ public class Create
                 }
                 catch (InvalidLineException err)
                 {
-                    return Result<Unit>.Failure(err.Message);
+                    return Result<Guid>.Failure(err.Message);
                 }
 
 //Ready and save
@@ -75,8 +75,8 @@ public class Create
 //Response               
                 var result = await _context.SaveChangesAsync() > 0;
                 if (!result)
-                    return Result<Unit>.Failure("Failed to create new Document");
-                return Result<Unit>.Success(Unit.Value);
+                    return Result<Guid>.Failure("Failed to create new Document");
+                return Result<Guid>.Success(doc.Id);
             }
 
 
@@ -85,7 +85,7 @@ public class Create
             {
                 var productLines = new List<DocumentLine>();
                 var badLines = new List<DocumentLineDto>();
-
+                
                 foreach (DocumentLineDto documentLine in document.newDocument.DocumentLines)
                 {
                     Product? product = await _context.Products
@@ -93,7 +93,10 @@ public class Create
                                     .Where(u => u.User.Id == user.Id)
                                     .FirstOrDefaultAsync(x => x.Id == documentLine.ProductId);
 
-                    if (product != null)
+                    if (product == null){
+                        badLines.Add(documentLine);
+                    }
+                    else
                     {
                         productLines.Add(document.UpdateProductLine(product, documentLine.Quantity));
                         int index = productLines.Count-1;

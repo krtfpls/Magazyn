@@ -12,19 +12,30 @@
       <h3>{{product.categoryName}}</h3>
   </div>
 
-  <form id="qtyForm" [formGroup]="qtyForm" (ngSubmit)="addToList(qtyForm)">
+  <form id="qtyForm" [formGroup]="qtyForm" (ngSubmit)="add(qtyForm)">
+    
     <div class="m-2 qtyInput">
-      <button class="btn btn-primary d-inline-block m-1" type="button" (click)="qtyRemove()"><i
+      
+      <button class="btn btn-primary d-inline-block m-1" type="button" 
+      [disabled]="product && product.serialNumber.length > 0 && $any(qtyForm.controls['qty'].value) <= 0" 
+      (click)="qtyStepDown()"><i
           class="fa fa-minus"></i></button>
       <app-number-input class="m-1 d-inline-block" style="width: 50px;"
         [formControl]="$any(qtyForm.controls['qty'])" min="-9999"></app-number-input>
-      <button class="btn btn-primary d-inline-block m-1" type="button" (click)="qtyAdd()"><i
+      <button class="btn btn-primary d-inline-block m-1"  type="button" 
+      [disabled]="product && product.serialNumber.length > 0 && $any(qtyForm.controls['qty'].value) >= 1"
+      (click)="qtyStepUp()"><i
           class="fa fa-plus"></i></button>
     </div>
+<div class="text-left">
+  <button class="btn btn-danger " type="button"  (click)="remove()">Usuń pozycję z listy</button>
+</div>
   </form>
 
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" [disabled]="!qtyForm.valid" form="qtyForm" type="submit">Dodaj</button>
-  <button class="btn btn-default" (click)="cancel()">{{closeBtnName}}</button>
+
+  <button class="btn btn-primary ms-5" [disabled]="!qtyForm.valid" form="qtyForm" type="submit">Dodaj</button>
+  <button class="btn btn-default" type="button" (click)="cancel()">{{closeBtnName}}</button>
+
 </div>

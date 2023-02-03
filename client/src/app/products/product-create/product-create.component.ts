@@ -1,5 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup,  Validators } from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/_models/category';
@@ -13,34 +14,99 @@ import { ProductService } from 'src/app/_services/product.service';
 })
 
 export class ProductCreateComponent implements OnInit {
-  productForm: FormGroup = new FormGroup({});
 
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event:any) {
-    if (this.productForm?.dirty) {
-      $event.returnValue = true;
-    }
-  }
-  
-  id: string | undefined;  
+  productForm: FormGroup = new FormGroup({});
+  id: string | undefined;
+  @Output() emitProduct = new EventEmitter<ProductClass>();
+  @Input() setBackButton: boolean = true;
   product: ProductClass = new ProductClass();
   validationErrors: string[] | undefined;
   categories: Category[] = [];
 
-  
-  constructor(private productService: ProductService, private route: ActivatedRoute, 
-                private toastr: ToastrService, private fb: FormBuilder) { }
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+    if (this.productForm?.dirty) {
+      $event.returnValue = true;
+    }
+  }
+
+  constructor(private productService: ProductService, private route: ActivatedRoute,
+    private toastr: ToastrService, private fb: FormBuilder, private location: Location) { }
 
   ngOnInit(): void {
     this.getCategories();
     this.initializeForm(this.product);
     this.route.params.subscribe(params =>
-      this.id= params['id'])
-    if (this.id){
-        this.loadProduct(this.id);
-      }
-     
+      this.id = params['id'])
+    if (this.id) {
+      this.loadProduct(this.id);
+    }
   }
-  
+
+  backButton() {
+    this.location.back();
+  }
+
+  get categoryProp() {
+    return this.productForm.get('categoryName');
+  }
+
+  addProduct() {
+    this.product = this.productForm.value;
+    if (this.id) {
+      this.product.id = this.id;
+      this.updateProduct(this.product);
+    }
+    else {
+      this.createProduct(this.product);
+    }
+  }
+
+  private createProduct(productToAdd: Product) {
+    this.productService.createProduct(productToAdd).subscribe({
+      next: (id: any) => {
+        productToAdd.id = id;
+        this.emitProduct.emit(productToAdd);
+        this.toastr.success('Produkt utworzony');
+        this.productForm?.reset(this.initializeForm(this.product = new ProductClass()));
+      },
+      error: error => {
+        this.validationErrors = error;
+      }
+    });
+    this.productService.clearProductsCache();
+  }
+
+  private getCategories() {
+    this.productService.getCategories().subscribe({
+      next: result => {
+        this.categories = result;
+      }
+    })
+  }
+
+  private loadProduct(id: string) {
+    this.productService.getProductDetail(id)?.subscribe({
+      next: product => {
+        this.product = product;
+        this.productForm.reset(this.product)
+      },
+      error: error => console.log(error)
+    });
+  }
+
+  private updateProduct(productToUpdate: Product) {
+    this.productService.updateProduct(productToUpdate).subscribe({
+      next: _ => {
+        this.toastr.success('Produkt zaktualizowany');
+        return this.productForm?.reset(this.product);
+      },
+      error: error => {
+        this.validationErrors = error
+      }
+    })
+    this.productService.clearProductsCache();
+  }
+
   private initializeForm(product: Product) {
     this.productForm = this.fb.group({
       name: [product.name, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
@@ -51,68 +117,5 @@ export class ProductCreateComponent implements OnInit {
       description: [product.description, [Validators.maxLength(300)]],
       categoryName: [product.categoryName, [Validators.required]]
     });
-  }
-
-  get categoryProp() {
-    return this.productForm.get('categoryName');
-  }
-
-  addProduct(){
-   this.product = this.productForm.value;
-   if (this.id){
-    this.product.id= this.id;
-    this.updateProduct(this.product);
-   }
-   else{
-    this.createProduct(this.product);
-  }
-  }
-
-  private createProduct(productToAdd: Product) {
-    this.productService.createProduct(productToAdd).subscribe({
-      next: _ => {
-        this.toastr.success('Produkt utworzony');
-        this.productForm?.reset(this.initializeForm(this.product = new ProductClass()));
-      },
-      error: error => {
-        this.validationErrors = error;
-      }
-    });
-
-    this.productService.clearProductsCache();
-  }
-
-  private getCategories(){
-    this.productService.getCategories().subscribe({
-      next: result => {
-        this.categories= result;
-      }
-    })
-  }
-
-  private loadProduct(id: string) {
-  
-    this.productService.getProductDetail(id)?.subscribe({
-      next: product => {
-        this.product=product;
-        this.productForm.reset(this.product)
-    },
-      error: error => console.log(error)
-    });
-  }
-
-  private updateProduct(productToUpdate: Product){
-
-    this.productService.updateProduct(productToUpdate).subscribe({
-      next: _ => {
-        this.toastr.success('Produkt zaktualizowany');
-        return this.productForm?.reset(this.product);
-      },
-      error: error => {
-        this.validationErrors = error
-      }
-    })
-
-    this.productService.clearProductsCache();
   }
 }

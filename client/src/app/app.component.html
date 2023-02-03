@@ -1,17 +1,20 @@
-<div class="col-12">
-    <div class="col-12">
+<div>
+    <div>
         <ngx-spinner type="square-jelly-box">
-            <h3>Loading...</h3>
+            <h3>Ładuję dane...</h3>
         </ngx-spinner>
     </div>
-    <div>
+    
+    <div class="row">
         <app-nav></app-nav>
     </div>
-    <div class="container">
+
+    <div class="row">
         <main class="my-5">
-            <div class="col-12 row">
+            <div class="container">
                 <router-outlet></router-outlet>
             </div>
         </main>
+
     </div>
 </div>
