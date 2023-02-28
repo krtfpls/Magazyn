@@ -27,6 +27,7 @@ public class MappingProfiles : Profile
         CreateProjection<Product, ProductsShortDto>();
         CreateProjection<Product, ProductLine>();
         
+        CreateMap<CustomerDto, Customer>();
         CreateMap<Category, CategoryDto>();
         CreateMap<ProductDto, Product>();
         

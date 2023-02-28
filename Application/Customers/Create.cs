@@ -9,7 +9,7 @@ namespace Application.Customers;
 
 public class Create
 {
-    public class Command : IRequest<Result<Unit>>
+    public class Command : IRequest<Result<int>>
     {
         public CustomerDto Customer { get; set; } = new CustomerDto();
     }
@@ -23,7 +23,7 @@ public class Create
         }
     }
 
-    public class Handler : IRequestHandler<Command, Result<Unit>>
+    public class Handler : IRequestHandler<Command, Result<int>>
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
@@ -34,15 +34,17 @@ public class Create
             _context = context;
         }
 
-        public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Result<int>> Handle(Command request, CancellationToken cancellationToken)
         {
-
-            _context.Customers.Add(_mapper.Map<Customer>(request.Customer));
+            Customer newCustomer = _mapper.Map<Customer>(request.Customer);
+                newCustomer.Id=0;
+                
+            _context.Customers.Add(newCustomer);
 
             var result = await _context.SaveChangesAsync() > 0;
 
-            if (!result) return Result<Unit>.Failure("Cannot to create new Customer");
-            return Result<Unit>.Success(Unit.Value);
+            if (!result) return Result<int>.Failure("Cannot to create new Customer");
+            return Result<int>.Success(newCustomer.Id);
         }
     }
 }

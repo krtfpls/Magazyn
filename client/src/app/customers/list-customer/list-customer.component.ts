@@ -9,7 +9,9 @@ import { CustomerService } from 'src/app/_services/customer.service';
 })
 export class ListCustomerComponent implements OnInit {
 customers: Customer[] = [];
+displayNewCustomerMode: boolean= false;
 @Output() event = new EventEmitter<Customer>();
+
   constructor(private customerService: CustomerService) { }
 
   ngOnInit(): void {
@@ -22,6 +24,10 @@ customers: Customer[] = [];
         this.customers = response;
       }
     })
+  }
+
+  setDisplayNewCustomerMode(){
+    this.displayNewCustomerMode= !this.displayNewCustomerMode;
   }
 
   setCustomer(item: Customer){

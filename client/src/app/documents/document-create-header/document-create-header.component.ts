@@ -1,12 +1,9 @@
 import { Component,  EventEmitter,  Input,  OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { plLocale } from 'ngx-bootstrap/locale';
 import { Customer } from 'src/app/_models/Customer';
-import { DocumentEntity, DocumentLine } from 'src/app/_models/DocumentEntity';
 import { DocumentType } from 'src/app/_models/DocumentType';
-import { DocumentsService } from 'src/app/_services/documents.service';
 defineLocale('pl', plLocale);
 
 @Component({
@@ -18,7 +15,7 @@ export class DocumentCreateHeaderComponent implements OnInit {
 date: Date = new Date();
 @Input() number: string= '';
 @Input() type: DocumentType | undefined;
-customer: Customer= {} as Customer;
+customer: Customer | undefined;
 bsConfig: Partial<BsDatepickerConfig> | undefined;
 displayCustomerMode: boolean = false;
 @Output() backEvent= new EventEmitter();
@@ -40,6 +37,13 @@ constructor(private localeService: BsLocaleService) {
     this.customer= item;
     this.setCustomerEvent.emit(item);
     this.displayCustomerModeChange();
+  }
+
+  validate(){
+    if (this.date != null && this.customer)
+      return false;
+      else
+      return true;
   }
 
   backButtonEvent(){

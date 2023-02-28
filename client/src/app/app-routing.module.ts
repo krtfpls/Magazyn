@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DocumentCreateHeaderComponent } from './documents/document-create-header/document-create-header.component';
 import { DocumentsCreateComponent } from './documents/documents-create/documents-create.component';
@@ -28,7 +29,8 @@ const routes: Routes = [
     {path: 'productsList', component: ProductsListComponent},
     {path: 'productsDetail/:id', component: ProductsDetailComponent},
     {path: 'productsCreate', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
-    {path: 'productsCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]}
+    {path: 'productsCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
+    {path: 'customersCreate', component: CreateCustomerComponent}
   ]
   },
   {path: 'not-found', component: NotFoundComponent},

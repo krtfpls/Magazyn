@@ -1,5 +1,5 @@
 <nav ngxNavbarDynamicExpand class="navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container-fluid mx-3">
         <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Magazyn</a>
         <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
             aria-expanded="false" aria-label="Toggle navigation">
@@ -16,24 +16,78 @@
 
             <ul class="navbar-nav me-auto">
                 <ng-container *ngIf="accountService.currentUser$ | async">
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/dashboard' routerLinkActive='active'>Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/documentsList' routerLinkActive='active'>Dokumenty</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/productsList' routerLinkActive='active'>Produkty</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/productsCreate' routerLinkActive='active'>Dodaj Produkt</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/documentsCreate/PZ' routerLinkActive='active'>Dokument PZ</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink='/documentsCreate/WZ' routerLinkActive='active'>Dokument WZ</a>
-                    </li>
+                    <div class="btn-group" dropdown container="body">
+                        <button id="button-Dasboard" dropdownToggle type="button" class="btn btn-dark"
+                        routerLink='/dashboard' routerLinkActive='active'
+                            aria-controls="button-Dasboard">
+                            Dashboard
+                        </button>
+                    </div>
+                    <div class="btn-group" dropdown container="body">
+                        <button id="button-Documents" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
+                            aria-controls="button-Documents">
+                            Dokumenty <span class="caret"></span>
+                        </button>
+                        <ul id="dropdown-DocumentList" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-Documents">
+                            <li role="menuitem"><a class="dropdown-item" routerLink='/documentsList'
+                                    routerLinkActive='active'>
+                                    Lista Dokumentów
+                                </a></li>
+                            <li role="menuitem" dropdown triggers="mouseover"
+                                 placement="right" container="body">
+                                <a dropdownToggle class="dropdown-item dropdown-toggle" 
+                                >Nowy Dokument<span class="caret"></span></a>
+                                <ul *dropdownMenu class="dropdown-menu" role="menu">
+                                    <li role="menuitem"><a class="dropdown-item" routerLink='/documentsCreate/PZ'
+                                            routerLinkActive='active'>
+                                            PZ
+                                        </a></li>
+                                    <li role="menuitem"><a class="dropdown-item" routerLink='/documentsCreate/WZ'
+                                            routerLinkActive='active'>
+                                            WZ
+                                        </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-group" dropdown container="body">
+                        <button id="button-Products" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
+                            aria-controls="dropdown-Products">
+                            Produkty <span class="caret"></span>
+                        </button>
+                        <ul id="dropdown-Products" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-Products">
+                            <li role="menuitem"><a class="dropdown-item" routerLink='/productsList'
+                                    routerLinkActive='active'>
+                                    Lista Produktów
+                                </a></li>
+                            <li role="menuitem"><a class="dropdown-item" routerLink='/productsCreate'
+                                    routerLinkActive='active'>
+                                    Dodaj Produkt
+                                </a></li>
+                        </ul>
+                    </div>
+
+                    <div class="btn-group" dropdown container="body">
+                        <button id="button-Customer" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
+                            aria-controls="dropdown-Products">
+                            Kontrahenci <span class="caret"></span>
+                        </button>
+                        <ul id="dropdown-Customer" *dropdownMenu class="dropdown-menu" role="menu"
+                            aria-labelledby="button-Customer">
+                            <li role="menuitem"><a class="dropdown-item" routerLink='#'
+                                    routerLinkActive='active'>
+                                    Lista Kontrahentów
+                                </a></li>
+                            <li role="menuitem"><a class="dropdown-item" routerLink='/customersCreate'
+                                    routerLinkActive='active'>
+                                    Dodaj Kontrahenta
+                                </a></li>
+                        </ul>
+                    </div>
+
                 </ng-container>
             </ul>
 
@@ -46,10 +100,8 @@
                 </div>
             </div>
 
-
-
         </ngx-navbar-collapse>
-       <ng-container >
+        <ng-container>
             <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex mt-2 mt-md-0"
                 (ngSubmit)="login()" autocomplete="off">
                 <input name="username" [(ngModel)]="model.username" class="form-control me-sm-2" type="text"

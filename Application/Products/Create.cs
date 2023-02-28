@@ -43,15 +43,15 @@ public class Create
             
             Product newProduct = _mapper.Map<Product>(requestProduct);
             newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
-//Zdecyduj czy ID nadawane na Froncie czy na backendzie
-            newProduct.Id = new Guid();
+
            string category = requestProduct.CategoryName.Trim().ToLower();
             newProduct.Quantity = 0;
             newProduct.Category= await _context.Categories
                         .FirstOrDefaultAsync(x =>
                             x.Name == category) ??
                     new Category() { Name = category};
-
+            //Zdecyduj czy ID nadawane na Froncie czy na backendzie
+            newProduct.Id = new Guid();
             _context.Products.Add(newProduct);
 
             var result = await _context.SaveChangesAsync() > 0;

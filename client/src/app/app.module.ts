@@ -34,6 +34,7 @@ import { DocumentCreateHeaderComponent } from './documents/document-create-heade
 import { DatePickerComponent } from './_forms/date-picker/date-picker.component';
 import { DocumentCreateLinesComponent } from './documents/document-create-lines/document-create-lines.component';
 import { ListCustomerComponent } from './customers/list-customer/list-customer.component';
+import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { ListCustomerComponent } from './customers/list-customer/list-customer.c
     DocumentCreateHeaderComponent,
     DatePickerComponent,
     DocumentCreateLinesComponent,
-    ListCustomerComponent
+    ListCustomerComponent,
+    CreateCustomerComponent
   ],
   imports: [
     BrowserAnimationsModule,

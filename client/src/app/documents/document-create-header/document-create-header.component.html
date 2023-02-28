@@ -41,7 +41,7 @@
             </div>
             <div class="col-sm-3 text-end m-1 d-inline-block">
                 <button class="btn btn-primary" 
-                [disabled]="" 
+                [disabled]="validate()" 
                 type="button" (click)="headerDone()">
                     Dalej
                 </button>

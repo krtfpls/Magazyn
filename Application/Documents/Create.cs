@@ -72,6 +72,7 @@ public class Create
                 }
 
 //Ready and save
+                doc.Id= new Guid();
                 _context.Add(doc);
 //Response               
                 var result = await _context.SaveChangesAsync() > 0;
