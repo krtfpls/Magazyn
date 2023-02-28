@@ -16,54 +16,35 @@ defineLocale('pl', plLocale);
 })
 export class DocumentCreateHeaderComponent implements OnInit {
 date: Date = new Date();
+@Input() number: string= '';
 @Input() type: DocumentType | undefined;
-@Input() documentLines: DocumentLine[]= {} as DocumentLine[];
-number: string= '##/####';
-checkData: boolean = false;
+customer: Customer= {} as Customer;
 bsConfig: Partial<BsDatepickerConfig> | undefined;
-customer: Customer | undefined;
-documentNew: DocumentEntity = {} as DocumentEntity;
 displayCustomerMode: boolean = false;
-@Output() listDone= new EventEmitter();
+@Output() backEvent= new EventEmitter();
+@Output() setCustomerEvent = new EventEmitter<Customer>();
+@Output() headerDoneEvent = new EventEmitter<string>();
 
-constructor(private localeService: BsLocaleService, private documentService: DocumentsService, private router: Router) {
+constructor(private localeService: BsLocaleService) {
   this.setDatePickerConfig();
   }
 
   ngOnInit(): void {
-   this.checkData= this.chekLines();
+  }
+
+  headerDone(){
+    this.headerDoneEvent.emit(this.formatDate(this.date));
   }
 
   setCustomer(item: Customer){
     this.customer= item;
-    this.checkData=false;
+    this.setCustomerEvent.emit(item);
     this.displayCustomerModeChange();
   }
 
-  listDoneEvent(){
-    this.listDone.emit();
+  backButtonEvent(){
+    this.backEvent.emit();
   }
-
-  sendDocument(){
-    if (this.customer && this.documentLines && this.type && this.date){
-    this.documentNew.customer = this.customer;
-    this.documentNew.date= this.formatDate(this.date);
-    this.documentNew.documentLines= this.documentLines;
-    this.documentNew.number= this.number;
-    this.documentNew.type= this.type;
-
-    this.documentService.sendNewDocument(this.documentNew, this.type).subscribe({
-      next: (id:any) => {
-        //this.documentService.clearDocumentLines();
-        this.router.navigateByUrl('documentsDetail/'+id);
-      }
-    });
-   
-  }
-  }
-  private formatDate(date: Date){
-    return date.toISOString().split('T')[0];
-   }
 
   displayCustomerModeChange() {
     this.displayCustomerMode= !this.displayCustomerMode;
@@ -79,15 +60,9 @@ constructor(private localeService: BsLocaleService, private documentService: Doc
     };
   }
 
-  private chekLines() {
-    if (this.documentLines.length > 1)
-      {
-        this.documentNew?.documentLines=== this.documentLines;
-      return false
-    }
-    else
-      return true;
-  }
+  private formatDate(date: Date){
+    return date.toISOString().split('T')[0];
+   }
 }
 
 

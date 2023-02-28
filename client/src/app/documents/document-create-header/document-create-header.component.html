@@ -35,12 +35,14 @@
     <div class="row m-5">
         <div class="col-sm-12 text-center position-sticky">
             <div class="col-sm-3 text-start m-1 d-inline-block">
-                <button class="btn btn-danger" (click)="listDoneEvent()">
+                <button class="btn btn-danger" (click)="backButtonEvent()">
                     Powrót
                 </button>
             </div>
             <div class="col-sm-3 text-end m-1 d-inline-block">
-                <button class="btn btn-primary" [disabled]="checkData" type="button" (click)="sendDocument()">
+                <button class="btn btn-primary" 
+                [disabled]="" 
+                type="button" (click)="headerDone()">
                     Dalej
                 </button>
             </div>

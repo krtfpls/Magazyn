@@ -5,7 +5,11 @@
     </ng-container>
 
     <ng-container *ngIf="displayCustomerMode">
-        <app-document-create-header (listDone)="displayModeChange()" 
-        [documentLines]="documentLines" [type]="type"></app-document-create-header>
+        <app-document-create-header (backEvent)="displayModeChange()" 
+        (setCustomerEvent)="setCustomer($event)"
+        [type]="type"
+        [number]="number"
+        (headerDoneEvent)="sendDocument($event)"
+         ></app-document-create-header>
     </ng-container>
 </div>
