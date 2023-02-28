@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DocumentEntity, DocumentLine, DocumentLineToSend, DocumentToSend } from '../_models/DocumentEntity';
-import { DocumentLineHandle } from '../_models/DocumentLineHandle';
+import { DocumentEntity, DocumentLineToSend, DocumentToSend } from '../_models/DocumentEntity';
 import { DocumentParams } from '../_models/DocumentParams';
 import { DocumentType } from '../_models/DocumentType';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
@@ -43,7 +42,7 @@ export class DocumentsService {
     }
   }
 
-  documentPrepare(doc: DocumentEntity) {
+  private documentPrepare(doc: DocumentEntity) {
 
     let docToSend: DocumentToSend = {} as DocumentToSend;
       docToSend.customerId = doc.customer!.id.toString();

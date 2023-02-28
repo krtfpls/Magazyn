@@ -4,7 +4,7 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { BsDatepickerConfig, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { plLocale } from 'ngx-bootstrap/locale';
 import { Customer } from 'src/app/_models/Customer';
-import { DocumentEntity } from 'src/app/_models/DocumentEntity';
+import { DocumentEntity, DocumentLine } from 'src/app/_models/DocumentEntity';
 import { DocumentType } from 'src/app/_models/DocumentType';
 import { DocumentsService } from 'src/app/_services/documents.service';
 defineLocale('pl', plLocale);
@@ -17,6 +17,7 @@ defineLocale('pl', plLocale);
 export class DocumentCreateHeaderComponent implements OnInit {
 date: Date = new Date();
 @Input() type: DocumentType | undefined;
+@Input() documentLines: DocumentLine[]= {} as DocumentLine[];
 number: string= '##/####';
 checkData: boolean = false;
 bsConfig: Partial<BsDatepickerConfig> | undefined;
@@ -47,13 +48,13 @@ constructor(private localeService: BsLocaleService, private documentService: Doc
     if (this.customer && this.documentLines && this.type && this.date){
     this.documentNew.customer = this.customer;
     this.documentNew.date= this.formatDate(this.date);
-    this.documentNew.documentLines= this.documentService.documentLinesHandle.documentLines;
+    this.documentNew.documentLines= this.documentLines;
     this.documentNew.number= this.number;
     this.documentNew.type= this.type;
 
     this.documentService.sendNewDocument(this.documentNew, this.type).subscribe({
       next: (id:any) => {
-        this.documentService.clearDocumentLines();
+        //this.documentService.clearDocumentLines();
         this.router.navigateByUrl('documentsDetail/'+id);
       }
     });
@@ -67,11 +68,6 @@ constructor(private localeService: BsLocaleService, private documentService: Doc
   displayCustomerModeChange() {
     this.displayCustomerMode= !this.displayCustomerMode;
   }
-
-  private get documentLines(){
-    return this.documentService.documentLinesHandle.documentLines;
-  }
-
 
   private setDatePickerConfig() {
     this.localeService.use('pl');

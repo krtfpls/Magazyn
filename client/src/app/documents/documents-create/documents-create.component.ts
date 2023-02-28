@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { DocumentLine } from 'src/app/_models/DocumentEntity';
 import { DocumentLineHandle } from 'src/app/_models/DocumentLineHandle';
 import { DocumentType } from 'src/app/_models/DocumentType';
 import { DocumentsService } from 'src/app/_services/documents.service';
@@ -16,7 +17,7 @@ export class DocumentsCreateComponent implements OnInit {
   displayCustomerMode: boolean  = false;
   displayLinesMode: boolean = true;
   type: DocumentType | undefined;
-  documentLinesHandle: DocumentLineHandle= new DocumentLineHandle();
+  documentLines: DocumentLine[]= {} as DocumentLine[];
   
   constructor(private documentService: DocumentsService, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => this.type = params['type']);
@@ -30,13 +31,21 @@ export class DocumentsCreateComponent implements OnInit {
     this.displayLinesMode=!this.displayLinesMode;
     this.displayCustomerMode = !this.displayCustomerMode;
   }
-
-  get documentLines(){
-    return this.documentLinesHandle.documentLines;
+  setDocumentLines(items: DocumentLine[]){
+    this.documentLines= items;
+    this.displayModeChange();
   }
 
-  clearDocumentLines(){
-    this.documentLinesHandle.clearAll();
-  }
+  // get documentLines(){
+  //   return this.documentLinesHandle.documentLines;
+  // }
+
+  // addLine(item: DocumentLine){
+  //   this.documentLinesHandle.addProduct(item.product, item.quantity);
+  // }
+
+  // clearDocumentLines(){
+  //   this.documentLinesHandle.clearAll();
+  // }
 
 }

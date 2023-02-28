@@ -1,9 +1,11 @@
 <div class="row">
     <ng-container *ngIf="displayLinesMode">
-        <app-document-create-lines (listDone)="displayModeChange()" [documentLines]="documentLines"></app-document-create-lines>
+        <app-document-create-lines (listDone)="setDocumentLines($event)" 
+        [lines]="documentLines"></app-document-create-lines>
     </ng-container>
 
     <ng-container *ngIf="displayCustomerMode">
-        <app-document-create-header (listDone)="displayModeChange()" [type]="type"></app-document-create-header>
+        <app-document-create-header (listDone)="displayModeChange()" 
+        [documentLines]="documentLines" [type]="type"></app-document-create-header>
     </ng-container>
 </div>
