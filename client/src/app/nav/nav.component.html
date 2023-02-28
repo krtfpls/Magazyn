@@ -1,55 +1,63 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-  <div class="container-fluid">
+<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Magazyn</a>
+        <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="
+            navbar-toggler-icon
+            d-flex
+            align-items-center
+            justify-content-center
+          ">
+            </span>
+        </button>
 
-      <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Magazyn</a>
+        <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
 
-      <ul class="navbar-nav me-auto">
-          <ng-container *ngIf="accountService.currentUser$ | async">
-              <li class="nav-item">
-                  <a class="nav-link" routerLink='/dashboard' routerLinkActive='active' >Dashboard</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" routerLink='/documentsList' routerLinkActive='active'>Dokumenty</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" routerLink='/productsList'routerLinkActive='active' >Produkty</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" routerLink='/productsCreate' routerLinkActive='active' >Dodaj Produkt</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink='/documentsCreate/PZ' routerLinkActive='active'>Dokument PZ</a> 
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink='/documentsCreate/WZ' routerLinkActive='active'>Dokument WZ</a> 
-            </li>
-          </ng-container>
-      </ul>
+            <ul class="navbar-nav me-auto">
+                <ng-container *ngIf="accountService.currentUser$ | async">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/dashboard' routerLinkActive='active'>Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/documentsList' routerLinkActive='active'>Dokumenty</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/productsList' routerLinkActive='active'>Produkty</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/productsCreate' routerLinkActive='active'>Dodaj Produkt</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/documentsCreate/PZ' routerLinkActive='active'>Dokument PZ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink='/documentsCreate/WZ' routerLinkActive='active'>Dokument WZ</a>
+                    </li>
+                </ng-container>
+            </ul>
 
-      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-        <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>Welcome {{user.username}}</a>
-        <div class="dropdown-menu mt-3" *dropdownMenu>
-            <a class="dropdown-item" routerLink="/">Edit Profile</a>
-            <a class="dropdown-item" (click)="logout()">Logout</a>
-        </div>
+            <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+                <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>Welcome
+                    {{user.username}}</a>
+                <div class="dropdown-menu mt-3" *dropdownMenu>
+                    <a class="dropdown-item" routerLink="/">Edit Profile</a>
+                    <a class="dropdown-item" (click)="logout()">Logout</a>
+                </div>
+            </div>
+
+
+
+        </ngx-navbar-collapse>
+       <ng-container >
+            <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex mt-2 mt-md-0"
+                (ngSubmit)="login()" autocomplete="off">
+                <input name="username" [(ngModel)]="model.username" class="form-control me-sm-2" type="text"
+                    placeholder="Username">
+                <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
+                    placeholder="Password">
+                <button class="btn btn-light my-2 my-sm-0" type="submit">Login</button>
+            </form>
+        </ng-container>
     </div>
-
-      <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex mt-2 mt-md-0" (ngSubmit)="login()" 
-          autocomplete="off">
-          <input 
-              name="username"
-              [(ngModel)]="model.username"
-              class="form-control me-sm-2" 
-              type="text" 
-              placeholder="Username">
-          <input 
-              name="password"
-              [(ngModel)]="model.password"
-              class="form-control me-sm-2" 
-              type="password" 
-              placeholder="Password">
-          <button class="btn btn-light my-2 my-sm-0" type="submit">Login</button>
-      </form>
-  </div>
-
 </nav>

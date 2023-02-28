@@ -7,6 +7,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgxNavbarModule } from 'ngx-bootstrap-navbar';
+
 
 @NgModule({
   declarations: [],
@@ -23,6 +25,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
+    NgxNavbarModule
   ],
   exports: [
     BsDropdownModule,
@@ -31,7 +34,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     PaginationModule,
     ModalModule,
     AlertModule,
-    BsDatepickerModule
+    BsDatepickerModule,
+    NgxNavbarModule
   ]
 })
 export class SharedModule { }

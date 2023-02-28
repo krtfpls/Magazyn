@@ -57,6 +57,7 @@ public class Create
 
  // Set Number
                 doc.Number = ((await _context.Documents
+                                    .Where(year => year.Date.Year == doc.Date.Year)
                                     .CountAsync(type => type.Type.Id == doc.Type.Id)) + 1).ToString() + "/" + DateTime.Now.Year;
 
 //Set Lines
