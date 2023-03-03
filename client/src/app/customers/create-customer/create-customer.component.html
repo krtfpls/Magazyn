@@ -1,1 +1,63 @@
-<p>create-customer works!</p>
+<div class="row d-grid col-sm-6" >
+     <form [formGroup]="customerForm" id="customerForm" (ngSubmit)="customerForm.valid && createCustomer(customerForm.value)">
+        <div class="mt-2 " >
+            <label>Nazwa</label>
+            <app-text-input [formControl]="$any(customerForm.controls['name'])" 
+            [label]="'Nazwa'">
+            </app-text-input>
+
+         <label>Ulica</label>
+            <div class="m-2">
+                 <app-text-input [formControl]="$any(customerForm.controls['street'])" 
+                 [label]="'Ulica'">
+                 </app-text-input>
+            </div>
+
+            <label>Nr</label>
+            <div class="m-2">
+                 <app-text-input [formControl]="$any(customerForm.controls['streetNumber'])" 
+                 [label]="'Nr'">
+                 </app-text-input>
+            </div>
+
+            <label>Miejscowość</label>
+            <div class="m-2">
+                 <app-text-input [formControl]="$any(customerForm.controls['city'])" 
+                 [label]="'Miejscowość'">
+                 </app-text-input>
+            </div>
+
+            <label>NIP</label>
+            <div class="m-2">
+                 <app-text-input [formControl]="$any(customerForm.controls['taxNumber'])" 
+                 [label]="'NIP'">
+                 </app-text-input>
+            </div>
+
+       
+            <div class="m-2">
+                <label>Uwagi</label>
+                <textarea class="form-control mt-2" 
+                    formControlName="description"
+                    placeholder="Opis"
+                    rows="6"
+                    autocomplete="off"></textarea>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row" *ngIf="validationErrors">
+    <ul class="text-danger">
+        <li *ngFor="let error of validationErrors">
+            {{error}}
+        </li>
+    </ul>
+</div>
+
+<div class="row mt-3 btn-group float-end">
+    <button type="submit" [disabled]="!customerForm.dirty || !customerForm.valid" form="customerForm" class="btn btn-warning m-2">
+        Zapisz zmiany    
+    </button>
+    <!-- <button *ngIf="setBackButton" type="button" class="btn btn-light m-2" (click)="backButton()">Powrót</button> -->
+</div>

@@ -3,5 +3,7 @@ export interface Customer {
     name: string;
     city: string;
     street: string;
-    streetNumber: string
+    streetNumber: string;
+    taxNumber: string;
+    description: string;
 }
