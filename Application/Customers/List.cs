@@ -9,12 +9,12 @@ namespace Application.Customers;
 
 public class List
 {
-    public class Query : IRequest<Result<List<CustomerShortDto>>>
+    public class Query : IRequest<Result<PagedList<CustomerShortDto>>>
     {
-
+        public CustomerParams Params { get; set; } = new CustomerParams(); 
     }
 
-    public class Handler : IRequestHandler<Query, Result<List<CustomerShortDto>>>
+    public class Handler : IRequestHandler<Query, Result<PagedList<CustomerShortDto>>>
     {
         DataContext _context;
         private readonly IMapper _mapper;
@@ -25,14 +25,15 @@ public class List
             _mapper = mapper;
         }
 
-        public async Task<Result<List<CustomerShortDto>>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<CustomerShortDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var customerList = await _context.Customers
+            var customerList =  _context.Customers
                 .AsNoTracking()
                 .ProjectTo<CustomerShortDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
 
-            return Result<List<CustomerShortDto>>.Success(customerList);
+            return Result<PagedList<CustomerShortDto>>.Success(
+                await PagedList<CustomerShortDto>.CreateAysnc(customerList, request.Params.PageNumber, request.Params.PageSize));
 
         }
     }

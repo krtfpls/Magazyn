@@ -1,23 +1,7 @@
 <!-- List Customer Mode -->
 <ng-container *ngIf="!displayNewCustomerMode">
     <button class="btn btn-primary mb-3" (click)="setDisplayNewCustomerMode()">Utwórz Dostawcę<i class="fa fa-plus mx-2"></i></button>
-    
-    <table class="table table-striped">
-        <thead>
-            <th>Nazwa</th>
-            <th>Adres</th>
-            <th>Miejscowość</th>
-            <th></th>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of customers">
-                <td>{{item.name}}</td>
-                <td>{{item.street}} {{item.streetNumber}}</td>
-                <td>{{item.city}}</td>
-                <td><Button class="btn btn-primary" (click)="setCustomer(item)">Wybierz <i class="fa fa-check-circle mx-2"></i></Button></td>
-            </tr>
-        </tbody>
-    </table>
+        <app-list-customer (setCustomerEvent)="setCustomer($event)"></app-list-customer>
     </ng-container>
     
     <!-- New Customer Mode -->

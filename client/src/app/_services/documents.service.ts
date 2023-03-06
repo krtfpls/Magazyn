@@ -25,7 +25,7 @@ export class DocumentsService {
     return this.http.get<DocumentEntity>(this.baseUrl + id);
   }
 
-  sendNewDocument(inputDocument: DocumentEntity, docType: DocumentType){
+  CreateDocument(inputDocument: DocumentEntity, docType: DocumentType){
 
      const doc= this.documentPrepare(inputDocument);
 

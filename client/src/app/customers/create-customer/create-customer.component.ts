@@ -36,10 +36,9 @@ customerForm: FormGroup = new FormGroup({});
 
   private initializeForm() {
     this.customerForm = this.fb.group({
-      id: [''],
       name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       street: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
-      streetName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+      streetNumber: ['', [Validators.required, Validators.maxLength(100)]],
       city: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       taxNumber: ['', [Validators.minLength(3), Validators.maxLength(100)]],
       description: ['', [Validators.minLength(3), Validators.maxLength(500)]],

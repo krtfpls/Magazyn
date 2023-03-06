@@ -9,9 +9,9 @@ namespace API.Controllers;
 public class CustomerController : BaseApiController
 {
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] CustomerParams param)
     {
-        return HandleResult(await Mediator.Send(new List.Query()));
+        return HandlePagedResult(await Mediator.Send(new List.Query{Params = param}));
     }
 
     [HttpGet("{id}")]

@@ -19,11 +19,10 @@
                  [label]="'Nr'">
                  </app-text-input>
             </div>
-
-            <label>Miejscowość</label>
+            <label>Miasto</label>
             <div class="m-2">
                  <app-text-input [formControl]="$any(customerForm.controls['city'])" 
-                 [label]="'Miejscowość'">
+                 [label]="'Miasto'">
                  </app-text-input>
             </div>
 
@@ -33,8 +32,6 @@
                  [label]="'NIP'">
                  </app-text-input>
             </div>
-
-       
             <div class="m-2">
                 <label>Uwagi</label>
                 <textarea class="form-control mt-2" 
@@ -57,7 +54,6 @@
 
 <div class="row mt-3 btn-group float-end">
     <button type="submit" [disabled]="!customerForm.dirty || !customerForm.valid" form="customerForm" class="btn btn-warning m-2">
-        Zapisz zmiany    
+        Utwórz kontrahenta    
     </button>
-    <!-- <button *ngIf="setBackButton" type="button" class="btn btn-light m-2" (click)="backButton()">Powrót</button> -->
 </div>

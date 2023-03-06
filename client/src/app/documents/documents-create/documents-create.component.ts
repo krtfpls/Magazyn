@@ -53,7 +53,7 @@ export class DocumentsCreateComponent implements OnInit {
     this.documentNew.number= this.number;
     this.documentNew.type= this.type;
 
-    this.documentService.sendNewDocument(this.documentNew, this.type).subscribe({
+    this.documentService.CreateDocument(this.documentNew, this.type).subscribe({
       next: (id:any) => {
         //this.documentService.clearDocumentLines();
         this.router.navigateByUrl('documentsDetail/'+id);
