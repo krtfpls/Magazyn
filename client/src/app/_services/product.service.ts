@@ -40,24 +40,14 @@ export class ProductService {
         return response;
       })
     );
-    
   }
 
 
   getStockProducts(productParams: ProductParams){
-    // const response = this.productsCache.get(Object.values(productParams).join('-'));
-    // if (response) return of(response);
-
     let params = getPaginationHeaders(productParams.pageNumber, productParams.pageSize);
     params = params.append('CategoryName', productParams.CategoryName);
     
     return getPaginatedResult<Product[]>(this.baseUrl+'stock', params, this.http);
-    // .pipe(
-    //   map (response => {
-    //     this.addToMapObject(productParams, response);
-    //     return response;
-    //   })
-    // );
     
   }
 
@@ -75,13 +65,6 @@ export class ProductService {
 
   updateProduct(product: Product){
     return this.http.put(this.baseUrl,product);
-    // .pipe(
-    //   map(() => {
-    //     this.productsCache.set([...this.productsCache.values()]
-    //     .reduce((arr, elem) => arr.concat(elem.result), [])
-    //     .find((prod: Product) => prod.id == product.id), product);
-    //   })
-    // )
   }
 
   addToMapObject(params: ProductParams, data: PaginatedResult<Product[]>){

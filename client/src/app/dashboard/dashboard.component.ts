@@ -12,19 +12,11 @@ export class DashboardComponent implements OnInit {
   displayNewCustomerMode: boolean= false;
   @Output() event = new EventEmitter<Customer>();
   
-    constructor(private customerService: CustomerService) { }
+    constructor() { }
   
     ngOnInit(): void {
-      this.getCustomer();
     }
   
-    getCustomer(){
-      this.customerService.getCustomers().subscribe({
-        next: response => {
-          this.customers = response;
-        }
-      })
-    }
   
     setDisplayNewCustomerMode(){
       this.displayNewCustomerMode= !this.displayNewCustomerMode;

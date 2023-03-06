@@ -16,4 +16,10 @@
             </tr>
         </tbody>
     </table>
+    <div class="row-col-12 d-flex justify-content-center" *ngIf="pagination && pagination.totalPages > 1">
+        <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+            [maxSize]="5" [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)"
+            previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+        </pagination>
+    </div>
 </ng-container>

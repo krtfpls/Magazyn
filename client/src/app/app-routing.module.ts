@@ -15,7 +15,6 @@ import { ProductsDetailComponent } from './products/products-detail/products-det
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
-import { DocumentType } from './_models/DocumentType';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
