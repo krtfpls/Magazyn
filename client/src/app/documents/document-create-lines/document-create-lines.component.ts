@@ -12,7 +12,8 @@ import { Product } from 'src/app/_models/product';
   styleUrls: ['./document-create-lines.component.css']
 })
 
-export class DocumentCreateLinesComponent implements OnInit { bsModalRef?: BsModalRef;
+export class DocumentCreateLinesComponent implements OnInit { 
+  bsModalRef?: BsModalRef;
   displayProductListMode: boolean = false;
   displayNewProductMode: boolean = false;
   documentLinesHandle: DocumentLineHandle;

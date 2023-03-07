@@ -9,12 +9,12 @@ namespace Application.Categories
 {
     public class List
     {
-        public class Query : IRequest<Result<List<CategoryDto>>>
+        public class Query : IRequest<Result<PagedList<CategoryDto>>>
     {
-
+        public CategoryParams Params { get; set; } = new CategoryParams(); 
     }
 
-    public class Handler : IRequestHandler<Query, Result<List<CategoryDto>>>
+    public class Handler : IRequestHandler<Query, Result<PagedList<CategoryDto>>>
     {
         DataContext _context;
         private readonly IMapper _mapper;
@@ -25,16 +25,16 @@ namespace Application.Categories
             _mapper = mapper;
         }
 
-        public async Task<Result<List<CategoryDto>>> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<Result<PagedList<CategoryDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var categories = await _context.Categories
+            var categories = _context.Categories
                 .AsNoTracking()
-                .Take(100)
                 .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+                .AsQueryable();
 
-            return Result<List<CategoryDto>>.Success(categories);
-
+            return Result<PagedList<CategoryDto>>.Success(
+                await PagedList<CategoryDto>.CreateAysnc(categories, request.Params.PageNumber, request.Params.PageSize)
+                );
         }
     }
     }

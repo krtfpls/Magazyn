@@ -3,6 +3,8 @@
             <p><strong>Informacja: </strong>Niezapisane zmiany zostaną utracone</p>
         </div>
     </div>
+   
+
 
     <div class="row d-grid col-sm-6" >
          <form [formGroup]="productForm" id="productForm" (ngSubmit)="productForm.valid && addProduct()">
@@ -11,20 +13,19 @@
                 <app-text-input [formControl]="$any(productForm.controls['name'])" 
                 [label]="'Nazwa'">
                 </app-text-input>
-
-             <div class="m-2 " *ngIf="categories">
                 <label>Kategoria</label>
-                <select 
-                    class="form-select"
-                    formControlName="categoryName">
-                <option [ngValue]="null" disabled>Wybierz kategorię</option>
-                <option *ngFor="let cat of categories" [ngValue]="cat.name">
-                        {{cat.name}}
-                </option>
-                </select>
-                <div *ngIf="categoryProp?.invalid && productForm.dirty" class="text-danger">Nie wybrano kategorii</div>
+                <div class="m-2">
+                    <input 
+                    type='text'
+                    class="form-control" 
+                    placeholder='Wybierz kategorię'
+                    [formControl]="$any(productForm.controls['categoryName'])"
+                    readonly>
+                     <button class="btn btn-info m-2" (click)="openCategoryModal()">Wybierz kategorię</button>
+                     <div *ngIf="categoryProp?.invalid && productForm.dirty" class="text-danger">Nie wybrano kategorii</div>
 
-             </div>
+                </div>
+
              <label>Numer seryjny</label>
                 <div class="m-2">
                      <app-text-input [formControl]="$any(productForm.controls['serialNumber'])" 

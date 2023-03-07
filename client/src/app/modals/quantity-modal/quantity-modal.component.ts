@@ -14,7 +14,7 @@ export class QuantityModalComponent implements OnInit {
   title?: string = "Podaj ilość";
   closeBtnName?: string = "Anuluj";
   product: Product | undefined;
-  @Output() event: EventEmitter<number> = new EventEmitter();
+  @Output() event: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(public bsModalRef: BsModalRef, private formBuilder: FormBuilder) { }
 

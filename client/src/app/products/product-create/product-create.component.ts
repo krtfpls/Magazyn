@@ -2,7 +2,9 @@ import { Location } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryModalComponent } from 'src/app/modals/category-modal/category-modal.component';
 import { Category } from 'src/app/_models/category';
 import { ProductClass, Product } from 'src/app/_models/product';
 import { ProductService } from 'src/app/_services/product.service';
@@ -14,14 +16,19 @@ import { ProductService } from 'src/app/_services/product.service';
 })
 
 export class ProductCreateComponent implements OnInit {
-
+  modalRef?: BsModalRef;
   productForm: FormGroup = new FormGroup({});
+  category: Category = {} as Category;
   id: string | undefined;
   @Output() emitProduct = new EventEmitter<ProductClass>();
   @Input() setBackButton: boolean = true;
   product: ProductClass = new ProductClass();
   validationErrors: string[] | undefined;
   categories: Category[] = [];
+  page= 1;
+  throttle = 0;
+  distance = 2;
+  modalOpen = false;
 
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
     if (this.productForm?.dirty) {
@@ -29,7 +36,7 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
-  constructor(private productService: ProductService, private route: ActivatedRoute,
+  constructor(private productService: ProductService, private route: ActivatedRoute, private modalService: BsModalService,
     private toastr: ToastrService, private fb: FormBuilder, private location: Location) { }
 
   ngOnInit(): void {
@@ -40,6 +47,10 @@ export class ProductCreateComponent implements OnInit {
     if (this.id) {
       this.loadProduct(this.id);
     }
+  }
+
+  toggleModal() {
+    this.modalOpen = !this.modalOpen;
   }
 
   backButton() {
@@ -84,6 +95,15 @@ export class ProductCreateComponent implements OnInit {
     })
   }
 
+  onScroll(){
+    this.productService.getCategories(++this.page).subscribe({
+      next: result => {
+        this.categories.push(...result);
+      }
+    })
+    console.log(this.categories)
+  }
+
   private loadProduct(id: string) {
     this.productService.getProductDetail(id)?.subscribe({
       next: product => {
@@ -118,4 +138,25 @@ export class ProductCreateComponent implements OnInit {
       categoryName: [product.categoryName, [Validators.required]]
     });
   }
+// Modal !!!!!!!!!!!!!!!!!
+
+  openCategoryModal() {
+    this.modalRef = this.modalService.show(CategoryModalComponent);
+    this.modalRef.content.ChosenCategoryEvent.subscribe((res: Category) => {
+        this.productForm.controls['categoryName'].setValue(res.name);
+    //  this.category = res;
+
+    });
+}
+
+private modalConfig(): ModalOptions{
+
+  const initialState: ModalOptions = {
+    
+    class: 'modal-dialog-centered',
+    backdrop: true,
+    ignoreBackdropClick: true
+  };
+  return initialState;
+}
 }

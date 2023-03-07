@@ -36,6 +36,8 @@ import { DocumentCreateLinesComponent } from './documents/document-create-lines/
 import { ListCustomerComponent } from './customers/list-customer/list-customer.component';
 import { CreateCustomerComponent } from './customers/create-customer/create-customer.component';
 import { CustomerDashboardComponent } from './customers/customer-dashboard/customer-dashboard.component';
+import { ListCategoryComponent } from './categories/list-category/list-category.component';
+import { CategoryModalComponent } from './modals/category-modal/category-modal.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { CustomerDashboardComponent } from './customers/customer-dashboard/custo
     DocumentCreateLinesComponent,
     ListCustomerComponent,
     CreateCustomerComponent,
-    CustomerDashboardComponent
+    CustomerDashboardComponent,
+    ListCategoryComponent,
+    CategoryModalComponent
   ],
   imports: [
     BrowserAnimationsModule,

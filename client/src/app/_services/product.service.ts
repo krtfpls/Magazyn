@@ -23,8 +23,8 @@ export class ProductService {
     this.params = new ProductParams();
    }
 
-  getCategories(){
-    return this.http.get<Category[]>(this.categoryUrl);
+  getCategories(page= 1){
+    return this.http.get<Category[]>(this.categoryUrl+'?pageNumber='+page);
    }
 
   getAllProducts(productParams: ProductParams){

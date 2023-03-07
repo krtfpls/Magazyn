@@ -1,0 +1,16 @@
+<div 
+class="search-results"
+infiniteScroll
+[scrollWindow]="false"
+[infiniteScrollDistance]="distance"
+[infiniteScrollThrottle]="throttle"
+(scrolled)="onScroll()">
+<div class="list-group" *ngFor="let item of categories">
+
+  <button type="button" (click)="chooseCategory(item)" id="{{item.id}}" class="list-group-item list-group-item-action">{{item.name}}</button>
+  
+</div>
+<div class="list-group">
+    <button type="button" class="list-group-item list-group-item-action" disabled>Koniec...</button>
+</div>
+</div>

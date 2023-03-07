@@ -13,7 +13,7 @@
         </button>
 
         <ngx-navbar-collapse id="main-nav" #collapse="ngxNavbarCollapse">
-
+<!-- Dashboard -->
             <ul class="navbar-nav me-auto">
                 <ng-container *ngIf="accountService.currentUser$ | async">
                     <div class="btn-group" dropdown container="body">
@@ -23,6 +23,7 @@
                             Dashboard
                         </button>
                     </div>
+<!-- Documents -->
                     <div class="btn-group" dropdown container="body">
                         <button id="button-Documents" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
                             aria-controls="button-Documents">
@@ -51,7 +52,7 @@
                             </li>
                         </ul>
                     </div>
-
+<!-- Products -->
                     <div class="btn-group" dropdown container="body">
                         <button id="button-Products" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
                             aria-controls="dropdown-Products">
@@ -69,10 +70,10 @@
                                 </a></li>
                         </ul>
                     </div>
-
+<!-- Customers -->
                     <div class="btn-group" dropdown container="body">
                         <button id="button-Customer" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
-                            aria-controls="dropdown-Products">
+                            aria-controls="dropdown-Customer">
                             Kontrahenci <span class="caret"></span>
                         </button>
                         <ul id="dropdown-Customer" *dropdownMenu class="dropdown-menu" role="menu"
@@ -84,6 +85,21 @@
                             <li role="menuitem"><a class="dropdown-item" routerLink='/customersCreate'
                                     routerLinkActive='active'>
                                     Dodaj Kontrahenta
+                                </a></li>
+                        </ul>
+                    </div>
+<!-- Categories -->
+                    <div class="btn-group" dropdown container="body">
+                        <button id="button-Category" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
+                            aria-controls="dropdown-Products">
+                            Kategorie <span class="caret"></span>
+                        </button>
+                        <ul id="dropdown-Category" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-Category">
+                            <li role="menuitem"><a class="dropdown-item" routerLink='/categoryList' routerLinkActive='active'>
+                                    Lista Kategorii
+                                </a></li>
+                            <li role="menuitem"><a class="dropdown-item" routerLink='/categoryCreate' routerLinkActive='active'>
+                                    Nowa kategoria
                                 </a></li>
                         </ul>
                     </div>
