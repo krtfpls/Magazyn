@@ -13,18 +13,20 @@
                 <app-text-input [formControl]="$any(productForm.controls['name'])" 
                 [label]="'Nazwa'">
                 </app-text-input>
-                <label>Kategoria</label>
-                <div class="m-2">
-                    <input 
-                    type='text'
-                    class="form-control" 
-                    placeholder='Wybierz kategorię'
-                    [formControl]="$any(productForm.controls['categoryName'])"
-                    readonly>
-                     <button class="btn btn-info m-2" (click)="openCategoryModal()">Wybierz kategorię</button>
-                     <div *ngIf="categoryProp?.invalid && productForm.dirty" class="text-danger">Nie wybrano kategorii</div>
 
+                <div *ngIf="categoryProp?.invalid && productForm.dirty" 
+                class="text-danger">Nie wybrano kategorii</div>
+                <div class="input-group mb-3">
+                        <input id="category" type='text' class="form-control" 
+                            placeholder='Wybierz kategorię'
+                            aria-label="Wybierz kategorię"
+                            aria-describedby="button-category"
+                            [formControl]="$any(productForm.controls['categoryName'])" readonly>
+
+                            <button type="button" id="button-category" class="btn btn-outline-secondary" 
+                                (click)="openCategoryModal()">Wybierz</button>
                 </div>
+
 
              <label>Numer seryjny</label>
                 <div class="m-2">

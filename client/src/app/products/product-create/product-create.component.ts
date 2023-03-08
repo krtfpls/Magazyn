@@ -40,7 +40,6 @@ export class ProductCreateComponent implements OnInit {
     private toastr: ToastrService, private fb: FormBuilder, private location: Location) { }
 
   ngOnInit(): void {
-    this.getCategories();
     this.initializeForm(this.product);
     this.route.params.subscribe(params =>
       this.id = params['id'])
@@ -49,10 +48,7 @@ export class ProductCreateComponent implements OnInit {
     }
   }
 
-  toggleModal() {
-    this.modalOpen = !this.modalOpen;
-  }
-
+ 
   backButton() {
     this.location.back();
   }
@@ -85,23 +81,6 @@ export class ProductCreateComponent implements OnInit {
       }
     });
     this.productService.clearProductsCache();
-  }
-
-  private getCategories() {
-    this.productService.getCategories().subscribe({
-      next: result => {
-        this.categories = result;
-      }
-    })
-  }
-
-  onScroll(){
-    this.productService.getCategories(++this.page).subscribe({
-      next: result => {
-        this.categories.push(...result);
-      }
-    })
-    console.log(this.categories)
   }
 
   private loadProduct(id: string) {
@@ -141,18 +120,15 @@ export class ProductCreateComponent implements OnInit {
 // Modal !!!!!!!!!!!!!!!!!
 
   openCategoryModal() {
-    this.modalRef = this.modalService.show(CategoryModalComponent);
+    this.modalRef = this.modalService.show(CategoryModalComponent, this.modalConfig());
     this.modalRef.content.ChosenCategoryEvent.subscribe((res: Category) => {
         this.productForm.controls['categoryName'].setValue(res.name);
-    //  this.category = res;
-
     });
 }
 
 private modalConfig(): ModalOptions{
 
   const initialState: ModalOptions = {
-    
     class: 'modal-dialog-centered',
     backdrop: true,
     ignoreBackdropClick: true
