@@ -3,6 +3,7 @@ using AutoMapper;
 using Data;
 using Entities;
 using Entities.interfaces;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,14 @@ public class Edit
         public ProductDto Product { get; set; } = new ProductDto();
     }
 
+        public class CommandValidator : AbstractValidator<Command>
+    {
+        public CommandValidator()
+        {
+            RuleFor(x => x.Product).SetValidator(new ProductsValidator());
+        }
+    }
+    
     public class Handler : IRequestHandler<Command, Result<Unit>>
     {
         private readonly DataContext _context;

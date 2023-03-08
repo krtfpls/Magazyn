@@ -13,6 +13,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error/server-
 import { HomeComponent } from './home/home.component';
 import { ProductCreateComponent } from './products/product-create/product-create.component';
 import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
+import { ProductsListAllComponent } from './products/products-list-all/products-list-all.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
@@ -23,11 +24,12 @@ const routes: Routes = [
   runGuardsAndResolvers: 'always',
   canActivate: [AuthGuard],
   children:[
-    {path: 'dashboard', component: DashboardComponent},
+    {path: 'dashboard', component: ProductsListComponent},
     {path: 'documentsList', component: DocumentsListComponent},
     {path: 'documentsCreate/:type', component: DocumentsCreateComponent},
     {path: 'documentsDetail/:id', component: DocumentsDetailComponent},
     {path: 'productsList', component: ProductsListComponent},
+    {path: 'productsListAll', component: ProductsListAllComponent},
     {path: 'productsDetail/:id', component: ProductsDetailComponent},
     {path: 'productsCreate', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
     {path: 'productsCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},

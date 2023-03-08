@@ -1,15 +1,1 @@
-<!-- List Customer Mode -->
-<ng-container *ngIf="!displayNewCustomerMode">
-    <button class="btn btn-primary mb-3" (click)="setDisplayNewCustomerMode()">Utwórz Dostawcę<i class="fa fa-plus mx-2"></i></button>
-    
-    <app-list-customer (setCustomerEvent)="setCustomer($event)"></app-list-customer>
-    </ng-container>
-    
-    <!-- New Customer Mode -->
-    
-    <ng-container *ngIf="displayNewCustomerMode">
-        <button class="btn btn-primary mb-3" (click)="setDisplayNewCustomerMode()">Lista Dostawców<i class="fa fa-plus mx-2"></i></button>
-    
-        <app-create-customer (setCustomerEvent)="setCustomer($event)"></app-create-customer>
-    
-    </ng-container>
+Statystyki
