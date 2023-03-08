@@ -123,6 +123,7 @@ export class ProductCreateComponent implements OnInit {
     this.modalRef = this.modalService.show(CategoryModalComponent, this.modalConfig());
     this.modalRef.content.ChosenCategoryEvent.subscribe((res: Category) => {
         this.productForm.controls['categoryName'].setValue(res.name);
+        this.productForm.markAsDirty();
     });
 }
 
