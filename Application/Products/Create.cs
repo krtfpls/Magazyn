@@ -1,3 +1,4 @@
+using Application.Categories;
 using Application.Core;
 using AutoMapper;
 using Data;
@@ -44,13 +45,14 @@ public class Create
             Product newProduct = _mapper.Map<Product>(requestProduct);
             newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
 
-           string category = requestProduct.CategoryName.Trim().ToLower();
+            CategoryHandle category= new CategoryHandle(requestProduct.CategoryName, _context);
+            
+            if (category.isNew)
+                 return Result<Guid>.Failure("This Category don't exist!");
+            
+            newProduct.Category= category.Category;
             newProduct.Quantity = 0;
-            newProduct.Category= await _context.Categories
-                        .FirstOrDefaultAsync(x =>
-                            x.Name == category) ??
-                    new Category() { Name = category};
-            //Zdecyduj czy ID nadawane na Froncie czy na backendzie
+            
             newProduct.Id = new Guid();
             _context.Products.Add(newProduct);
 

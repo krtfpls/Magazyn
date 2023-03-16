@@ -1,3 +1,4 @@
+using Application.Categories;
 using Application.Core;
 using AutoMapper;
 using Data;
@@ -48,16 +49,12 @@ public class Edit
 
             if (product == null) return Result<Unit>.Failure("Can't find that Product");
 
-            string? category = requestProduct.CategoryName.Trim().ToLower();
+            CategoryHandle category= new CategoryHandle(requestProduct.CategoryName, _context);
 
-            if (category != null && product.Category.Name != category)
-            {
+            if (category.isNew)
+                 return Result<Unit>.Failure("This Category don't exist!");
 
-                product.Category = await _context.Categories
-                                     .FirstOrDefaultAsync(x =>
-                                     x.Name == category) ??
-                         new Category() { Name = category };
-            }
+            product.Category = category.Category;
 
             // ensure that quantity doesnt change
             requestProduct.Quantity = product.Quantity;
