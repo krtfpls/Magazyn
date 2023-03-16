@@ -9,12 +9,15 @@ import { Category } from 'src/app/_models/category';
 })
 export class CategoryModalComponent implements OnInit {
   @Output() ChosenCategoryEvent: EventEmitter<Category> = new EventEmitter<Category>();
-  
+  newCategory: boolean = false;
   title?: string = "Przewiń aby załadować więcej";
-  closeBtnName?: string = "Anuluj";
+  // closeBtnName?: string = "Anuluj";
   constructor(public bsModalRef: BsModalRef) { }
 
   ngOnInit(): void {
+  }
+  changeMode(){
+    this.newCategory= !this.newCategory;
   }
 
   categoryChosen(item: Category){

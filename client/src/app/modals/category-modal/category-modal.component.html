@@ -5,11 +5,11 @@
     </button>
   </div>
   <div class="modal-body">
-
-        <app-list-category (categoryEvent)="categoryChosen($event)"></app-list-category>
+    <div class="m-1">
+       <button *ngIf="!newCategory" class="btn btn-secondary" type="button" (click)="changeMode()">Dodaj Nową</button>
+       <button *ngIf="newCategory" class="btn btn-secondary" type="button" (click)="changeMode()">Wróć do listy</button>
+      </div>
+        <app-create-category *ngIf="newCategory" (CategoryEvent)="categoryChosen($event)" (backButtonEvent)="cancel()"></app-create-category>
+        <app-list-category *ngIf="!newCategory" (categoryEvent)="categoryChosen($event)"></app-list-category>
   
-  </div>
-  <div class="modal-footer">
-    <button class="btn btn-default" type="button" (click)="cancel()">{{closeBtnName}}</button>
-
   </div>

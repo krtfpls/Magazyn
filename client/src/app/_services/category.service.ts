@@ -14,4 +14,8 @@ categoryUrl = environment.apiUrl + 'category/';
   getCategories(page= 1){
     return this.http.get<Category[]>(this.categoryUrl+'?pageNumber='+page);
    }
+
+   createCategory(category: Category){
+    return this.http.post<Category>(this.categoryUrl, category);
+   }
 }

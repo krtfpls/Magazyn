@@ -25,9 +25,6 @@ export class ProductCreateComponent implements OnInit {
   product: ProductClass = new ProductClass();
   validationErrors: string[] | undefined;
   categories: Category[] = [];
-  page= 1;
-  throttle = 0;
-  distance = 2;
   modalOpen = false;
 
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
@@ -112,7 +109,6 @@ export class ProductCreateComponent implements OnInit {
       priceNetto: [product.priceNetto, [Validators.required, Validators.min(0), Validators.max(9999)]],
       serialNumber: [product.serialNumber, [Validators.maxLength(50)]],
       minLimit: [product.minLimit, [Validators.min(0), Validators.max(9999)]],
-
       description: [product.description, [Validators.maxLength(300)]],
       categoryName: [product.categoryName, [Validators.required]]
     });

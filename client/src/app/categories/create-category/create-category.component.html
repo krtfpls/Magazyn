@@ -1,1 +1,25 @@
-<p>create-category works!</p>
+<div class="row d-grid col-sm-6" >
+     <form [formGroup]="categoryForm" id="categoryForm" (ngSubmit)="categoryForm.valid && Create()">
+        <div class="mt-2 " >
+            <label>Nazwa Kategorii</label>
+            <app-text-input [formControl]="$any(categoryForm.controls['name'])" 
+            [label]="'Nazwa'">
+            </app-text-input>
+        </div>
+    </form>
+</div>
+
+<div class="row" *ngIf="validationErrors">
+    <ul class="text-danger">
+        <li *ngFor="let error of validationErrors">
+            {{error}}
+        </li>
+    </ul>
+</div>
+
+<div class="row mt-3 btn-group float-end">
+    <button type="submit" [disabled]="!categoryForm.dirty || !categoryForm.valid" form="categoryForm" class="btn btn-warning m-2">
+        Zapisz zmiany    
+    </button>
+    <button type="button" class="btn btn-light m-2" (click)="backButton()">Powrót</button>
+</div>
