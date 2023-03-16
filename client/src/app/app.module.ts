@@ -39,6 +39,7 @@ import { CustomerDashboardComponent } from './customers/customer-dashboard/custo
 import { ListCategoryComponent } from './categories/list-category/list-category.component';
 import { CategoryModalComponent } from './modals/category-modal/category-modal.component';
 import { ProductsListAllComponent } from './products/products-list-all/products-list-all.component';
+import { CreateCategoryComponent } from './categories/create-category/create-category.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { ProductsListAllComponent } from './products/products-list-all/products-
     CustomerDashboardComponent,
     ListCategoryComponent,
     CategoryModalComponent,
-    ProductsListAllComponent
+    ProductsListAllComponent,
+    CreateCategoryComponent
   ],
   imports: [
     BrowserAnimationsModule,
