@@ -39,7 +39,9 @@ namespace API.Controllers
             var user = new User
             {
                 UserName = registerDto.Username.ToUpper(),
-                //Email= registerDto.Username+"@test.pl"
+                FirstName= registerDto.Username.ToUpper(),
+                LastName= registerDto.Username.ToUpper(),
+                Email= registerDto.Username+"@test.pl"
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);

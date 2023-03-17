@@ -10,7 +10,13 @@ public abstract class CreateOutboundDocument : NewDocument
     public override DocumentLine UpdateProductLine(Product product, int qty)
     {
         // check if it's unique product
-        qty = (product.SerialNumber?.Length > 0) ? 1 : qty;
+        if (product.SerialNumber?.Length > 0)
+        {
+            if (product.Quantity == 1 || product.Quantity == 0)
+                qty = 1;
+            else
+                qty = 0;
+        }
 
         product.Quantity -= qty;
 

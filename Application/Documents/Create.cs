@@ -58,6 +58,7 @@ public class Create
  // Set Number
                 doc.Number = ((await _context.Documents
                                     .Where(year => year.Date.Year == doc.Date.Year)
+                                    .Where(user => user.User.UserName == doc.User.UserName)
                                     .CountAsync(type => type.Type.Id == doc.Type.Id)) + 1).ToString() + "/" + DateTime.Now.Year;
 
 //Set Lines
@@ -103,8 +104,8 @@ public class Create
                         productLines.Add(document.UpdateProductLine(product, documentLine.Quantity));
                         int index = productLines.Count-1;
                         
-                       if (!checkProduct(productLines[index].Product))
-                            badLines.Add(documentLine);
+                    //    if (!checkProduct(productLines[index].Product))
+                    //         badLines.Add(documentLine);
                     }
                 }
 
@@ -126,15 +127,15 @@ public class Create
                 }
             }
 
-            private bool checkProduct(Product? product)
-            {
+//             private bool checkProduct(Product? product)
+//             {
           
-// Check if unique item and so qty on storage cannot be less than -1 and gt than 1
-                 if ((product.SerialNumber?.Length > 0) && (product.Quantity< -1 || product.Quantity > 1))
-                    return false;
-                else
-                    return true;
-            }
+// // Check if unique item and so qty on storage cannot be less than -1 and gt than 1
+//                  if ((product.SerialNumber?.Length > 0) && (product.Quantity< -1 || product.Quantity > 1))
+//                     return false;
+//                 else
+//                     return true;
+//             }
         }
     };
 }
