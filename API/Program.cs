@@ -32,6 +32,7 @@ builder.Services.AddDbContext<DataContext>(opts =>
 builder.Services.AddMediatR(typeof(List.Handler).Assembly);
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
 builder.Services.AddCors();
 //Identity
 builder.Services.AddIdentityServices(builder.Configuration);
@@ -41,42 +42,42 @@ var app = builder.Build();
 // ExceptionMiddleware- Handle logs
 app.UseMiddleware<ExceptionMiddleware>();
 
-//app.UseHttpsRedirection();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+else {
+  //  app.UseHsts(); Same but manual:
+    app.Use(async (context, next) => {
+        context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
+        await next.Invoke();
+    });
+}
 
-//added by myself
+//app.UseHttpsRedirection();
+
+//My Addons **********************************
 app.UseRouting();
-
-//Cors place
-app.UseCors(x => x.AllowAnyHeader()
-        .AllowAnyMethod()
-        .WithOrigins(
-            "http://localhost:4200"
-        ));
-
-
-app.UseAuthentication();
-app.UseAuthorization();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-//added end
+//Cors place
+app.UseCors(x => x
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .WithOrigins("http://localhost:4200"));
 
-//app.MapControllers();
-
+app.UseAuthentication();
+app.UseAuthorization();
+app.MapControllers();
 // handle fallback to index
-app.UseEndpoints(endpoints =>
-          {
-              endpoints.MapControllers();
-              endpoints.MapFallbackToController("Index", "Fallback");
-          });
+    app.MapFallbackToController("Index", "Fallback");
+
+//My Addons end *****************************
 
 //SeedData
 using var scope = app.Services.CreateScope();

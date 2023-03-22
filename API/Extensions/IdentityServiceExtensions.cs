@@ -35,8 +35,13 @@ namespace API.Extensions
                                 .GetBytes(config["TokenKey"])),
                             ValidateIssuer = false,
                             ValidateAudience = false,
+                            ValidateLifetime= true,
+                            ClockSkew = TimeSpan.Zero
                         }
                         );
+            
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+                opt.TokenLifespan= TimeSpan.FromHours(3));
 
             return services;
         }
