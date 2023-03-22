@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Customer } from 'src/app/_models/Customer';
 import { CustomerParams } from 'src/app/_models/CustomerParams';
 import { Pagination } from 'src/app/_models/pagination';
@@ -14,6 +14,7 @@ customers: Customer[] = [];
 displayNewCustomerMode: boolean= false;
 pagination: Pagination | undefined;
 customerParams: CustomerParams | undefined;
+@Input() buttonChek: boolean = false;
 @Output() setCustomerEvent = new EventEmitter<Customer>();
 
   constructor(private customerService: CustomerService) { }

@@ -54,7 +54,7 @@ public class Create
 
                     Document? document = director.BuildDocument();
                     if (document == null)
-                        return Result<Guid>.Failure("Failed to create new Document. Check all values!");
+                        return Result<Guid>.Failure("Failed to create new Document. Check all values, an unique items!");
                     //Ready and save
                     _context.Add(document);
                     //Response               

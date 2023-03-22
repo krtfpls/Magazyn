@@ -1,7 +1,7 @@
 <!-- List Customer Mode -->
 <ng-container *ngIf="!displayNewCustomerMode">
     <button class="btn btn-primary mb-3" (click)="setDisplayNewCustomerMode()">Utwórz Dostawcę<i class="fa fa-plus mx-2"></i></button>
-        <app-list-customer (setCustomerEvent)="setCustomer($event)"></app-list-customer>
+        <app-list-customer (setCustomerEvent)="setCustomer($event)" [buttonChek]="true"></app-list-customer>
     </ng-container>
     
     <!-- New Customer Mode -->
