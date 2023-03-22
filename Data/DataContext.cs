@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Entities;
 using Entities.Documents;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -11,9 +7,7 @@ namespace Data
 {
     public class DataContext: IdentityDbContext<User>
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options){
-            
-        }
+        public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
         public DbSet<Product> Products {get;set;}
         public DbSet<Category> Categories {get;set;}

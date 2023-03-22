@@ -457,6 +457,7 @@ $RECYCLE.BIN/
 ## Moje wykluczenia
 ##
 
+customers_copy.json
 appsettings.json
 *.db
 *.db-*

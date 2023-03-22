@@ -16,7 +16,6 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddControllers().AddFluentValidation(config =>
 {
     config.RegisterValidatorsFromAssemblyContaining<Create>();
-    //config.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 }
 );
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -35,6 +35,7 @@ namespace Application.Documents.DocumentBuilder
             return doc;
         }
 
+//////////////////////////////////////////////
                 private async void setLines(IEnumerable<DocumentLine> lines, string userId)
                 {
                     if (lines != null)
