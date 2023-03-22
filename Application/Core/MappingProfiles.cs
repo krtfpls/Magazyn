@@ -30,6 +30,7 @@ public class MappingProfiles : Profile
         CreateMap<CustomerDto, Customer>();
         CreateMap<Category, CategoryDto>();
         CreateMap<ProductDto, Product>();
+        CreateMap<DocumentLine, DocumentLineDto>().ReverseMap();
         
     }
 }

@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Documents.DocumentBuilder;
 using Application.Documents.DocumentHelpers;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
@@ -16,14 +17,15 @@ public class Create
 {
     public class Command : IRequest<Result<Guid>>
     {
-        public NewDocument Document { get; set; }
+        public DocumentDto Document { get; set; }
+        public IDocumentBuilder builder {get;set;}
     }
 
     public class CommandValidator : AbstractValidator<Command>
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Document.newDocument).SetValidator(new DocumentsValidator());
+            RuleFor(x => x.Document).SetValidator(new DocumentsValidator());
         }
         public class Handler : IRequestHandler<Command, Result<Guid>>
         {
@@ -40,102 +42,31 @@ public class Create
 
             public async Task<Result<Guid>> Handle(Command request, CancellationToken cancellationToken)
             {
-                Document doc = new Document();
-                doc.User= await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
-
-//Set Customer
-                if ((doc.Customer = await _context.Customers.FindAsync(request.Document!.newDocument?.CustomerId)) == null)
-                    return Result<Guid>.Failure("Customer dont exist");
-
-// Set Date
-                doc.Date = request.Document.newDocument.Date;
+                if (request.Document != null && request.builder != null)
+                 {
+                   DocumentDto requestDocument= request.Document;
+                 
+                    DataContextDocumentDirector director = new DataContextDocumentDirector(_context, request.builder, _userAccessor.GetUserId());
                 
+                    IEnumerable<DocumentLine> lines = _mapper.Map<IEnumerable<DocumentLine>>(requestDocument.DocumentLines);
 
-// Set Type
-                if ((doc.Type = await _context.DocumentTypes.FirstOrDefaultAsync(type => type.Name == request.Document.newDocument.Type)) == null)
-                    return Result<Guid>.Failure("Wrong Document Type");
+                    director.SetDocument(requestDocument.CustomerId, lines, requestDocument.Date);
 
- // Set Number
-                doc.Number = ((await _context.Documents
-                                    .Where(year => year.Date.Year == doc.Date.Year)
-                                    .Where(user => user.User.UserName == doc.User.UserName)
-                                    .CountAsync(type => type.Type.Id == doc.Type.Id)) + 1).ToString() + "/" + DateTime.Now.Year;
-
-//Set Lines
-
-                try
-                {
-                    doc.DocumentLines = await setDocumentLines(request.Document, doc.User);
+                    Document? document = director.BuildDocument();
+                    if (document == null)
+                        return Result<Guid>.Failure("Failed to create new Document. Check all values!");
+                    //Ready and save
+                    _context.Add(document);
+                    //Response               
+                    var result = await _context.SaveChangesAsync() > 0;
+                    if (!result)
+                        return Result<Guid>.Failure("Failed to create new Document");
+                    return Result<Guid>.Success(document.Id);
                 }
-                catch (InvalidLineException err)
-                {
-                    return Result<Guid>.Failure(err.Message);
-                }
-
-//Ready and save
-                doc.Id= new Guid();
-                _context.Add(doc);
-//Response               
-                var result = await _context.SaveChangesAsync() > 0;
-                if (!result)
-                    return Result<Guid>.Failure("Failed to create new Document");
-                return Result<Guid>.Success(doc.Id);
+                else {
+                    return Result<Guid>.Failure("Failed to create new Document. Document is probably Empty");
+                };
             }
-
-
-// Private Methods
-            private async Task<IEnumerable<DocumentLine>> setDocumentLines(NewDocument document, User user)
-            {
-                var productLines = new List<DocumentLine>();
-                var badLines = new List<DocumentLineDto>();
-                
-                foreach (DocumentLineDto documentLine in document.newDocument.DocumentLines)
-                {
-                    Product? product = await _context.Products
-                                    .Include(u => u.User)
-                                    .Where(u => u.User.Id == user.Id)
-                                    .FirstOrDefaultAsync(x => x.Id == documentLine.ProductId);
-
-                    if (product == null){
-                        badLines.Add(documentLine);
-                    }
-                    else
-                    {
-                        productLines.Add(document.UpdateProductLine(product, documentLine.Quantity));
-                        int index = productLines.Count-1;
-                        
-                    //    if (!checkProduct(productLines[index].Product))
-                    //         badLines.Add(documentLine);
-                    }
-                }
-
-                if (badLines.Count() > 0)
-                {
-                    string message = "Failed to add product on lines: " + System.Environment.NewLine;
-                        foreach (var item in badLines)
-                        {
-
-                            message += "Position: " + item.Id + " item id: " + item.ProductId + " Qty: " + item.Quantity + ", " + System.Environment.NewLine;
-                        }
-                            message+= "Products don't exists or trying to add unique item with plural numbers";
-                
-                    throw new InvalidLineException(message);
-                }
-                else
-                {
-                    return productLines;
-                }
-            }
-
-//             private bool checkProduct(Product? product)
-//             {
-          
-// // Check if unique item and so qty on storage cannot be less than -1 and gt than 1
-//                  if ((product.SerialNumber?.Length > 0) && (product.Quantity< -1 || product.Quantity > 1))
-//                     return false;
-//                 else
-//                     return true;
-//             }
         }
-    };
+    }
 }

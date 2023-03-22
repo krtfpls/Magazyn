@@ -8,19 +8,19 @@ namespace Entities.Documents
 
         [Required]
         [StringLength(100)]
-        public string Name {get; set;}= string.Empty;
+        public string Name {get; set;}
 
         [Required]
         [StringLength(100)]
-        public string Street {get;set;} = string.Empty;
+        public string Street {get;set;}
     
         [Required]
         [StringLength(100)]
-        public string StreetNumber {get;set;} = string.Empty;
+        public string StreetNumber {get;set;}
         
         [Required]
         [StringLength(100)]
-        public string City {get;set;} = string.Empty;
+        public string City {get;set;}
 
         [StringLength(100)]
         public string? TaxNumber {get;set;}

@@ -234,15 +234,7 @@ public class Seed
                                 Description = "patchcord testowy",
                                 Category = context.Categories.SingleOrDefault(x => x.Name == "Patchcord".ToLower())
                             }
-                    //         },new Product
-                    // {
-                    //     Name = "patchcord 0,5m",
-                    //     SerialNumber = "",
-                    //     PriceNetto = 5,
-                    //     MinLimit = 20,
-                    //     Description = "patchcord testowy",
-                    //     Category = context.Categories.SingleOrDefault(x => x.Name == "Patchcord".ToLower())
-                    // },
+
          };
     }
 
@@ -313,11 +305,15 @@ public class Seed
         return new List<DocumentType>{
             new DocumentType{
                 Name = "PZ",
-                isIncomeType=true
             },
             new DocumentType{
                 Name = "WZ",
-                isIncomeType=false
+            },
+              new DocumentType{
+                Name = "GoodsReceiptNote",
+            },
+              new DocumentType{
+                Name = "GoodsDispachedNote",
             }
             };
     }

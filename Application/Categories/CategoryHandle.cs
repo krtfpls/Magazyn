@@ -15,10 +15,10 @@ namespace Application.Categories
         {
             this._context = context;
             this._name = name.Trim().ToLower();
-            CheckCategory();
+            PrepareCategory();
         }
 
-        private async void CheckCategory()
+        private async void PrepareCategory()
         {
             Category = await _context.Categories
                     .FirstOrDefaultAsync(x =>

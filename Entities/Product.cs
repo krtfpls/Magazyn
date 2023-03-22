@@ -28,8 +28,13 @@ namespace Entities
         public string? Description { get; set; }
 
         [Required]
-        public Category Category { get; set; }
+        public int CategoryId { get; set; }
+
+        [Required]
+        public Category? Category { get; set; }
         
+        [Required]
+        public string UserId {get;set;}
         [Required]
         public User User {get;set;}
     }

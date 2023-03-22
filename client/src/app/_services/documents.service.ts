@@ -31,10 +31,10 @@ export class DocumentsService {
 
     switch (docType){
       case DocumentType.PZ:
-        return this.http.post<DocumentEntity>(this.baseUrl+'CreatePZ', doc);
+        return this.http.post<DocumentEntity>(this.baseUrl+'GoodsReceiptNote', doc);
         break;
       case DocumentType.WZ:
-        return this.http.post<DocumentEntity>(this.baseUrl+'CreateWZ', doc);
+        return this.http.post<DocumentEntity>(this.baseUrl+'GoodsDispatchNote', doc);
         break;
       default:
         return {} as Observable<DocumentEntity>;

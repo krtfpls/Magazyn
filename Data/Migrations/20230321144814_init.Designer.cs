@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230109210513_init")]
+    [Migration("20230321144814_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -144,9 +144,6 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("isIncomeType")
-                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 

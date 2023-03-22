@@ -1,5 +1,5 @@
 using Application.Documents;
-using Application.Documents.DocumentHelpers;
+using Application.Documents.DocumentBuilder;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,16 +21,16 @@ public class DocumentsController: BaseApiController
     }
 
 
-    [HttpPost("CreatePZ")]
-    public async Task<IActionResult> CreateInbound(DocumentDto document)
+    [HttpPost("GoodsReceiptNote")]
+    public async Task<IActionResult> GoodsReceiptNote(DocumentDto document)
     {
-        return HandleResult(await Mediator.Send(new Create.Command { Document = new CreatePZDocument(document)}));
+        return HandleResult(await Mediator.Send(new Create.Command { Document = document, builder= new GoodsReceiptNoteBuilder()}));
     }
 
-     [HttpPost("CreateWZ")]
-    public async Task<IActionResult> CreateOutbound(DocumentDto document)
+     [HttpPost("GoodsDispatchNote")]
+    public async Task<IActionResult> GoodsDispatchNote(DocumentDto document)
     {
-        return HandleResult(await Mediator.Send(new Create.Command { Document = new CreateWZDocument(document)}));
+        return HandleResult(await Mediator.Send(new Create.Command { Document = document, builder = new GoodsDispatchNoteBuilder()}));
     }
      
 }
