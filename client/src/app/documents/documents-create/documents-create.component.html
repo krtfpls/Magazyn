@@ -5,7 +5,7 @@
     </ng-container>
 
     <ng-container *ngIf="displayCustomerMode">
-        <app-document-create-header (backEvent)="displayModeChange()" 
+        <app-document-create-header (backButtonEvent)="displayModeChange()" 
         (setCustomerEvent)="setCustomer($event)"
         [type]="type"
         [number]="number"

@@ -13,7 +13,7 @@ export class DocumentUnsavedChangesGuardGuard implements CanDeactivate<Documents
   constructor (private confirmService: ConfirmService) {}
 
   canDeactivate(component: DocumentsCreateComponent): Observable<boolean> {
-    if (component.documentLines.length > 0) {
+    if (component.documentLines && component.documentLines.length > 0) {
       return this.confirmService.confirm()
     }
 

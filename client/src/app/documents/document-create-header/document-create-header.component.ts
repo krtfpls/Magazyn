@@ -18,7 +18,7 @@ date: Date = new Date();
 customer: Customer | undefined;
 bsConfig: Partial<BsDatepickerConfig> | undefined;
 displayCustomerMode: boolean = false;
-@Output() backEvent= new EventEmitter();
+@Output() backButtonEvent= new EventEmitter();
 @Output() setCustomerEvent = new EventEmitter<Customer>();
 @Output() headerDoneEvent = new EventEmitter<string>();
 
@@ -46,8 +46,8 @@ constructor(private localeService: BsLocaleService) {
       return true;
   }
 
-  backButtonEvent(){
-    this.backEvent.emit();
+  backButton(){
+    this.backButtonEvent.emit();
   }
 
   displayCustomerModeChange() {

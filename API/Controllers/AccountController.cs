@@ -58,6 +58,10 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            if (!ModelState.IsValid){
+                return ValidationProblem();
+            }
+
             var user = await _userManager.FindByNameAsync(loginDto.Username.ToUpper());
 
             if (user == null) return Unauthorized("Invalid username");

@@ -18,11 +18,11 @@ export class DocumentCreateLinesComponent implements OnInit {
   displayNewProductMode: boolean = false;
   documentLinesHandle: DocumentLineHandle;
 
-  @Input() lines: DocumentLine[] = {} as DocumentLine[]; 
+  @Input() lines: DocumentLine[] | undefined; 
   @Output() listDone= new EventEmitter<DocumentLine[]>();
 
   constructor(private modalService: BsModalService) { 
-    if (this.lines.length > 0)
+    if (this.lines && this.lines.length > 0)
     this.documentLinesHandle = new DocumentLineHandle(this.lines);
     else
     this.documentLinesHandle = new DocumentLineHandle();

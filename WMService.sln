@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{F99F2AF1-81A4-459E-9280-939A41712D9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMService.Tests", "WMService.Tests\WMService.Tests.csproj", "{06A34710-CBE4-4BC3-8ED1-667482D866C6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WMService.Tests", "WMService.Tests\WMService.Tests.csproj", "{727F2FEA-9112-487F-9CB4-45FF330628AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,5 +46,9 @@ Global
 		{06A34710-CBE4-4BC3-8ED1-667482D866C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06A34710-CBE4-4BC3-8ED1-667482D866C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06A34710-CBE4-4BC3-8ED1-667482D866C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{727F2FEA-9112-487F-9CB4-45FF330628AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{727F2FEA-9112-487F-9CB4-45FF330628AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{727F2FEA-9112-487F-9CB4-45FF330628AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{727F2FEA-9112-487F-9CB4-45FF330628AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

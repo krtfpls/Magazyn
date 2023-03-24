@@ -21,7 +21,7 @@ export class DocumentsCreateComponent implements OnInit {
   displayCustomerMode: boolean  = false;
   displayLinesMode: boolean = true;
   type: DocumentType | undefined;
-  documentLines: DocumentLine[]= {} as DocumentLine[];
+  documentLines: DocumentLine[] | undefined;
   
   constructor(private documentService: DocumentsService, private router: Router, private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe(params => this.type = params['type']);
