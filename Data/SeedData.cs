@@ -14,6 +14,7 @@ public class Seed
            if (!context.Users.Any())
         {
             var _user = setUser();
+            _user.EmailConfirmed = true;
             userManager.CreateAsync(_user, "P@ssword1");
         }
 
@@ -55,7 +56,7 @@ public class Seed
             UserName = "admin",
             FirstName= "admin",
             LastName= "admin",
-            Email = "admin@test.pl"
+            Email = "admin@test.com"
         };
 
         return user;

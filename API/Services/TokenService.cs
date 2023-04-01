@@ -23,7 +23,8 @@ namespace API.Services
         {
             var claims = new List<Claim> {
                 new Claim(JwtRegisteredClaimNames.NameId, user.Id),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName)
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
+                //new Claim(ClaimTypes.Email, user.Email)
         };
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
@@ -31,10 +32,12 @@ namespace API.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddHours(3), // How long the token have to been active?
+                Expires = DateTime.UtcNow.AddMinutes(1), // How long the token have to been active?
                 SigningCredentials = creds,
                 Issuer= _issuer,
-                Audience= _audience
+                Audience= _audience,
+
+                NotBefore=DateTime.UtcNow
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();

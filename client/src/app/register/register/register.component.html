@@ -4,8 +4,20 @@
         <h2 class="text-center text-secondary mt-5">Zarejestruj się</h2>
         <hr>
         <div>
+        <app-text-input [formControl]="$any(registerForm.controls['email'])" 
+            [label]="'Email'">
+        </app-text-input>
+        
         <app-text-input [formControl]="$any(registerForm.controls['username'])" 
             [label]="'Nazwa użytkownika'">
+        </app-text-input>
+
+        <app-text-input [formControl]="$any(registerForm.controls['firstname'])" 
+            [label]="'Imię'">
+        </app-text-input>
+        
+        <app-text-input [formControl]="$any(registerForm.controls['lastname'])" 
+            [label]="'Nazwisko'">
         </app-text-input>
 
         <app-text-input [formControl]="$any(registerForm.controls['password'])" 
@@ -15,6 +27,7 @@
             [label]="'Potwierdź hasło'"
             [type]="'password'"></app-text-input>
         </div>
+        
         <div class="row" *ngIf="validationErrors">
             <ul class="text-danger">
                 <li *ngFor="let error of validationErrors">

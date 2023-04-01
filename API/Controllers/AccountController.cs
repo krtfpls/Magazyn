@@ -1,85 +1,203 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using API.DTOs;
+using API.Infrastructure;
 using API.Services;
 using Data;
 using Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [AllowAnonymous]
     public class AccountController : BaseApiController
     {
         private readonly ITokenService _tokenService;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly LocalEmailSender _emailSender;
 
-        public AccountController(ITokenService tokenService, UserManager<User> userManager, 
-                SignInManager<User> signInManager)
+        public AccountController(ITokenService tokenService, UserManager<User> userManager,
+                SignInManager<User> signInManager, LocalEmailSender emailSender)
         {
+            _emailSender = emailSender;
             _tokenService = tokenService;
             _userManager = userManager;
             _signInManager = signInManager;
         }
 
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return ValidationProblem();
+            }
+
+            var user = await _userManager.FindByEmailAsync(loginDto.Email.ToLower());
+
+            if (user == null) return Unauthorized("Invalid email");
+
+            if (!user.EmailConfirmed) return Unauthorized("Email not confirmed");
+
+            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded) return Unauthorized("Problem with login");
+
+            return await CreateUserObject(user);
+        }
+
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
 
-            if (!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return ValidationProblem();
-                }
+            }
 
-            if (await UserExists(registerDto.Username)) return BadRequest("Ta nazwa użytkownika jest zajęta");
+            if (await _userManager.Users.AnyAsync(x => x.NormalizedEmail == registerDto.Email.ToUpper())){
+                
+                ModelState.AddModelError("email", "This email is taken. Try to remeber password option");
+                return ValidationProblem();
+            }
+
+            if (await _userManager.Users.AnyAsync(x => x.NormalizedUserName == registerDto.UserName.ToUpper())){
+                 ModelState.AddModelError("UserName", "This username is taken");
+                return ValidationProblem();
+            }
 
             var user = new User
             {
-                UserName = registerDto.Username.ToUpper(),
-                FirstName= registerDto.Username.ToUpper(),
-                LastName= registerDto.Username.ToUpper(),
-                Email= registerDto.Username+"@test.pl"
+                UserName = registerDto.UserName.ToLower(),
+                FirstName = registerDto.FirstName.ToLower(),
+                LastName = registerDto.LastName.ToLower(),
+                Email = registerDto.Email.ToLower()
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if (!result.Succeeded) return BadRequest(result.Errors); 
+            if (!result.Succeeded) return BadRequest(result.Errors);
 
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = await _tokenService.CreateToken(user)
-            };
+            var origin = Request.Headers["origin"];
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+            //var callback = Url.Action(nameof(VerifyEmail), "Account", new {token=token, email=user.Email}, Request.Scheme);
+            var message = $"<p>Kliknij poniższy link aby potwierdzić rejestrację konta</p><a href='{verifyUrl}'>Potwierdź email</a>";
+
+            await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+
+            return Ok(JsonSerializer.Serialize("Register Successfully. Chek your email inbox and confirm to finish"));
+            //return await CreateUserObject(user);
+        }
+        
+        [AllowAnonymous]
+        [HttpPost("verifyEmail")]
+        public async Task<ActionResult> VerifyEmail(EmailDto email){
+
+             if (!ModelState.IsValid){
+                return ValidationProblem();
+            }
+
+            var user = await _userManager.FindByEmailAsync(email.Email);
+                if (user == null || email.Token == null) return Unauthorized();
+
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(email.Token);
+            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+            var result = await _userManager.ConfirmEmailAsync(user, decodedToken);
+
+            if (!result.Succeeded) return BadRequest("Could not verify email address");
+
+            return Ok(JsonSerializer.Serialize("Email confirmed - you can login now"));
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
-        {
+        [AllowAnonymous]
+        [HttpPost("resendEmailConfirmationLink")]
+        public async Task<IActionResult> ResendEmailConfirmationLink(EmailDto email){
+            
+             if (!ModelState.IsValid){
+                return ValidationProblem();
+            }
+            
+            var user = await _userManager.FindByEmailAsync(email.Email);
+             if (user == null) return Unauthorized();
+
+                var origin = Request.Headers["origin"];
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+                var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
+                //var callback = Url.Action(nameof(VerifyEmail), "Account", new {token=token, email=user.Email}, Request.Scheme);
+              
+                  var message = $"<p>Kliknij poniższy link aby potwierdzić rejestrację konta</p><a href='{verifyUrl}'>Potwierdź email</a>";
+
+            await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
+             return Ok(JsonSerializer.Serialize("Resended token again"));
+        }
+
+        [AllowAnonymous]
+       // [ValidateAntiForgeryToken]
+        [HttpPost("ForgotPassword")]
+        public async Task<ActionResult> ForgotPassword(EmailDto email){
+
             if (!ModelState.IsValid){
                 return ValidationProblem();
             }
 
-            var user = await _userManager.FindByNameAsync(loginDto.Username.ToUpper());
+            var user = await _userManager.FindByEmailAsync(email.Email);
+                if (user == null) 
+                    return Unauthorized();
 
-            if (user == null) return Unauthorized("Invalid username");
+           // var origin = Request.Headers["Host"];
+           // Console.WriteLine(origin);
+            var tokenToSend = await _userManager.GeneratePasswordResetTokenAsync(user);
+                tokenToSend = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(tokenToSend));
+                
+            //var verifyUrl = $"{origin}/account/ResetPassword?token={token}&email={user.Email}";
+            var callback = Url.Action(nameof(ResetPassword), "Account", new {token=tokenToSend, email=user.Email}, Request.Scheme);
+               
+            var message = $"<p>Kliknij poniższy link do resetu hasła: </p><a href='{callback}'>resetuj hasło</a>";
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-            if (!result.Succeeded) return Unauthorized();
-
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = await _tokenService.CreateToken(user)
-        };
+            await _emailSender.SendEmailAsync(user.Email, "WMService password reset", message);
+        
+            return Ok(JsonSerializer.Serialize("Reset password token was send to your email- check your inbox"));
         }
 
-        private async Task<bool> UserExists(string username)
+        [AllowAnonymous]
+        [HttpPost("ResetPassword")]
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPassword){
+
+             if (!ModelState.IsValid){
+                return ValidationProblem();
+            }
+
+            var user = await _userManager.FindByEmailAsync(resetPassword.Email);
+                if (user == null) return Unauthorized();
+
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(resetPassword.Token);
+            var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, resetPassword.Password);
+
+            if (!result.Succeeded) return BadRequest("Could not reset your password");
+            
+            return Ok(JsonSerializer.Serialize("Your password has been reset"));
+        }
+
+          private async Task<UserDto> CreateUserObject(User user)
         {
-            return await _userManager.Users.AnyAsync(x => x.UserName == username.ToUpper());
+            return new UserDto{
+                    Username = user.UserName,
+                    Token = await _tokenService.CreateToken(user)
+                };
         }
     }
 }

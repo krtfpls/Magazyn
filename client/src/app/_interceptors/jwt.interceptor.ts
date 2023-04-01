@@ -23,6 +23,11 @@ export class JwtInterceptor implements HttpInterceptor {
             }
           })
         }
+      },
+      error: err => {
+        if ([401,403].includes(err.status) && this.accountService.currentUser$){
+          this.accountService.logout();
+        }
       }
     })
     

@@ -1,5 +1,9 @@
+using API.Infrastructure;
 using API.Services;
+using Application.Documents;
 using Entities.interfaces;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using static API.Services.Security;
 
 namespace API.Extensions
@@ -11,6 +15,9 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserAccessor, UserAccessor>();
 
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining<Create>();
+            services.AddScoped<LocalEmailSender>();
              return services;
         }
     }

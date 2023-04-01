@@ -18,8 +18,8 @@ namespace API.Extensions
             {
                 opt.Password.RequireNonAlphanumeric= false;
                 opt.Password.RequiredLength=8;
-                //opt.User.RequireUniqueEmail=true;
-               // opt.SignIn.RequireConfirmedEmail = true;
+                opt.User.RequireUniqueEmail=true;
+                opt.SignIn.RequireConfirmedEmail = true;
             })
             .AddEntityFrameworkStores<DataContext>()
             .AddSignInManager<SignInManager<User>>()
@@ -38,7 +38,10 @@ namespace API.Extensions
                             ValidateLifetime= true,
                             ValidAudience=config["JWT:ValidAudience"],
                             ValidIssuer= config["JWT:ValidIssuer"],
-                            ClockSkew = TimeSpan.Zero
+                            ClockSkew = TimeSpan.Zero,
+
+                            RequireSignedTokens= true,
+                            RequireExpirationTime= true
                         }
                         );
             

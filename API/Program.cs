@@ -3,9 +3,10 @@ using Application.Core;
 using Application.Products;
 using Data;
 using Entities;
-using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,11 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddControllers().AddFluentValidation(config =>
+
+builder.Services.AddControllers(opt =>
 {
-    config.RegisterValidatorsFromAssemblyContaining<Create>();
-}
-);
+var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+opt.Filters.Add(new AuthorizeFilter(policy));
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -49,7 +52,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 else {
-  //  app.UseHsts(); Same but manual:
+    //app.UseHsts(); // Same but manual:
     app.Use(async (context, next) => {
         context.Response.Headers.Add("Strict-Transport-Security", "max-age=31536000");
         await next.Invoke();
@@ -61,8 +64,8 @@ else {
 //My Addons **********************************
 app.UseRouting();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
+//app.UseDefaultFiles();
+//app.UseStaticFiles();
 
 //Cors place
 app.UseCors(x => x
@@ -75,7 +78,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 // handle fallback to index
-    app.MapFallbackToController("Index", "Fallback");
+   // app.MapFallbackToController("Index", "Fallback");
 
 //My Addons end *****************************
 

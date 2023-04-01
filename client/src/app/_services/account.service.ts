@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
-import { User } from '../_models/user';
 import {map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Email, User } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +35,10 @@ currentUser$ = this.currentUserSource.asObservable();
         }
       })
     )
+  }
+
+  resendEmail(email: Email){
+    return this.http.post(this.baseUrl+'account/resendEmailConfirmationLink', email)
   }
 
   logout() {

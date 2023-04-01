@@ -16,6 +16,7 @@ import { ProductCreateComponent } from './products/product-create/product-create
 import { ProductsDetailComponent } from './products/products-detail/products-detail.component';
 import { ProductsListAllComponent } from './products/products-list-all/products-list-all.component';
 import { ProductsListComponent } from './products/products-list/products-list.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
@@ -37,7 +38,8 @@ const routes: Routes = [
     {path: 'customersCreate', component: CreateCustomerComponent},
     {path: 'customerList', component: ListCustomerComponent},
     {path: 'categoryList', component: ListCategoryComponent},
-    {path: 'categoryCreate', component: CreateCategoryComponent}
+    {path: 'categoryCreate', component: CreateCategoryComponent},
+    {path: 'editProfile', component: EditProfileComponent}
   ]
   },
   {path: 'not-found', component: NotFoundComponent},

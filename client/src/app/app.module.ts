@@ -40,6 +40,8 @@ import { ListCategoryComponent } from './categories/list-category/list-category.
 import { CategoryModalComponent } from './modals/category-modal/category-modal.component';
 import { ProductsListAllComponent } from './products/products-list-all/products-list-all.component';
 import { CreateCategoryComponent } from './categories/create-category/create-category.component';
+import { ResendEmailComponent } from './register/resend-email/resend-email.component';
+import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +74,9 @@ import { CreateCategoryComponent } from './categories/create-category/create-cat
     ListCategoryComponent,
     CategoryModalComponent,
     ProductsListAllComponent,
-    CreateCategoryComponent
+    CreateCategoryComponent,
+    ResendEmailComponent,
+    EditProfileComponent
   ],
   imports: [
     BrowserAnimationsModule,

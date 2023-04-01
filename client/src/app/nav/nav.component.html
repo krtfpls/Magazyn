@@ -115,7 +115,7 @@
                 <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>Welcome
                     {{user.username}}</a>
                 <div class="dropdown-menu mt-3" *dropdownMenu>
-                    <a class="dropdown-item" routerLink="/">Edit Profile</a>
+                    <a class="dropdown-item" routerLink="/editProfile">Edit Profile</a>
                     <a class="dropdown-item" (click)="logout()">Logout</a>
                 </div>
             </div>
@@ -124,8 +124,8 @@
         <ng-container>
             <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex mt-2 mt-md-0"
                 (ngSubmit)="login()" autocomplete="off">
-                <input name="username" [(ngModel)]="model.username" class="form-control me-sm-2" type="text"
-                    placeholder="Username">
+                <input name="email" [(ngModel)]="model.email" class="form-control me-sm-2" type="text"
+                    placeholder="Email">
                 <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
                     placeholder="Password">
                 <button class="btn btn-light my-2 my-sm-0" type="submit">Login</button>
