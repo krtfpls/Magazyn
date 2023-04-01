@@ -63,7 +63,7 @@ namespace Application.Documents.DocumentBuilder
                 return null;
                     }
             if (document.Date == null)
-                document.Date= DateOnly.FromDateTime(DateTime.Now);
+                document.Date= DateOnly.FromDateTime(DateTime.UtcNow);
 
             document.DocumentLines= documentLines;
 

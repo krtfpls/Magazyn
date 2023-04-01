@@ -87,7 +87,7 @@ namespace Application.Documents.DocumentBuilder
                 {
                     if (userId != null)
                     {
-                        int date = DateTime.Now.Year;
+                        int date = DateTime.UtcNow.Year;
 
                         string number = ((await _context.Documents
                                 .Where(year => year.Date.Year == date)
