@@ -42,6 +42,8 @@ import { ProductsListAllComponent } from './products/products-list-all/products-
 import { CreateCategoryComponent } from './categories/create-category/create-category.component';
 import { ResendEmailComponent } from './register/resend-email/resend-email.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { ForgotPasswordComponent } from './register/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
     ProductsListAllComponent,
     CreateCategoryComponent,
     ResendEmailComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserAnimationsModule,

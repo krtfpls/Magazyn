@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   registerMode = false;
   resendMode = false;
+  forgotMode = false;
 
   constructor() { }
 
@@ -15,19 +16,28 @@ export class HomeComponent implements OnInit {
     
   }
 
+  forgotToggle(){
+    this.forgotMode=true;
+    this.resendMode = false;
+    this.registerMode= false;
+  }
+
   registerToggle() {
     this.registerMode= true;
     this.resendMode = false;
+    this.forgotMode=false;
   }
 
   reSendEmailToggle(){
     this.resendMode= true;
-    this.registerMode= false;
+    this.registerMode= false;   
+    this.forgotMode=false;
   }
 
   cancelModes (event: boolean){
     this.registerMode= event;
     this.resendMode= event;
+    this.forgotMode= event;
   }
 
 }

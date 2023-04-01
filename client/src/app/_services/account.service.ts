@@ -3,21 +3,21 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Email, User } from '../_models/user';
+import { Email, passwordChangeModel, User, userProfile } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
-baseUrl = environment.apiUrl;
+baseUrl = environment.apiUrl+ 'account/';
 private currentUserSource = new ReplaySubject<User | null>(1);
 currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
   login(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
@@ -28,7 +28,7 @@ currentUser$ = this.currentUserSource.asObservable();
   }
 
   register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'register', model).pipe(
       map(user => {
         if (user) {
          this.setCurrentUser(user);
@@ -37,8 +37,20 @@ currentUser$ = this.currentUserSource.asObservable();
     )
   }
 
+  changePassword(password: passwordChangeModel){
+    return this.http.post<any>(this.baseUrl+'ChangePassword', password);
+  }
+
+  getUserProfile(){
+    return this.http.get<userProfile>(this.baseUrl+'GetUserProfile');
+  }
+
   resendEmail(email: Email){
-    return this.http.post(this.baseUrl+'account/resendEmailConfirmationLink', email)
+    return this.http.post(this.baseUrl+'resendEmailConfirmationLink', email);
+  }
+
+  forgotPassword(email: Email){
+    return this.http.post(this.baseUrl+'ForgotPassword', email);
   }
 
   logout() {

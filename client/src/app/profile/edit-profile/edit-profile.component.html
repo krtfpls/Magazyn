@@ -1,1 +1,18 @@
-<p>edit-profile works!</p>
+<div *ngIf="user" class="card" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Nazwa: {{user.userName}}</h5>
+      <p class="card-text">Twoje role: </p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">Imię: {{user.firstName}}</li>
+      <li class="list-group-item">Nazwisko: {{user.lastName}}</li>
+      <li class="list-group-item">email: {{user.email}}</li>
+    </ul>
+    <div class="card-body">
+        <button (click)="changePasswordMode()" class="btn btn-danger">Zmień hasło</button>
+    </div>
+  </div>
+<div *ngIf="passwordMode" class="mt-5">
+  <app-change-password (cancelResetEvent)="changePasswordMode()"></app-change-password>
+</div>

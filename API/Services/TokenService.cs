@@ -32,7 +32,7 @@ namespace API.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddMinutes(1), // How long the token have to been active?
+                Expires = DateTime.UtcNow.AddHours(3), // How long the token have to been active?
                 SigningCredentials = creds,
                 Issuer= _issuer,
                 Audience= _audience,
