@@ -9,14 +9,10 @@ namespace API.Services
     public class TokenService : ITokenService
     {
         private readonly SymmetricSecurityKey _key;
-        private readonly string _issuer;
-        private readonly string _audience;
 
         public TokenService(IConfiguration config)
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Secret"]));
-            _issuer = config["JWT:ValidIssuer"];
-            _audience = config["JWT:ValidAudience"];
         }
 
         public async Task<string> CreateToken(User user)
@@ -34,9 +30,6 @@ namespace API.Services
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddHours(3), // How long the token have to been active?
                 SigningCredentials = creds,
-                Issuer= _issuer,
-                Audience= _audience,
-
                 NotBefore=DateTime.UtcNow
             };
 

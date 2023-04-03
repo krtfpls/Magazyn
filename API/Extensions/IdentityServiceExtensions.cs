@@ -33,11 +33,9 @@ namespace API.Extensions
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
                                 .GetBytes(config["JWT:Secret"])),
-                            ValidateIssuer = true,
-                            ValidateAudience = true,
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
                             ValidateLifetime= true,
-                            ValidAudience=config["JWT:ValidAudience"],
-                            ValidIssuer= config["JWT:ValidIssuer"],
                             ClockSkew = TimeSpan.Zero,
 
                             RequireSignedTokens= true,
