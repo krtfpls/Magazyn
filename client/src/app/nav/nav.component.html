@@ -7,8 +7,7 @@
             navbar-toggler-icon
             d-flex
             align-items-center
-            justify-content-center
-          ">
+            justify-content-center">
             </span>
         </button>
 
@@ -16,6 +15,7 @@
 <!-- Dashboard -->
             <ul class="navbar-nav me-auto">
                 <ng-container *ngIf="accountService.currentUser$ | async">
+
                     <div class="btn-group" dropdown container="body">
                         <button id="button-Dasboard" dropdownToggle type="button" class="btn btn-dark"
                         routerLink='/dashboard' routerLinkActive='active'
@@ -24,12 +24,13 @@
                         </button>
                     </div>
 <!-- Documents -->
-                    <div class="btn-group" dropdown container="body">
+                    <div class="btn-group" dropdown container="body" [autoClose]="false">
                         <button id="button-Documents" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
                             aria-controls="button-Documents">
                             Dokumenty <span class="caret"></span>
                         </button>
-                        <ul id="dropdown-DocumentList" *dropdownMenu class="dropdown-menu" role="menu"
+
+                        <ul id="dropdown-DocumentList" *dropdownMenu class="dropdown-menu" role="menu" 
                             aria-labelledby="button-Documents">
                             <li role="menuitem"><a class="dropdown-item" routerLink='/documentsList'
                                     routerLinkActive='active'>
@@ -37,14 +38,14 @@
                                 </a></li>
                             <li role="menuitem" dropdown triggers="mouseover"
                                  placement="right" container="body">
-                                <a dropdownToggle class="dropdown-item dropdown-toggle" 
+                                <a dropdownToggle class="dropdown-item dropdown-toggle" (click)="false"
                                 >Nowy Dokument<span class="caret"></span></a>
                                 <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                    <li role="menuitem"><a class="dropdown-item" routerLink='/documentsCreate/PZ'
+                                    <li role="menuitem"><a class="dropdown-item" fragment="nested-dropdowns" routerLink='/documentsCreate/PZ'
                                             routerLinkActive='active'>
                                             PZ
                                         </a></li>
-                                    <li role="menuitem"><a class="dropdown-item" routerLink='/documentsCreate/WZ'
+                                    <li role="menuitem"><a class="dropdown-item" fragment="nested-dropdowns" routerLink='/documentsCreate/WZ'
                                             routerLinkActive='active'>
                                             WZ
                                         </a></li>
@@ -111,8 +112,8 @@
                 </ng-container>
             </ul>
 
-            <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-                <a class="dropdown-toggle text-light text-decoration-none ms-2" dropdownToggle>Welcome
+            <div class="dropdown mt-2" *ngIf="(accountService.currentUser$ | async) as user" dropdown placement="bottom right">
+                <a class="dropdown-toggle text-light text-decoration-none me-auto" dropdownToggle>Witaj
                     {{user.username}}</a>
                 <div class="dropdown-menu mt-3" *dropdownMenu>
                     <a class="dropdown-item" routerLink="/editProfile">Edit Profile</a>
@@ -120,16 +121,21 @@
                 </div>
             </div>
 
-        </ngx-navbar-collapse>
-        <ng-container>
-            <form *ngIf="(accountService.currentUser$ | async) === null" #loginForm="ngForm" class="d-flex mt-2 mt-md-0"
+
+        <ng-container *ngIf="(accountService.currentUser$ | async) === null">
+            <form  #loginForm="ngForm" class="d-flex mt-2 mt-md-2"
                 (ngSubmit)="login()" autocomplete="off">
-                <input name="email" [(ngModel)]="model.email" class="form-control me-sm-2" type="text"
-                    placeholder="Email">
+               
+                <input name="email" [(ngModel)]="model.email" class="form-control me-sm-2 " type="text"
+                    placeholder="Email" >
+              
                 <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
                     placeholder="Password">
-                <button class="btn btn-light my-2 my-sm-0" type="submit">Login</button>
+                <button class="btn btn-light my-2 my-sm-0 d-block" type="submit">Login</button>
+         
             </form>
         </ng-container>
+
+    </ngx-navbar-collapse>
     </div>
 </nav>

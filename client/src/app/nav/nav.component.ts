@@ -17,8 +17,7 @@ export class NavComponent implements OnInit {
   login() {
     this.accountService.login(this.model).subscribe({
       next:() => {
-        this.router.navigateByUrl('/productsList');
-        // window.location.reload();
+        window.location.href='/productsList';
       },
       error: () => {
       }
