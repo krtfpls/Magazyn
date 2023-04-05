@@ -32,7 +32,7 @@ namespace API.Extensions
                         {
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                                .GetBytes(config["JWT:Secret"])),
+                                .GetBytes(config["TokenKey"])),
                             ValidateIssuer = false,
                             ValidateAudience = false,
                             ValidateLifetime= true,
