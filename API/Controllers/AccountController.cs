@@ -87,11 +87,12 @@ namespace API.Controllers
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            var origin = Request.Headers["origin"];
+           // var origin = Request.Headers["origin"];
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-            var verifyUrl = $"{origin}/account/verifyEmail?token={token}&email={user.Email}";
-            //var callback = Url.Action(nameof(VerifyEmail), "Account", new {token=token, email=user.Email}, Request.Scheme);
+            
+            var callback = Url.Action(nameof(VerifyEmail), "Account", new {token=token, email=user.Email}, Request.Scheme);
+            var verifyUrl = $"{callback}/account/verifyEmail?token={token}&email={user.Email}";
             var message = $"<p>Kliknij poniższy link aby potwierdzić rejestrację konta</p><a href='{verifyUrl}'>Potwierdź email</a>";
 
             await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
