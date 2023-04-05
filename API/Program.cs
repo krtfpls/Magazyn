@@ -28,16 +28,16 @@ builder.Services.AddSwaggerGen();
 // builder.Services.AddDbContext<DataContext>(opts =>
 // {
 //     opts.UseSqlite(
-//         builder.Configuration["ConnectionStrings:SqliteConnection"]
+//         builder.Configuration.GetConnectionString(SqliteConnection")
 //     );
 // });
 var connString = "";
 if (builder.Environment.IsDevelopment())
-    connString = builder.Configuration["ConnectionStrings:PostrgesConnection"];
+    connString = builder.Configuration.GetConnectionString("PostrgesConnection");
 else
 {
 
-  //   connString = builder.Configuration["ConnectionStrings:PostrgesConnection"];
+    // connString = builder.Configuration["ConnectionStrings:PostrgesConnection"];
 
     // Use connection string provided at runtime by FlyIO.
     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
