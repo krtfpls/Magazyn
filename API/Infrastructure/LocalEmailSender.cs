@@ -15,7 +15,7 @@ namespace API.Infrastructure
         public async Task SendEmailAsync(string userEmail, string emailSubject, string msg)
         {        
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("WMSSrvice Notification" ,_config["EmailConfiguration:From"]));
+            message.From.Add(new MailboxAddress("WMSSrvice Notification" ,_config["From"]));
             message.To.Add(new MailboxAddress("",userEmail));
             message.Subject= emailSubject;
             message.Body= new TextPart(MimeKit.Text.TextFormat.Html) { Text = msg };
@@ -29,9 +29,9 @@ namespace API.Infrastructure
         {
             try
             {
-                await client.ConnectAsync(_config["EmailConfiguration:SmtpServer"], int.Parse(_config["EmailConfiguration:Port"]), true);
+                await client.ConnectAsync(_config["SmtpServer"], int.Parse(_config["Port"]), true);
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
-                await client.AuthenticateAsync(_config["EmailConfiguration:Username"], _config["EmailConfiguration:Password"]);
+                await client.AuthenticateAsync(_config["Username"], _config["Password"]);
                 await client.SendAsync(mailMessage);
             }
             catch
