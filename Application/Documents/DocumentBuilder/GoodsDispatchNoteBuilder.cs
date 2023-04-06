@@ -30,7 +30,7 @@ namespace Application.Documents.DocumentBuilder
 
         public void AddLine(Product product, int qty)
         {
-            DocumentLine? line =StandardDispatchDocumentLineStrategy.handleLine(product, qty);
+            DocumentLine? line =StandardDispatchDocumentLine.handleLine(product, qty);
             if (line != null)
                 documentLines.Add(line);
         }

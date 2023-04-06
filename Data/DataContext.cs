@@ -16,5 +16,13 @@ namespace Data
         public DbSet<DocumentLine> DocumentLines {get;set;}
         public DbSet<DocumentType> DocumentTypes {get; set;}
         public DbSet<User> Users {get;set;}
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+                     
+        }
+            
     }
 }

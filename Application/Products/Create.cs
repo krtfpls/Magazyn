@@ -43,14 +43,17 @@ public class Create
             var requestProduct = request.Product;
             
             Product newProduct = _mapper.Map<Product>(requestProduct);
-            newProduct.User = await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());
+            User user = await _context.Users.FirstOrDefaultAsync(x=> x.Id == _userAccessor.GetUserId());            
+            if (user == null)
+                return Result<Guid>.Failure("Failed to find user");
+            
+            newProduct.User = user;
 
             CategoryHandle category= new CategoryHandle(requestProduct.CategoryName, _context);
             
             if (category.isNew)
                  return Result<Guid>.Failure("This Category don't exist!");
-            
-            newProduct.Category= category.Category;
+            newProduct.Category = category.category;
             newProduct.Quantity = 0;
             
             newProduct.Id = new Guid();

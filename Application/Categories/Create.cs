@@ -38,14 +38,14 @@ namespace Application.Categories
                 CategoryHandle newCategory = new CategoryHandle(request.Category.Name, _context);
 
                 if (!newCategory.isNew)
-                    return Result<int>.Failure("The Category already exists, with id=" + newCategory.Category.Id);
+                    return Result<int>.Failure("The Category already exists, with id=" + newCategory.category.Id);
                 
-                    _context.Categories.Add(newCategory.Category);
+                    _context.Categories.Add(newCategory.category);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result) return Result<int>.Failure("Cannot to create new Category");
-                return Result<int>.Success(newCategory.Category.Id);
+                return Result<int>.Success(newCategory.category.Id);
             }
         }
     }

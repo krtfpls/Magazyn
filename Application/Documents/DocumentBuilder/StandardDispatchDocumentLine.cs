@@ -4,7 +4,7 @@ using Entities.Documents;
 
 namespace Application.Documents.DocumentBuilder
 {
-    public class StandardDispatchDocumentLineStrategy
+    public class StandardDispatchDocumentLine
     {
         public static DocumentLine? handleLine(Product product, int qty)
         {

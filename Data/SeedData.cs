@@ -2,6 +2,7 @@ using System.Text.Json;
 using Entities;
 using Entities.Documents;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data;
 

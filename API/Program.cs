@@ -33,11 +33,10 @@ builder.Services.AddSwaggerGen();
 // });
 var connString = "";
 if (builder.Environment.IsDevelopment())
-    connString = builder.Configuration.GetConnectionString("PostrgesConnection");
+    connString = builder.Configuration.GetConnectionString("PostgresConnection");
 else
 {
-
-    // connString = builder.Configuration["ConnectionStrings:PostrgesConnection"];
+    //connString = builder.Configuration.GetConnectionString("PostgresConnection");
 
     // Use connection string provided at runtime by FlyIO.
     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");

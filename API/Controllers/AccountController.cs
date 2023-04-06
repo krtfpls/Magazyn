@@ -85,14 +85,14 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 
-            if (!result.Succeeded) return BadRequest(result.Errors);
+            if (!result.Succeeded) return BadRequest("Problem registering user");
 
-           // var origin = Request.Headers["origin"];
+           var origin = Request.Headers["origin"];
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
-            
-            var callback = Url.Action(nameof(VerifyEmail), "Account", new {token=token, email=user.Email}, Request.Scheme);
-            var verifyUrl = $"{callback}/account/verifyEmail?token={token}&email={user.Email}";
+
+           // var callback = Url.Action(nameof(VerifyEmail), "Account", new {token=token, email=user.Email}, Request.Scheme);
+            var verifyUrl = $"{origin}/account/VerifyEmail?token={token}&email={user.Email}";
             var message = $"<p>Kliknij poniższy link aby potwierdzić rejestrację konta</p><a href='{verifyUrl}'>Potwierdź email</a>";
 
             await _emailSender.SendEmailAsync(user.Email, "Please verify email", message);
@@ -102,19 +102,14 @@ namespace API.Controllers
         }
 
         [AllowAnonymous]
-        [HttpPost("verifyEmail")]
-        public async Task<ActionResult> VerifyEmail(EmailDto email)
+        [HttpPost("VerifyEmail")]
+        public async Task<ActionResult> VerifyEmail(string token, string email)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return ValidationProblem();
-            }
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return Unauthorized();
 
-            var user = await _userManager.FindByEmailAsync(email.Email);
-            if (user == null || email.Token == null) return Unauthorized();
-
-            var decodedTokenBytes = WebEncoders.Base64UrlDecode(email.Token);
+            var decodedTokenBytes = WebEncoders.Base64UrlDecode(token);
             var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
 
             var result = await _userManager.ConfirmEmailAsync(user, decodedToken);

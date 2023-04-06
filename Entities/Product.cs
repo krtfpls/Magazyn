@@ -30,12 +30,10 @@ namespace Entities
         [Required]
         public int CategoryId { get; set; }
 
-        [Required]
         public Category? Category { get; set; }
         
         [Required]
         public string UserId {get;set;}
-        [Required]
         public User User {get;set;}
     }
 }

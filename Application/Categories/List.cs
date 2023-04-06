@@ -28,6 +28,7 @@ namespace Application.Categories
         public async Task<Result<PagedList<CategoryDto>>> Handle(Query request, CancellationToken cancellationToken)
         {
             var categories = _context.Categories
+                .OrderBy(x => x.Name)
                 .AsNoTracking()
                 .ProjectTo<CategoryDto>(_mapper.ConfigurationProvider)
                 .AsQueryable();

@@ -6,7 +6,7 @@ namespace Application.Categories
 {
     public class CategoryHandle
     {
-        public Category Category { get; private set; }
+        public Category category { get; private set; }
         public bool isNew { get; private set; }
         private readonly string _name;
         private DataContext _context;
@@ -18,15 +18,15 @@ namespace Application.Categories
             PrepareCategory();
         }
 
-        private async void PrepareCategory()
+        private void PrepareCategory()
         {
-            Category = await _context.Categories
-                    .FirstOrDefaultAsync(x =>
+            category = _context.Categories
+                    .FirstOrDefault(x =>
                         x.Name == _name);
 
-            if (Category == null)
+            if (category == null)
                 {
-                    Category = new Category { Name= _name};
+                    category = new Category { Name= _name};
                     isNew= true;
                 }
             else{

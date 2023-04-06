@@ -29,7 +29,7 @@ namespace Application.Documents.DocumentBuilder
 
         public void AddLine(Product product, int qty)
         {
-            DocumentLine? line =StandardReceivedDocumentLineStrategy.handleLine(product, qty);
+            DocumentLine? line =StandardReceivedDocumentLine.handleLine(product, qty);
             if (line != null)
                 documentLines.Add(line);
         }

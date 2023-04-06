@@ -54,7 +54,7 @@ public class Edit
             if (category.isNew)
                  return Result<Unit>.Failure("This Category don't exist!");
 
-            product.Category = category.Category;
+            product.Category = category.category;
 
             // ensure that quantity doesnt change
             requestProduct.Quantity = product.Quantity;
