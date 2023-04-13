@@ -1,4 +1,4 @@
-<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark">
+<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark fixed-top">
     <div class="container-fluid mx-3">
         <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Magazyn</a>
         <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
@@ -24,7 +24,7 @@
                         </button>
                     </div>
 <!-- Documents -->
-                    <div class="btn-group" dropdown container="body" [autoClose]="false">
+                    <div class="btn-group" dropdown container="body">
                         <button id="button-Documents" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
                             aria-controls="button-Documents">
                             Dokumenty <span class="caret"></span>
