@@ -31,23 +31,23 @@ if (builder.Environment.IsDevelopment())
      builder.Configuration.GetConnectionString("SqliteConnection");
 else
 {
-    connString = builder.Configuration.GetConnectionString("PostgresConnection");
+  //  connString = builder.Configuration.GetConnectionString("PostgresConnection");
 
-    // // Use connection string provided at runtime by FlyIO.
-    // var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    // Use connection string provided at runtime by FlyIO.
+    var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 
-    // // Parse connection URL to connection string for Npgsql
-    // connUrl = connUrl.Replace("postgres://", string.Empty);
-    // var pgUserPass = connUrl.Split("@")[0];
-    // var pgHostPortDb = connUrl.Split("@")[1];
-    // var pgHostPort = pgHostPortDb.Split("/")[0];
-    // var pgDb = pgHostPortDb.Split("/")[1];
-    // var pgUser = pgUserPass.Split(":")[0];
-    // var pgPass = pgUserPass.Split(":")[1];
-    // var pgHost = pgHostPort.Split(":")[0];
-    // var pgPort = pgHostPort.Split(":")[1];
+    // Parse connection URL to connection string for Npgsql
+    connUrl = connUrl.Replace("postgres://", string.Empty);
+    var pgUserPass = connUrl.Split("@")[0];
+    var pgHostPortDb = connUrl.Split("@")[1];
+    var pgHostPort = pgHostPortDb.Split("/")[0];
+    var pgDb = pgHostPortDb.Split("/")[1];
+    var pgUser = pgUserPass.Split(":")[0];
+    var pgPass = pgUserPass.Split(":")[1];
+    var pgHost = pgHostPort.Split(":")[0];
+    var pgPort = pgHostPort.Split(":")[1];
 
-    // connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SslMode=disable";
+    connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SslMode=disable";
 }
 builder.Services.AddDbContext<DataContext>(opt =>
 {
@@ -95,7 +95,7 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("http://localhost:4200"));
+    .WithOrigins("http://localhost:5000"));
 
 app.UseAuthentication();
 app.UseAuthorization();
