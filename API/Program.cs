@@ -51,7 +51,9 @@ else
 }
 builder.Services.AddDbContext<DataContext>(opt =>
 {
-    opt.UseNpgsql(connString);
+    opt.UseNpgsql(connString, builder => {
+        builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
+    });
 });
  
 // Mediator CQRS
@@ -95,7 +97,10 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("https://wmservice.fly.dev"));
+    .WithOrigins("https://wmservice.fly.dev",
+                "http://wmservice.fly.dev",
+                "https://localhost:5001",
+                "http://localhost:5000"));
 
 app.UseAuthentication();
 app.UseAuthorization();

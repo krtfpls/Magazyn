@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/_services/account.service';
 
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   validationErrors: string[] | undefined;
 
   constructor(private accountService: AccountService, private fb: FormBuilder,
-          private toastr: ToastrService) { }
+          private toastr: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
     const value = this.registerForm.value;
     this.accountService.register(this.registerForm.value).subscribe({
       next:() => {
-        //this.router.navigateByUrl('/productsList');
+      this.router.navigateByUrl('/');
       this.toastr.success("Rejestracja przebiegła poprawnie. Sprawdź skrzynkę email i potwierdź rejestrację.")
     }, 
     error: error => {
