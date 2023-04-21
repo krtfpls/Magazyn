@@ -15,7 +15,7 @@ namespace API.Infrastructure
         public async Task SendEmailAsync(string userEmail, string emailSubject, string msg)
         {        
             var message = new MimeMessage();
-            message.From.Add(new MailboxAddress("WMSSrvice Notification" ,_config["From"]));
+            message.From.Add(new MailboxAddress("WMSSrvice Notification", _config["From"]));
             message.To.Add(new MailboxAddress("",userEmail));
             message.Subject= emailSubject;
             message.Body= new TextPart(MimeKit.Text.TextFormat.Html) { Text = msg };

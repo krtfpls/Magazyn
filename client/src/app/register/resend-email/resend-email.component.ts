@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Email } from 'src/app/_models/user';
 import { AccountService } from 'src/app/_services/account.service';
@@ -15,7 +16,7 @@ export class ResendEmailComponent implements OnInit {
   @Output() cancelReSend = new EventEmitter<boolean>();
   
   constructor(private accountService: AccountService, private fb: FormBuilder,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService, private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -27,6 +28,7 @@ export class ResendEmailComponent implements OnInit {
     this.accountService.resendEmail(email).subscribe({
       next: () => {
         this.toastr.success("Email przesłany ponownie");
+        this.router.navigateByUrl('/');
       }
     });
   }

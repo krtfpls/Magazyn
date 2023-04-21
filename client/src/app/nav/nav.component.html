@@ -1,4 +1,4 @@
-<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark fixed-top">
+<nav ngxNavbarDynamicExpand class="navbar-dark bg-dark sticky-top ">
     <div class="container-fluid mx-3">
         <a class="navbar-brand" routerLink='/' routerLinkActive='active'>Magazyn</a>
         <button class="navbar-toggler" type="button" (click)="collapse.toggle()" aria-controls="main-nav"
@@ -16,15 +16,13 @@
             <ul class="navbar-nav me-auto">
                 <ng-container *ngIf="accountService.currentUser$ | async">
 
-                    <div class="btn-group" dropdown container="body">
-                        <button id="button-Dasboard" dropdownToggle type="button" class="btn btn-dark"
-                        routerLink='/dashboard' routerLinkActive='active'
-                            aria-controls="button-Dasboard">
+                        <li class="nav-item">
+                        <a class="nav-link active" href='/dashboard'>
                             Dashboard
-                        </button>
-                    </div>
+                        </a>
+                </li>
 <!-- Documents -->
-                    <div class="btn-group" dropdown container="body">
+                    <div class="btn-group" dropdown [insideClick]="true" container="body">
                         <button id="button-Documents" dropdownToggle type="button" class="btn btn-dark dropdown-toggle"
                             aria-controls="button-Documents">
                             Dokumenty <span class="caret"></span>
@@ -36,16 +34,16 @@
                                     routerLinkActive='active'>
                                     Lista Dokumentów
                                 </a></li>
-                            <li role="menuitem" dropdown triggers="mouseover"
+                            <li role="menuitem" dropdown 
                                  placement="right" container="body">
                                 <a dropdownToggle class="dropdown-item dropdown-toggle" (click)="false"
                                 >Nowy Dokument<span class="caret"></span></a>
                                 <ul *dropdownMenu class="dropdown-menu" role="menu">
-                                    <li role="menuitem"><a class="dropdown-item" fragment="nested-dropdowns" routerLink='/documentsCreate/PZ'
+                                    <li role="menuitem"><a class="dropdown-item" routerLink='/documentsCreate/PZ'
                                             routerLinkActive='active'>
                                             PZ
                                         </a></li>
-                                    <li role="menuitem"><a class="dropdown-item" fragment="nested-dropdowns" routerLink='/documentsCreate/WZ'
+                                    <li role="menuitem"><a class="dropdown-item" routerLink='/documentsCreate/WZ'
                                             routerLinkActive='active'>
                                             WZ
                                         </a></li>

@@ -44,6 +44,7 @@ import { ResendEmailComponent } from './register/resend-email/resend-email.compo
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { ForgotPasswordComponent } from './register/forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './profile/change-password/change-password.component';
+import { VerifyEmailComponent } from './register/verify-email/verify-email.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { ChangePasswordComponent } from './profile/change-password/change-passwo
     ResendEmailComponent,
     EditProfileComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserAnimationsModule,

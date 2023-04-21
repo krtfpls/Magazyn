@@ -19,6 +19,7 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
+import { VerifyEmailComponent } from './register/verify-email/verify-email.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -42,6 +43,7 @@ const routes: Routes = [
     {path: 'editProfile', component: EditProfileComponent}
   ]
   },
+  {path: 'VerifyEmail', component: VerifyEmailComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
   {path: '**', component: HomeComponent, pathMatch: 'full'}

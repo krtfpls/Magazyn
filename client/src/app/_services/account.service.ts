@@ -27,14 +27,19 @@ currentUser$ = this.currentUserSource.asObservable();
     )
   }
 
+  verifyEmail(token: string, email: string) {
+    return this.http.post(this.baseUrl + 'VerifyEmail', {token, email});
+  }
+
   register(model: any) {
-    return this.http.post<User>(this.baseUrl + 'register', model).pipe(
-      map(user => {
-        if (user) {
-         this.setCurrentUser(user);
-        }
-      })
-    )
+    return this.http.post<User>(this.baseUrl + 'register', model)
+    // .pipe(
+    //   map(user => {
+    //     if (user) {
+    //      this.setCurrentUser(user);
+    //     }
+    //   })
+    // )
   }
 
   changePassword(password: passwordChangeModel){
