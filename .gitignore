@@ -458,7 +458,7 @@ $RECYCLE.BIN/
 ##
 
 customers_copy.json
-appsettings.json
+appsettings.Development.json
 TODO.txt
 *.db
 *.db-*
