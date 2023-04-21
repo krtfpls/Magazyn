@@ -32,8 +32,8 @@ email: string = '';
     this.accountService.verifyEmail(token, email).subscribe({
       next: _ => 
        { 
-        this.toastr.success('Email zweryfikowany');
-        this.router.navigateByUrl('/documentsList')
+        this.toastr.success('Email zweryfikowany, terz możesz się zalogować');
+        this.router.navigateByUrl('/')
       },
       error: error => console.log(error)
     });;
