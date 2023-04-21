@@ -12,6 +12,10 @@ processes = []
 
 [env]
   ASPNETCORE_URLS="http://+:8080"
+
+[experimental]
+  allowed_public_ports = []
+  suto_rollback = true
   
 [[services]]
   internal_port = 8080

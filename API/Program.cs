@@ -95,7 +95,7 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("http://localhost:5000"));
+    .WithOrigins("https://wmservice.fly.dev"));
 
 app.UseAuthentication();
 app.UseAuthorization();
