@@ -28,7 +28,8 @@ builder.Services.AddSwaggerGen();
 
 var connString = "";
 if (builder.Environment.IsDevelopment())
-     builder.Configuration.GetConnectionString("SqliteConnection");
+    connString= builder.Configuration.GetConnectionString("PostgresConnection");
+     // builder.Configuration.GetConnectionString("SqliteConnection");
 else
 {
   //  connString = builder.Configuration.GetConnectionString("PostgresConnection");
@@ -100,7 +101,7 @@ app.UseCors(x => x
     .WithOrigins("https://wmservice.fly.dev",
                 "http://wmservice.fly.dev",
                 "https://localhost:5001",
-                "http://localhost:5000"));
+                "http://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();
