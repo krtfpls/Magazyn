@@ -99,7 +99,6 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowCredentials()
     .WithOrigins("https://wmservice.fly.dev",
-                "http://wmservice.fly.dev",
                 "https://localhost:5001",
                 "http://localhost:4200"));
 
@@ -118,8 +117,9 @@ try
 {
     var context = services.GetRequiredService<DataContext>();
     var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context, userManager);
+    await Seed.SeedData(context, userManager, roleManager);
 }
 catch (Exception ex)
 {

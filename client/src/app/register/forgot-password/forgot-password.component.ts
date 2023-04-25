@@ -25,8 +25,9 @@ export class ForgotPasswordComponent implements OnInit {
     const email:Email = this.forgotForm.value;
   
     this.accountService.forgotPassword(email).subscribe({
-      next: () => {
-        this.toastr.success("Link do zmiany hasła został pomyślne przesłany, Sprawdź swoją skrzynkę odbiorczą");
+      next: () =>{
+          this.toastr.success("Link do zmiany hasła został pomyślne przesłany, Sprawdź swoją skrzynkę odbiorczą"); 
+          window.location.reload();
       }
     });
   }

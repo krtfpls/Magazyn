@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Email, passwordChangeModel, User, userProfile } from '../_models/user';
+import { Email, passwordChangeModel, passwordResetModel, User, userProfile } from '../_models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,10 @@ currentUser$ = this.currentUserSource.asObservable();
     //     }
     //   })
     // )
+  }
+
+  resetPassword(resetModel: passwordResetModel){
+    return this.http.post<any>(this.baseUrl+'ResetPassword', resetModel);
   }
 
   changePassword(password: passwordChangeModel){

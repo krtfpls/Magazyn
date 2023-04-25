@@ -24,11 +24,11 @@ export class DocumentsCreateComponent implements OnInit {
   documentLines: DocumentLine[] | undefined;
   
   constructor(private documentService: DocumentsService, private router: Router, private activatedRoute: ActivatedRoute) {
-    this.activatedRoute.params.subscribe(params => this.type = params['type']);
+    
    }
 
   ngOnInit(): void { 
-   
+    this.activatedRoute.params.subscribe(params => this.type = params['type']);
    }
 
    displayModeChange(){

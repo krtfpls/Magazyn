@@ -84,8 +84,10 @@ namespace API.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
-
             if (!result.Succeeded) return BadRequest("Problem registering user");
+
+            var roleResult = await _userManager.AddToRoleAsync(user, "user");
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
            var origin = Request.Headers["origin"];
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -156,35 +158,22 @@ namespace API.Controllers
             if (user == null)
                 return Unauthorized();
 
-            // var origin = Request.Headers["Host"];
+            var origin = Request.Headers["origin"];
             // Console.WriteLine(origin);
             var tokenToSend = await _userManager.GeneratePasswordResetTokenAsync(user);
             tokenToSend = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(tokenToSend));
 
-            //var verifyUrl = $"{origin}/account/ResetPassword?token={token}&email={user.Email}";
-            var callback = Url.Action(nameof(ResetPassword), "Account", new { token = tokenToSend, email = user.Email }, Request.Scheme);
+            var verifyUrl = $"{origin}/ResetPassword?token={tokenToSend}&email={user.Email}";
+            //var callback = Url.Action(nameof(ResetPassword), "Account", new { token = tokenToSend, email = user.Email }, Request.Scheme);
             // response url to app password change mode
-            var message = $"<p>Kliknij poniższy link do resetu hasła: </p><a href='{callback}'>resetuj hasło</a>";
+            var message = $"<p>Kliknij poniższy link do resetu hasła: </p><a href='{verifyUrl}'>resetuj hasło</a>";
 
             await _emailSender.SendEmailAsync(user.Email, "WMService password reset", message);
 
             return Ok(JsonSerializer.Serialize("Reset password token was send to your email- check your inbox"));
         }
-
-        [AllowAnonymous]
-        [HttpGet]
-        public IActionResult ResetPassword(string token, string email)
-        {
-            if (token == null || email == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(new  { Token = token, Email = email }); // Zwróć url strony do resetu hasła
-        }
         
         [AllowAnonymous]
-        //[ValidateAntiForgeryToken]
         [HttpPost("ResetPassword")]
         public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPassword)
         {

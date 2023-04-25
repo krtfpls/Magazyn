@@ -19,3 +19,9 @@ export interface passwordChangeModel {
     oldPassword: string,
     password: string,
 }
+
+export interface passwordResetModel {
+    password: string,
+    email: string,
+    token: string
+}

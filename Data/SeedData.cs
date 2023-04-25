@@ -8,15 +8,21 @@ namespace Data;
 
 public class Seed
 {
-    public static async Task SeedData(DataContext context, UserManager<User> userManager)
+    public static async Task SeedData(DataContext context, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
     {
-        
-
            if (!context.Users.Any())
         {
+          var roles = new [] {"admin", "moderator", "user"};
+
+            foreach (var role in roles)
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+
             var _user = setUser();
             _user.EmailConfirmed = true;
-            userManager.CreateAsync(_user, "P@ssword1");
+            await userManager.CreateAsync(_user, "P@ssword1");
+            await userManager.AddToRolesAsync(_user, roles);
         }
 
         if (!context.DocumentTypes.Any())

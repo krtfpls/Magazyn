@@ -21,6 +21,8 @@ namespace API.Extensions
                 opt.User.RequireUniqueEmail=true;
                 opt.SignIn.RequireConfirmedEmail = true;
             })
+            .AddRoles<IdentityRole>()
+            .AddRoleManager<RoleManager<IdentityRole>>()
             .AddEntityFrameworkStores<DataContext>()
             .AddSignInManager<SignInManager<User>>()
             .AddDefaultTokenProviders();

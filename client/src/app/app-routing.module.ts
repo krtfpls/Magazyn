@@ -20,6 +20,7 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { VerifyEmailComponent } from './register/verify-email/verify-email.component';
+import { ResetPasswordComponent } from './register/reset-password/reset-password.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -44,6 +45,7 @@ const routes: Routes = [
   ]
   },
   {path: 'VerifyEmail', component: VerifyEmailComponent},
+  {path: 'ResetPassword', component: ResetPasswordComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: 'server-error', component: ServerErrorComponent},
   {path: '**', component: HomeComponent, pathMatch: 'full'}
