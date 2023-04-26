@@ -30,6 +30,7 @@ public class List
             var customerList =  _context.Customers
                 .AsNoTracking()
                 .ProjectTo<CustomerShortDto>(_mapper.ConfigurationProvider)
+                .OrderBy(x => x.Name)
                 .AsQueryable();
 
             return Result<PagedList<CustomerShortDto>>.Success(

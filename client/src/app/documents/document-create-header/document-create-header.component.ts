@@ -27,6 +27,7 @@ constructor(private localeService: BsLocaleService) {
   }
 
   ngOnInit(): void {
+
   }
 
   headerDone(){

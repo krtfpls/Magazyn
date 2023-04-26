@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="alert alert-info pb-0" *ngIf="documentLines.length > 0">
+    <div class="alert alert-info pb-0" *ngIf="documentLines && documentLines.length > 0">
         <p><strong>Informacja: </strong>Niezapisane zmiany zostaną utracone po odświeżeniu strony</p>
     </div>
 </div>
@@ -67,7 +67,7 @@
 </div>
 <div class="row mx-5">
     <div class="text-end m-5">
-        <button [disabled]="documentLines.length<1" class="btn btn-primary" (click)="listDoneEvent()">
+        <button [disabled]="documentLines && documentLines.length<1" class="btn btn-primary" (click)="listDoneEvent()">
             Dalej
         </button>
     </div>

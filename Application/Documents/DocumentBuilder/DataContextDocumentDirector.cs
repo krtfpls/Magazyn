@@ -36,23 +36,22 @@ namespace Application.Documents.DocumentBuilder
         }
 
 //////////////////////////////////////////////
-                private async void setLines(IEnumerable<DocumentLine> lines, string userId)
+                private void setLines(IEnumerable<DocumentLine> lines, string userId)
                 {
                     if (lines != null)
                     {
                         foreach (var line in lines)
                         {
-
-                            var checkProduct = await _context.Products
+                            var checkProduct = _context.Products
                                     .Where(p => p.Id == line.ProductId)
-                                    .Where(u => u.UserId == userId)
+                                     .Where(u => u.UserId == userId)
                                     .Select(p => new Product
                                     {
                                         Id = p.Id,
                                         SerialNumber = p.SerialNumber,
                                         Quantity = p.Quantity
                                     })
-                                    .FirstOrDefaultAsync();
+                                    .FirstOrDefault();
 
                             if (checkProduct != null)
                                 {
@@ -65,46 +64,46 @@ namespace Application.Documents.DocumentBuilder
                     }
                 }
 
-                private async void setCustomer(int customerId)
-                {
-                    bool check = await _context.Customers
-                                .AnyAsync(x => x.Id == customerId);
+                private void setCustomer(int customerId)
+                {   
+                    bool check = _context.Customers
+                                .Any(x => x.Id == customerId);
 
                     if (check)
                         _builder.SetCustomer(customerId);
                 }
 
-                private async void SetUserByID(string userId)
+                private void SetUserByID(string userId)
                 {
-                    var findUser = await _context.Users
-                                    .AnyAsync(user => user.Id == userId);
+                    var findUser = _context.Users
+                                    .Any(user => user.Id == userId);
 
                     if (findUser)
                         _builder.SetUser(userId);
                 }
 
-                private async void setNumber(string userId)
+                private void setNumber(string userId)
                 {
                     if (userId != null)
                     {
                         int date = DateTime.UtcNow.Year;
 
-                        string number = ((await _context.Documents
+                        string number = ((_context.Documents
                                 .Where(year => year.Date.Year == date)
                                 .Where(user => user.UserId == userId)
-                                .CountAsync(doc => doc.Type!.Name == _builder.GetType())) + 1).ToString() + "/" + date;
+                                .Count(doc => doc.Type!.Name == _builder.GetType())) + 1).ToString() + "/" + date;
 
                         _builder.SetNumber(number);
                     }
                 }
 
-                private async void setDocumentType()
+                private void setDocumentType()
                 {
                     string type = _builder.GetType();
-                    var documentType = await _context.DocumentTypes
+                    var documentType = _context.DocumentTypes
                                         .Where(x => x.Name == type)
                                         .Select(x => x.Id)
-                                        .FirstOrDefaultAsync();
+                                        .FirstOrDefault();
 
                     _builder.SetType(documentType);
                 }

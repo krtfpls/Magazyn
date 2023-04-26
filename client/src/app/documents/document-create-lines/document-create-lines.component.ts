@@ -16,19 +16,19 @@ export class DocumentCreateLinesComponent implements OnInit {
   bsModalRef?: BsModalRef;
   displayProductListMode: boolean = false;
   displayNewProductMode: boolean = false;
-  documentLinesHandle: DocumentLineHandle;
+  documentLinesHandle: DocumentLineHandle | undefined;
 
   @Input() lines: DocumentLine[] | undefined; 
   @Output() listDone= new EventEmitter<DocumentLine[]>();
 
   constructor(private modalService: BsModalService) { 
+  }
+
+  ngOnInit(): void { 
     if (this.lines && this.lines.length > 0)
     this.documentLinesHandle = new DocumentLineHandle(this.lines);
     else
     this.documentLinesHandle = new DocumentLineHandle();
-  }
-
-  ngOnInit(): void { 
    }
 
    listDoneEvent(){
@@ -36,11 +36,11 @@ export class DocumentCreateLinesComponent implements OnInit {
    }
 
   get total(){
-    return this.documentLinesHandle.total;
+    return this.documentLinesHandle?.total;
   }
 
     get documentLines(){
-    return this.documentLinesHandle.documentLines;
+    return this.documentLinesHandle?.documentLines;
   }
 
 
@@ -56,8 +56,9 @@ export class DocumentCreateLinesComponent implements OnInit {
 
   openQtyModal(product: Product) {
       this.bsModalRef = this.modalService.show(QuantityModalComponent, this.modalConfig(product));
+      if (this.documentLinesHandle)
       this.bsModalRef.content.event.subscribe((res: any) => {
-         this.documentLinesHandle.addProduct(product, parseInt(res.qty));
+         this.documentLinesHandle?.addProduct(product, parseInt(res.qty));
       });
 
     this.displayNewProductMode=false;
@@ -78,6 +79,6 @@ export class DocumentCreateLinesComponent implements OnInit {
   }
 
     clearDocumentLines(){
-    this.documentLinesHandle.clearAll();
+    this.documentLinesHandle?.clearAll();
   }
 }

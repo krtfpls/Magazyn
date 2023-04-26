@@ -21,6 +21,9 @@ var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()
 opt.Filters.Add(new AuthorizeFilter(policy));
 });
 
+//Identity
+builder.Services.AddIdentityServices(builder.Configuration);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -50,11 +53,15 @@ else
 
     connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SslMode=disable";
 }
-builder.Services.AddDbContext<DataContext>(opt =>
+builder.Services.AddDbContext<DataContext>(
+    opt =>
 {
-    opt.UseNpgsql(connString, builder => {
+    opt.UseNpgsql(
+        connString,
+        builder => {
         builder.EnableRetryOnFailure(5, TimeSpan.FromSeconds(10), null);
-    });
+        }
+        );
 });
  
 // Mediator CQRS
@@ -63,8 +70,7 @@ builder.Services.AddMediatR(typeof(List.Handler).Assembly);
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 
 builder.Services.AddCors();
-//Identity
-builder.Services.AddIdentityServices(builder.Configuration);
+
 
 var app = builder.Build();
 
@@ -99,11 +105,14 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowCredentials()
     .WithOrigins("https://wmservice.fly.dev",
+                "http://wmservice.fly.dev",
                 "https://localhost:5001",
+                "http://localhost:5000",
                 "http://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 // handle fallback to index
 app.MapFallbackToController("Index", "Fallback");
