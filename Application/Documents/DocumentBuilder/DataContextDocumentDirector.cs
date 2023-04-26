@@ -19,13 +19,13 @@ namespace Application.Documents.DocumentBuilder
             _builder = builder;
         }
 
-        public void SetDocument(int customerId, IEnumerable<DocumentLine> lines, DateOnly date)
+        public async Task SetDocumentAsync(int customerId, IEnumerable<DocumentLine> lines, DateOnly date)
         {
-            SetUserByID(_userId);
-            setDocumentType();
-            setNumber(_userId);
-            setCustomer(customerId);
-            setLines(lines, _userId);
+            await SetUserByID(_userId);
+            await setDocumentType();
+            await setNumber(_userId);
+            await setCustomer(customerId);
+            await setLines(lines, _userId);
             _builder.SetDate(date);
         }
 
@@ -36,13 +36,13 @@ namespace Application.Documents.DocumentBuilder
         }
 
 //////////////////////////////////////////////
-                private void setLines(IEnumerable<DocumentLine> lines, string userId)
+                private async Task setLines(IEnumerable<DocumentLine> lines, string userId)
                 {
                     if (lines != null)
                     {
                         foreach (var line in lines)
                         {
-                            var checkProduct = _context.Products
+                            var checkProduct = await _context.Products
                                     .Where(p => p.Id == line.ProductId)
                                      .Where(u => u.UserId == userId)
                                     .Select(p => new Product
@@ -51,7 +51,7 @@ namespace Application.Documents.DocumentBuilder
                                         SerialNumber = p.SerialNumber,
                                         Quantity = p.Quantity
                                     })
-                                    .FirstOrDefault();
+                                    .FirstOrDefaultAsync();
 
                             if (checkProduct != null)
                                 {
@@ -64,46 +64,46 @@ namespace Application.Documents.DocumentBuilder
                     }
                 }
 
-                private void setCustomer(int customerId)
+                private async Task setCustomer(int customerId)
                 {   
-                    bool check = _context.Customers
-                                .Any(x => x.Id == customerId);
+                    bool check = await _context.Customers
+                                .AnyAsync(x => x.Id == customerId);
 
                     if (check)
                         _builder.SetCustomer(customerId);
                 }
 
-                private void SetUserByID(string userId)
+                private async Task SetUserByID(string userId)
                 {
-                    var findUser = _context.Users
-                                    .Any(user => user.Id == userId);
+                    var findUser = await _context.Users
+                                    .AnyAsync(user => user.Id == userId);
 
                     if (findUser)
                         _builder.SetUser(userId);
                 }
 
-                private void setNumber(string userId)
+                private async Task setNumber(string userId)
                 {
                     if (userId != null)
                     {
                         int date = DateTime.UtcNow.Year;
 
-                        string number = ((_context.Documents
+                        string number = ((await _context.Documents
                                 .Where(year => year.Date.Year == date)
                                 .Where(user => user.UserId == userId)
-                                .Count(doc => doc.Type!.Name == _builder.GetType())) + 1).ToString() + "/" + date;
+                                .CountAsync(doc => doc.Type!.Name == _builder.GetType())) + 1).ToString() + "/" + date;
 
                         _builder.SetNumber(number);
                     }
                 }
 
-                private void setDocumentType()
+                private async Task setDocumentType()
                 {
                     string type = _builder.GetType();
-                    var documentType = _context.DocumentTypes
+                    var documentType = await _context.DocumentTypes
                                         .Where(x => x.Name == type)
                                         .Select(x => x.Id)
-                                        .FirstOrDefault();
+                                        .FirstOrDefaultAsync();
 
                     _builder.SetType(documentType);
                 }

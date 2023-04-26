@@ -50,7 +50,7 @@ public class Create
                 
                     IEnumerable<DocumentLine> lines = _mapper.Map<IEnumerable<DocumentLine>>(requestDocument.DocumentLines);
 
-                    director.SetDocument(requestDocument.CustomerId, lines, requestDocument.Date);
+                    await director.SetDocumentAsync(requestDocument.CustomerId, lines, requestDocument.Date);
 
                     Document? document = director.BuildDocument();
                     if (document == null)
