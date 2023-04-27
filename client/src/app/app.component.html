@@ -1,20 +1,13 @@
-<div>
+<app-nav></app-nav>
+    
     <div>
         <ngx-spinner type="square-jelly-box">
             <h3>Ładuję dane...</h3>
         </ngx-spinner>
     </div>
-    
-    <div class="row">
-        <app-nav></app-nav>
+<main class="mt-5">
+    <div class="container">
+        <router-outlet></router-outlet>
     </div>
+</main>
 
-    <div class="row">
-        <main class="my-5">
-            <div class="container">
-                <router-outlet></router-outlet>
-            </div>
-        </main>
-
-    </div>
-</div>

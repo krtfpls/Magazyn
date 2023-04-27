@@ -7,9 +7,8 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { NgxNavbarModule } from 'ngx-bootstrap-navbar';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
-
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [],
@@ -26,8 +25,8 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    NgxNavbarModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    CollapseModule.forRoot()
   ],
   exports: [
     BsDropdownModule,
@@ -37,8 +36,8 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     ModalModule,
     AlertModule,
     BsDatepickerModule,
-    NgxNavbarModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    CollapseModule
   ]
 })
 export class SharedModule { }

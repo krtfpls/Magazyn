@@ -9,6 +9,7 @@ import { AccountService } from '../_services/account.service';
 })
 export class NavComponent implements OnInit {
   model: any = {}
+  isCollapsed = true;
 
   constructor(public accountService: AccountService, private router: Router) { }
 
@@ -23,6 +24,10 @@ export class NavComponent implements OnInit {
       }
     }
     )
+  }
+
+  collapsedMode(){
+    this.isCollapsed= !this.isCollapsed;
   }
 
   logout() {

@@ -57,7 +57,6 @@ export class DocumentsService {
       });
 
       docToSend.documentLines=lines;
-      console.log(docToSend);
       return docToSend;
 }
 }
