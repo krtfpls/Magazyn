@@ -33,7 +33,7 @@
                     </li>
 
                     <!-- Documents -->
-                    <li class="dropdown" dropdown [insideClick]="true" container="body">
+                    <li class="dropdown" dropdown [insideClick]="true"  container="body">
                         <a dropdownToggle id="button-Documents"
                             class="dropdown-toggle nav-link active "
                             aria-controls="button-Documents">
@@ -91,34 +91,31 @@
                         </ul>
                     </li>
                     <!-- Customers -->
-                    <li class="dropdown" dropdown>
-                        <a dropdownToggle class="dropdown-toggle nav-link active"
-                            aria-controls="dropdown-Customer">
-                            Kontrahenci <span class="caret"></span>
+                    <li class="dropdown" dropdown container="body">
+                        <a dropdownToggle class="dropdown-toggle nav-link active">Kontrahenci <span class="caret"></span>
                         </a>
-                        <ul id="dropdown-Customer" *dropdownMenu class="dropdown-menu" role="menu"
-                            aria-labelledby="button-Customer">
-                            <li role="menuitem"><a class="dropdown-item" routerLink='/customerList'
-                                    routerLinkActive='active' (click)="collapsedMode()">
+                        <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-Customer">
+                            <li role="menuitem" class="nav-item" (click)="collapsedMode()"><a class="dropdown-item" routerLink='/customerList'
+                                    routerLinkActive='active'>
                                     Lista Kontrahentów
                                 </a></li>
-                            <li role="menuitem"><a class="dropdown-item" routerLink='/customersCreate'
-                                    routerLinkActive='active' (click)="collapsedMode()">
+                            <li role="menuitem" (click)="collapsedMode()"><a class="dropdown-item" routerLink='/customersCreate'
+                                    routerLinkActive='active'>
                                     Dodaj Kontrahenta
                                 </a></li>
                         </ul>
                     </li>
 
                     <!-- Categories -->
-                    <li class="dropdown" dropdown>
-                        <a dropdownToggle class="dropdown-toggle nav-link active">Kategorie <span
-                                class="caret"></span></a>
+                    <li class="dropdown" dropdown container="body">
+                        <a dropdownToggle class="dropdown-toggle nav-link active">Kategorie <span class="caret"></span>
+                        </a>
                         <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-Category">
-                            <li role="menuitem" class="nav-item">
+                            <li role="menuitem" class="nav-item" (click)="collapsedMode()">
                                 <a class="dropdown-item" routerLink='/categoryList' routerLinkActive='active'>Lista
                                     Kategorii</a>
                             </li>
-                            <li role="menuitem" class="nav-item"><a class="dropdown-item" routerLink='/categoryCreate'
+                            <li role="menuitem" class="nav-item" (click)="collapsedMode()"><a class="dropdown-item" routerLink='/categoryCreate'
                                     routerLinkActive='active'>Nowa kategoria</a></li>
                         </ul>
                     </li>
