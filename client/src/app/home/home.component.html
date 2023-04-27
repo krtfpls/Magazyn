@@ -7,26 +7,20 @@
     </div>
 </div>
 
-<div *ngIf="registerMode" class="container">
+<div *ngIf="registerMode" class="container" style="max-width: 400px;">
     <div class="row justify-content-center mt-3 p-3">
-        <div class="col-4">
             <app-register (cancelRegister)="cancelModes($event)"></app-register>
-        </div>
     </div>
 </div>
 
-<div *ngIf="resendMode" class="container">
+<div *ngIf="resendMode" class="container" style="max-width: 400px;">
     <div class="row justify-content-center mt-3 p-3">
-        <div class="col-4">
             <app-resend-email (cancelReSend)="cancelModes($event)"></app-resend-email>
-        </div>
     </div>
 </div>
-<div *ngIf="forgotMode" class="container">
+<div *ngIf="forgotMode" class="container" style="max-width: 400px;">
     <div class="row justify-content-center mt-3 p-3">
-        <div class="col-4">
             <app-forgot-password (cancelForgot)="cancelModes($event)"></app-forgot-password>
-        </div>
     </div>
 </div>
 <div *ngIf="!resendMode" class="container mt-5 pt-5 text-center align-items-center d-block">
