@@ -65,7 +65,7 @@
         <app-product-create (emitProduct)="openQtyModal($event)" [setBackButton]="false"></app-product-create>
     </ng-container>
 </div>
-<div class="row mx-5">
+<div class="row mx-5" *ngIf="!displayNewProductMode">
     <div class="text-end m-5">
         <button [disabled]="documentLines && documentLines.length<1" class="btn btn-primary" (click)="listDoneEvent()">
             Dalej
