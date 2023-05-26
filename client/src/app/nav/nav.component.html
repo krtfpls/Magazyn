@@ -120,6 +120,17 @@
                         </ul>
                     </li>
 
+                            <!-- Import -->
+                            <li class="dropdown" dropdown container="body">
+                                <a dropdownToggle class="dropdown-toggle nav-link active">Import<span class="caret"></span>
+                                </a>
+                                <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-Import">
+                                    <li role="menuitem" class="nav-item" (click)="collapsedMode()">
+                                        <a class="dropdown-item" routerLink='/importLoMag' routerLinkActive='active'>LoMag</a>
+                                    </li>
+                                </ul>
+                            </li>
+
                 </ul>
                
 
@@ -142,12 +153,12 @@
         <ng-container *ngIf="(accountService.currentUser$ | async) === null">
             <form #loginForm="ngForm" class="d-flex mt-2 mt-md-2" (ngSubmit)="login()" autocomplete="off">
 
-                <input name="email" [(ngModel)]="model.email" class="form-control me-sm-2 " type="text"
+                <input name="email" [(ngModel)]="model.email" class="form-control me-2" type="text"
                     placeholder="Email">
 
-                <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
+                <input name="password" [(ngModel)]="model.password" class="form-control me-2"ms-1 type="password"
                     placeholder="Password">
-                <button class="btn btn-light my-2 my-sm-0 d-block" type="submit">Login</button>
+                <button class="btn btn-light my-2 my-sm-0 d-block ms-1" type="submit">Login</button>
 
             </form>
         </ng-container>

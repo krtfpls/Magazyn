@@ -46,6 +46,7 @@ import { ForgotPasswordComponent } from './register/forgot-password/forgot-passw
 import { ChangePasswordComponent } from './profile/change-password/change-password.component';
 import { VerifyEmailComponent } from './register/verify-email/verify-email.component';
 import { ResetPasswordComponent } from './register/reset-password/reset-password.component';
+import { LoMagImportComponent } from './importFiles/lo-mag-import/lo-mag-import.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { ResetPasswordComponent } from './register/reset-password/reset-password
     ForgotPasswordComponent,
     ChangePasswordComponent,
     VerifyEmailComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    LoMagImportComponent
   ],
   imports: [
     BrowserAnimationsModule,

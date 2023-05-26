@@ -1,0 +1,29 @@
+<h1>Dodaj plik z aplikacji LoMag i</h1>
+<h1>wybierz magazyn do weryfikacji i korekty stanów</h1>
+<div class="m-2">
+
+<span class="m-1">
+  <input class="form-control" id="formFileLg" type="file" (change)="importExcel($event)" accept=".xls">
+
+</span>
+<select class="form-select" [(ngModel)]="selectedValue" (change)="applyFilter()" aria-label="Select warehouse">
+  <option selected value="">--Wybierz--</option>
+  <option *ngFor="let row of filteredRows.slice(1)" [value]="row">{{ row }}</option>
+</select>
+</div>
+
+<div class="row table-responsive m-2 p-1">
+<table *ngIf="filteredData" class="table table-bordered responsive">
+  <thead>
+    <tr>
+      <th *ngFor="let header of sheetData?.[0]">{{ header }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of filteredData">
+      <td *ngFor="let cell of row">{{ cell }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<button [disabled]="buttonDisabled" class="btn btn-primary m-2 p-2">Weryfikuj stany</button>

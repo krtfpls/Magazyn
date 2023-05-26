@@ -72,7 +72,10 @@
     </div>
 
     <div class="row mt-3 btn-group float-end">
-        <button type="submit" [disabled]="!productForm.dirty || !productForm.valid" form="productForm" class="btn btn-warning m-2">
+        <button *ngIf="id && id.length > 0" type="submit" [disabled]="!productForm.dirty || !productForm.valid" form="productForm" class="btn btn-warning m-2">
+            Zapisz    
+        </button>
+        <button *ngIf="!id" type="submit" [disabled]="!productForm.dirty || !productForm.valid" form="productForm" class="btn btn-warning m-2">
             Utwórz    
         </button>
         <button *ngIf="setBackButton" type="button" class="btn btn-light m-2" (click)="backButton()">Powrót</button>
