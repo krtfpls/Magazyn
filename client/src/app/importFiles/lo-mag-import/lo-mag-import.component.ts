@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import * as XLSX from 'xlsx';
 
 @Component({
@@ -6,7 +6,8 @@ import * as XLSX from 'xlsx';
   templateUrl: './lo-mag-import.component.html',
   styleUrls: ['./lo-mag-import.component.css']
 })
-export class LoMagImportComponent {
+export class LoMagImportComponent implements OnInit {
+  @Output() filteredDataEmmitter= new EventEmitter<string[]>();
   file: File | undefined;
   workbook: XLSX.WorkBook | undefined;
   sheetData: any[][] | undefined;
@@ -15,9 +16,21 @@ export class LoMagImportComponent {
   filteredData: any[] = [];
   buttonDisabled= true;
 
+  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.file = undefined;
+    this.workbook= undefined;
+    this.sheetData= undefined;
+  }
+
+  constructor() { }
 
   onFileChange(event: any) {
     this.file = event.target.files[0];
+  }
+
+  onBtnClick(){
+    this.filteredDataEmmitter.emit(this.filteredData);
   }
 
   importExcel(event: any) {

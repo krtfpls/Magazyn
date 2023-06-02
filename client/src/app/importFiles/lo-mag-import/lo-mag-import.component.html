@@ -1,17 +1,21 @@
-<h1>Dodaj plik z aplikacji LoMag i</h1>
-<h1>wybierz magazyn do weryfikacji i korekty stanów</h1>
+<h1>Dodaj plik z aplikacji LoMag</h1>
+<h1>następnie wybierz magazyn do weryfikacji i korekty stanów</h1>
 <div class="m-2">
 
 <span class="m-1">
   <input class="form-control" id="formFileLg" type="file" (change)="importExcel($event)" accept=".xls">
 
 </span>
-<select class="form-select" [(ngModel)]="selectedValue" (change)="applyFilter()" aria-label="Select warehouse">
-  <option selected value="">--Wybierz--</option>
+<div class="form-floating">
+<select id="warehouseSelect" class="form-select" [(ngModel)]="selectedValue" (change)="applyFilter()" aria-label="Select warehouse" placeholder="Wybierz magazyn">
   <option *ngFor="let row of filteredRows.slice(1)" [value]="row">{{ row }}</option>
 </select>
+<label for="warehouseSelect">--Wybierz magazyn--</label>
 </div>
-
+</div>
+<div>
+<button [disabled]="buttonDisabled" (click)="onBtnClick()" class="btn btn-primary m-2 p-2">Weryfikuj stany</button>
+</div>
 <div class="row table-responsive m-2 p-1">
 <table *ngIf="filteredData" class="table table-bordered responsive">
   <thead>
@@ -26,4 +30,4 @@
   </tbody>
 </table>
 </div>
-<button [disabled]="buttonDisabled" class="btn btn-primary m-2 p-2">Weryfikuj stany</button>
+

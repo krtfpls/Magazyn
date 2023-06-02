@@ -22,6 +22,8 @@ import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.gu
 import { VerifyEmailComponent } from './register/verify-email/verify-email.component';
 import { ResetPasswordComponent } from './register/reset-password/reset-password.component';
 import { LoMagImportComponent } from './importFiles/lo-mag-import/lo-mag-import.component';
+import { VerifyProductsComponent } from './importFiles/verify-products/verify-products.component';
+import { ImportComponent } from './importFiles/import/import.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -39,7 +41,7 @@ const routes: Routes = [
     {path: 'productsCreate', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
     {path: 'productsCreate/:id', component: ProductCreateComponent, canDeactivate: [PreventUnsavedChangesGuard]},
     {path: 'customersCreate', component: CreateCustomerComponent},
-    {path: 'importLoMag', component: LoMagImportComponent},
+    {path: 'import', component: ImportComponent},
     {path: 'customerList', component: ListCustomerComponent},
     {path: 'categoryList', component: ListCategoryComponent},
     {path: 'categoryCreate', component: CreateCategoryComponent},
