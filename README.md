@@ -1,8 +1,6 @@
 # WMService on Angular
 
-Small application for simple warehouse management for field service staff
-
-Demo App: https://wmservice.fly.dev/
+My own, small application for simple warehouse management for field service staff. One of my first project, so please bear with it.
 
 ## Technologies:
 * API: C# with .Net 7.0
