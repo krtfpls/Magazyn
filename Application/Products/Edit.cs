@@ -21,7 +21,7 @@ public class Edit
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Product).SetValidator(new ProductsValidator());
+            RuleFor(x => x.Product).SetValidator(new ProductValidator());
         }
     }
     
@@ -49,12 +49,7 @@ public class Edit
 
             if (product == null) return Result<Unit>.Failure("Can't find that Product");
 
-            CategoryHandle category= new CategoryHandle(requestProduct.CategoryName, _context);
-
-            if (category.isNew)
-                 return Result<Unit>.Failure("This Category don't exist!");
-
-            product.Category = category.category;
+            product.Category = CategoryHandle.PrepareCategory(requestProduct.CategoryName, _context);
 
             // ensure that quantity doesnt change
             requestProduct.Quantity = product.Quantity;

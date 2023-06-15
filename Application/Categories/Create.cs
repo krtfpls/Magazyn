@@ -1,6 +1,7 @@
 using Application.Core;
 using AutoMapper;
 using Data;
+using Entities;
 using FluentValidation;
 using MediatR;
 
@@ -35,17 +36,17 @@ namespace Application.Categories
 
             public async Task<Result<int>> Handle(Command request, CancellationToken cancellationToken)
             {
-                CategoryHandle newCategory = new CategoryHandle(request.Category.Name, _context);
+                Category newCategory =  CategoryHandle.PrepareCategory(request.Category.Name, _context);
 
-                if (!newCategory.isNew)
-                    return Result<int>.Failure("The Category already exists, with id=" + newCategory.category.Id);
+                if (newCategory.Id > 0)
+                    return Result<int>.Failure("The Category already exists, with id=" + newCategory.Id);
                 
-                    _context.Categories.Add(newCategory.category);
+                _context.Categories.Add(newCategory);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result) return Result<int>.Failure("Cannot to create new Category");
-                return Result<int>.Success(newCategory.category.Id);
+                return Result<int>.Success(newCategory.Id);
             }
         }
     }

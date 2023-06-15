@@ -1,0 +1,6 @@
+<ng-container *ngIf="fileImportComponentEnabled" [ngSwitch]="componentName" >
+    <app-lo-mag-import *ngSwitchCase="'lomag'" (filteredDataEmmitter)="verifyEvent($event)"></app-lo-mag-import>
+</ng-container>
+<ng-container *ngIf="verifyDataComponentEnabled">
+    <app-verify-products [productsToVerify]="productsToVerify"></app-verify-products>
+</ng-container>

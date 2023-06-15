@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-md-3 ms-1">
+
+            <div>
+                <b>Legenda:</b>
+            </div>
+            <div class="row">
+                <div class="d-inline"><i class="fa fa-square me-1 d-inline" style="color: whitesmoke;"></i>stan zgodny</div>
+            </div>
+            <div class="row">
+                <div class="d-inline"><i class="fa fa-square me-1 d-inline" style="color: green;"></i>nadwyżka</div>
+            </div>
+            <div class="row">
+                <div class="d-inline"><i class="fa fa-square me-1 d-inline" style="color: red;"></i>brak</div>
+            </div>
+            <div class="row">
+                <div class="d-inline"><i class="fa-regular fa-square me-1 d-inline" style="color: green"></i>nadwyżka</div>
+            </div>
+            <div class="row">
+                <div class="d-inline"><i class="fa-regular fa-square me-1 d-inline" style="color: red;"></i>niedobór</div>
+            </div>
+     
+    </div>
+    <div class="col-md-8 ms-1">
+    <ng-container *ngIf="productsToVerify">
+    <div class="table-responsive m-2">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Nazwa</th>
+                <th>ilość</th>
+                <th>kategoria</th>
+                <th>limit minimalny</th>
+                <th>cena netto</th>
+                <th>numer seryjny</th>
+                <th>uwagi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of products">
+                <td>{{row.id}}</td>
+                <td>{{row.name}}</td>
+                <td>{{row.quantity}}</td>
+                <td>{{row.categoryName}}</td>
+                <td>{{row.minLimit}}</td>
+                <td>{{row.priceNetto}}</td>
+                <td>{{row.serialNumber}}</td>
+                <td>{{row.description}}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </ng-container>
+</div>
+</div>

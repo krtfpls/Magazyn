@@ -32,6 +32,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             if (!ModelState.IsValid)
@@ -54,6 +55,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
 
@@ -105,6 +107,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("VerifyEmail")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<ActionResult> VerifyEmail(EmailDto data)
         {
 
@@ -123,6 +126,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("resendEmailConfirmationLink")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<IActionResult> ResendEmailConfirmationLink(EmailDto email)
         {
 
@@ -146,6 +150,7 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpPost("ForgotPassword")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<ActionResult> ForgotPassword(EmailDto email)
         {
 
@@ -175,6 +180,7 @@ namespace API.Controllers
         
         [AllowAnonymous]
         [HttpPost("ResetPassword")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPassword)
         {
             if (!ModelState.IsValid)
@@ -198,6 +204,7 @@ namespace API.Controllers
 
         [Authorize]
         [HttpPost("ChangePassword")]
+        [RequestSizeLimit(30_000_000)] 
         public async Task<IActionResult> ChangePassword(ChangePasswordDto changePassword)
         {
             if (!ModelState.IsValid)

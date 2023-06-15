@@ -9,7 +9,7 @@ namespace Application.Products
         public string SerialNumber { get; set; } = string.Empty;
 
         public decimal PriceNetto { get; set; } = 0.01m;
-        public int MinLimit { get; set; }
+        public int? MinLimit { get; set; }
 
         public int Quantity { get; set; }
 

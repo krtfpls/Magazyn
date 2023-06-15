@@ -22,7 +22,7 @@ public class Create
     {
         public CommandValidator()
         {
-            RuleFor(x => x.Product).SetValidator(new ProductsValidator());
+            RuleFor(x => x.Product).SetValidator(new ProductValidator());
         }
     }
     public class Handler : IRequestHandler<Command, Result<Guid>>
@@ -49,11 +49,8 @@ public class Create
             
             newProduct.User = user;
 
-            CategoryHandle category= new CategoryHandle(requestProduct.CategoryName, _context);
-            
-            if (category.isNew)
-                 return Result<Guid>.Failure("This Category don't exist!");
-            newProduct.Category = category.category;
+     
+            newProduct.Category = CategoryHandle.PrepareCategory(requestProduct.CategoryName, _context);
             newProduct.Quantity = 0;
             
             newProduct.Id = new Guid();

@@ -77,6 +77,9 @@ var app = builder.Build();
 // ExceptionMiddleware- Handle logs
 app.UseMiddleware<ExceptionMiddleware>();
 
+// Payload Too Large Middleware
+//app.UseMiddleware<PayloadTooLargeMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -21,14 +21,20 @@ public class CustomerController : BaseApiController
     }
 
     [HttpPost]
+    [RequestSizeLimit(30_000_000)] 
     public async Task<IActionResult> Create(CustomerDto customer)
     {
+        if (Request.ContentLength > 30_000_000)
+            return new ObjectResult(new StatusCodeResult(413));
         return HandleResult(await Mediator.Send(new Create.Command { Customer = customer}));
     }
 
     [HttpPut("{id}")]
+    [RequestSizeLimit(30_000_000)] 
     public async Task<IActionResult> Edit(int id, CustomerDto customer)
     {
+        if (Request.ContentLength > 30_000_000)
+            return new ObjectResult(new StatusCodeResult(413));
         customer.Id = id;
         return HandleResult(await Mediator.Send(new Edit.Command { Customer = customer }));
     }

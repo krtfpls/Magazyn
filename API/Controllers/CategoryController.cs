@@ -12,9 +12,12 @@ namespace API.Controllers
         }
 
         [HttpPost]
-    public async Task<IActionResult> Create(CategoryDto category)
-    {
-        return HandleResult(await Mediator.Send(new Create.Command { Category = category}));
-    }
-    }
+        [RequestSizeLimit(30_000_000)]
+        public async Task<IActionResult> Create(CategoryDto category)
+        {
+            if (Request.ContentLength > 30_000_000)
+                return new ObjectResult(new StatusCodeResult(413));
+            return HandleResult(await Mediator.Send(new Create.Command { Category = category}));
+        }
+        }
 }

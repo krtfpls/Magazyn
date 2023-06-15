@@ -22,14 +22,20 @@ public class DocumentsController: BaseApiController
 
 
     [HttpPost("GoodsReceiptNote")]
+    [RequestSizeLimit(30_000_000)] 
     public async Task<IActionResult> GoodsReceiptNote(DocumentDto document)
     {
+        if (Request.ContentLength > 30_000_000)
+            return new ObjectResult(new StatusCodeResult(413));
         return HandleResult(await Mediator.Send(new Create.Command { Document = document, builder= new GoodsReceiptNoteBuilder()}));
     }
 
-     [HttpPost("GoodsDispatchNote")]
+    [HttpPost("GoodsDispatchNote")]
+    [RequestSizeLimit(30_000_000)]
     public async Task<IActionResult> GoodsDispatchNote(DocumentDto document)
     {
+        if (Request.ContentLength > 30_000_000)
+            return new ObjectResult(new StatusCodeResult(413));
         return HandleResult(await Mediator.Send(new Create.Command { Document = document, builder = new GoodsDispatchNoteBuilder()}));
     }
      

@@ -26,14 +26,24 @@ public class ProductsController : BaseApiController
     }
 
     [HttpPut()]
+    [RequestSizeLimit(30_000_000)] 
     public async Task<IActionResult> Edit(ProductDto item)
     {
         return HandleResult(await Mediator.Send(new Edit.Command { Product = item }));
     }
 
     [HttpPost]
+    [RequestSizeLimit(30_000_000)] 
     public async Task<IActionResult> Create(ProductDto item)
     {
         return HandleResult(await Mediator.Send(new Create.Command { Product = item }));
+    }
+
+    [HttpPost("Verify")]
+    [RequestSizeLimit(30_000_000)] 
+    public async Task<IActionResult> Verify(IEnumerable<ProductDto> items)
+    {
+
+        return HandleResult(await Mediator.Send(new Verify.Command { Products = items }));
     }
 }
