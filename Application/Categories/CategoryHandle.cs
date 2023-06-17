@@ -10,7 +10,7 @@ namespace Application.Categories
             string trimmedName = name.Trim().ToLower();
 
             if (trimmedName == string.Empty)
-                return new Category {Name= "import"};
+                return new Category {Name= "niezdefiniowana"};
             
             Category category = context.Categories.FirstOrDefault(x => x.Name == trimmedName);
 

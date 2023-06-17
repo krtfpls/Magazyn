@@ -26,7 +26,7 @@ export class VerifyProductsComponent implements OnInit {
         minLimit: 0,
         quantity: parseInt(tempRow[2],10),
         description: tempRow[6],
-        categoryName: "migracja"
+        categoryName: "import"
       }
       this.products.push(tempProduct);
     }
