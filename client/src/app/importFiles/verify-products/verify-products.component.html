@@ -11,13 +11,7 @@
                 <div class="d-inline"><i class="fa fa-square me-1 d-inline" style="color: green;"></i>nadwyżka</div>
             </div>
             <div class="row">
-                <div class="d-inline"><i class="fa fa-square me-1 d-inline" style="color: red;"></i>brak</div>
-            </div>
-            <div class="row">
-                <div class="d-inline"><i class="fa-regular fa-square me-1 d-inline" style="color: green"></i>nadwyżka</div>
-            </div>
-            <div class="row">
-                <div class="d-inline"><i class="fa-regular fa-square me-1 d-inline" style="color: red;"></i>niedobór</div>
+                <div class="d-inline"><i class="fa fa-square me-1 d-inline" style="color: red;"></i>niedobór</div>
             </div>
      
     </div>
@@ -38,8 +32,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of products">
-                <td>{{row.id}}</td>
+            <tr *ngFor="let row of products; let i=index">
+                <td>{{i+1}}</td>
                 <td>{{row.name}}</td>
                 <td>{{row.quantity}}</td>
                 <td>{{row.categoryName}}</td>
