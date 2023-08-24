@@ -13,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+var EnvironmentIsDevelopment= builder.Environment.IsDevelopment();
+
 builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Services.AddControllers(opt =>
@@ -22,7 +24,7 @@ opt.Filters.Add(new AuthorizeFilter(policy));
 });
 
 //Identity
-builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration, EnvironmentIsDevelopment);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -30,29 +32,12 @@ builder.Services.AddSwaggerGen();
 
 
 var connString = "";
-// if (builder.Environment.IsDevelopment())
+ if (EnvironmentIsDevelopment)
     connString= builder.Configuration.GetConnectionString("PostgresConnection");
-     // builder.Configuration.GetConnectionString("SqliteConnection");
-// else
-// {
-//   //  connString = builder.Configuration.GetConnectionString("PostgresConnection");
-
-//     // Use connection string provided at runtime by FlyIO.
-//     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-
-//     // Parse connection URL to connection string for Npgsql
-//     connUrl = connUrl.Replace("postgres://", string.Empty);
-//     var pgUserPass = connUrl.Split("@")[0];
-//     var pgHostPortDb = connUrl.Split("@")[1];
-//     var pgHostPort = pgHostPortDb.Split("/")[0];
-//     var pgDb = pgHostPortDb.Split("/")[1];
-//     var pgUser = pgUserPass.Split(":")[0];
-//     var pgPass = pgUserPass.Split(":")[1];
-//     var pgHost = pgHostPort.Split(":")[0];
-//     var pgPort = pgHostPort.Split(":")[1];
-
-//     connString = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb}; SslMode=disable";
-// }
+ else
+ {
+     connString = Environment.GetEnvironmentVariable("DATABASE_URL");
+ }
 builder.Services.AddDbContext<DataContext>(
     opt =>
 {
@@ -107,9 +92,7 @@ app.UseCors(x => x
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials()
-    .WithOrigins("https://wmservice.fly.dev",
-                "http://wmservice.fly.dev",
-                "https://localhost:5001",
+    .WithOrigins("https://localhost:5001",
                 "http://localhost:5000",
                 "http://localhost:4200"));
 

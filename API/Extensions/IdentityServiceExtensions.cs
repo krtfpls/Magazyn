@@ -11,7 +11,7 @@ namespace API.Extensions
     public static class IdentityServiceExtensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
-        IConfiguration config)
+        IConfiguration config, bool env)
         {
 //ASP Identity User Manager
             services.AddIdentityCore<User>(opt =>
@@ -34,7 +34,7 @@ namespace API.Extensions
                         {
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                                .GetBytes(config["TokenKey"])),
+                                .GetBytes(env ? config["TokenKey"] : Environment.GetEnvironmentVariable("TokenKey"))),
                             ValidateIssuer = false,
                             ValidateAudience = false,
                             ValidateLifetime= true,

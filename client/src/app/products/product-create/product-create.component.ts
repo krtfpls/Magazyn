@@ -105,7 +105,7 @@ export class ProductCreateComponent implements OnInit {
 
   private initializeForm(product: Product) {
     this.productForm = this.fb.group({
-      name: [product.name, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      name: [product.name, [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
       priceNetto: [product.priceNetto, [Validators.required, Validators.min(0), Validators.max(9999)]],
       serialNumber: [product.serialNumber, [Validators.maxLength(50)]],
       minLimit: [product.minLimit, [Validators.min(0), Validators.max(9999)]],
