@@ -96,7 +96,7 @@ app.UseCors(x => x
                 "https://krtfpls.ddns.net:443",
                 "http://krtfpls.ddns.net:80",
                 "https://localhost:5001",
-                "http://localhost:5000"));
+                "http://localhost:4200"));
 
 app.UseAuthentication();
 app.UseAuthorization();
